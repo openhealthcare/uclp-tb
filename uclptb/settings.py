@@ -1,4 +1,4 @@
-# Django settings for tbshowcase project.
+# Django settings for uclptb project.
 import commands
 import os
 import sys
@@ -127,10 +127,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'tbshowcase.urls'
+ROOT_URLCONF = 'uclptb.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'tbshowcase.wsgi.application'
+WSGI_APPLICATION = 'uclptb.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
@@ -162,7 +162,7 @@ INSTALLED_APPS = (
     'compressor',
     'opal',
     'opal.core.search',
-    'tbshowcase',
+    'uclptb',
     'django.contrib.admin',
 )
 
@@ -221,8 +221,8 @@ else:
     EMAIL_PORT = 1025
     EMAIL_HOST = 'localhost'
 
-COVERAGE_EXCLUDE_MODULES = ('tbshowcase.migrations', 'tbshowcase.tests',
-                            'tbshowcase.local_settings',
+COVERAGE_EXCLUDE_MODULES = ('uclptb.migrations', 'uclptb.tests',
+                            'uclptb.local_settings',
                             'opal.migrations', 'opal.tests',
                             'opal.wsgi')
 
@@ -242,17 +242,17 @@ INTEGRATING = False
 # Glossolalia (http://github.com/openhealthcare/glossolalia)
 #
 #GLOSSOLALIA_URL = 'http://localhost:5000/'
-#GLOSSOLALIA_NAME = 'tbshowcase'
+#GLOSSOLALIA_NAME = 'uclptb'
 
 # OPAL required Django settings you should edit
 
 CONTACT_EMAIL = []
 DEFAULT_FROM_EMAIL = 'hello@example.com'
-DEFAULT_DOMAIN = 'http://tbshowcase.com/'
+DEFAULT_DOMAIN = 'http://uclptb.com/'
 
 # Begins OPAL Settings you should edit !
 
-OPAL_BRAND_NAME = 'tbshowcase'
+OPAL_BRAND_NAME = 'uclptb'
 VERSION_NUMBER  = '<0.0.1'
 
 try:

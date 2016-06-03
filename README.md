@@ -1,4 +1,4 @@
-This is tbshowcase - an [OPAL](https://github.com/openhealthcare/opal) project.
+This is uclptb - an [OPAL](https://github.com/openhealthcare/opal) project.
 
 To get started, run the following commands:
 

@@ -1,9 +1,9 @@
 """
-Unittests for tbshowcase
+Unittests for uclptb
 """
 from django.test import TestCase
 
-from tbshowcase import models
+from uclptb import models
 
 class WeHaveSomeModelsTestCase(TestCase):
     def test_there_is_a_model(self):

@@ -1,5 +1,5 @@
 """
-tbshowcase models.
+uclptb models.
 """
 from django.db.models import fields
 
