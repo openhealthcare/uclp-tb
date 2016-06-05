@@ -10,3 +10,4 @@ class Application(application.OpalApplication):
         'js/uclptb/routes.js',
         'js/opal/controllers/discharge.js'
     ]
+    default_episode_category = 'TB'
