@@ -9,7 +9,6 @@ fabfile_dir = os.path.realpath(os.path.dirname(__file__))
 def db_commands(username):
     cmds =  [
         "python manage.py migrate",
-        "python manage.py loaddata data/elcid.teams.json",
         "python manage.py load_lookup_lists -f data/lookuplists/lookuplists.json",
     ]
     python_cmd = "echo '"
@@ -37,15 +36,15 @@ def create_heroku_instance(name, username):
     TODO make sure that we're fully committed git wise before pushing
     """
     with lcd(fabfile_dir):
-        # local("heroku apps:create {}".format(name))
-        # git_url = "https://git.heroku.com/{}.git".format(name)
-        # local("git remote add {0} {1}".format(name, git_url))
+        local("heroku apps:create {}".format(name))
+        git_url = "https://git.heroku.com/{}.git".format(name)
+        local("git remote add {0} {1}".format(name, git_url))
         push_to_heroku(name)
         with warn_only():
-            # heroku somtimes has memory issues doing migrate
-            # it seems to work fine if we just migrate opal first
-            # it will later fail because content types haven't
-            # been migrated, but that's fine we'll do that later
+        #     # heroku somtimes has memory issues doing migrate
+        #     # it seems to work fine if we just migrate opal first
+        #     # it will later fail because content types haven't
+        #     # been migrated, but that's fine we'll do that later
             local("heroku run --app {0} python manage.py migrate opal".format(
                 name
             ))

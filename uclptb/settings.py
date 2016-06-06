@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'compressor',
     'opal',
     'opal.core.search',
+    'referral',
     'uclptb',
     'django.contrib.admin',
 )
