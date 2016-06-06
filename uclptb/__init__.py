@@ -11,3 +11,9 @@ class Application(application.OpalApplication):
         'js/opal/controllers/discharge.js'
     ]
     default_episode_category = 'TB'
+
+    menuitems = [
+        dict(
+            href='/referrals/#/tb', display='Add Patient', icon='fa fa-plus',
+            activepattern='/referrals/#/tb'),
+    ]

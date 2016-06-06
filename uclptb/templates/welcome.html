@@ -14,29 +14,29 @@
         <div ng-controller="SearchCtrl">
           <form ng-submit="search()" class="form form-horizontal">
             <div class="row content-offset">
-                <div class="col-md-4 col-md-push-4">
-                  <input type="text" autofocus
-                         name="name"
-                         slash-key-focus="!state || state==='normal'"
-                         ng-blur="enableShortcuts()"
-                         ng-focus="disableShortcuts()"
-                         placeholder="Name or Hospital Number"
-                         ng-model="searchTerm"
-                         class="form-control"
-                         autocomplete="off"
-                         />
+              <div class="col-md-4 col-md-push-4">
+                <input type="text" autofocus
+                       name="name"
+                       slash-key-focus="!state || state==='normal'"
+                       ng-blur="enableShortcuts()"
+                       ng-focus="disableShortcuts()"
+                       placeholder="Name or Hospital Number"
+                       ng-model="searchTerm"
+                       class="form-control"
+                       autocomplete="off"
+                       />
                 </div>
-            </div>
-            <div class="row">
+              </div>
+              <div class="row">
                 <div class="col-md-4 col-md-push-4 text-center">
-                    <a ng-click="search()" class="btn btn-lg btn-primary content-offset-25">
-                        <i class="glyphicon glyphicon-search"></i>
-                        Search
-                    </a>
+                  <a ng-click="search()" class="btn btn-lg btn-primary content-offset-25">
+                    <i class="glyphicon glyphicon-search"></i>
+                          Search
+                  </a>
                 </div>
-            </div>
-          </form>
-        </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

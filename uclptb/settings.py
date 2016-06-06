@@ -164,6 +164,7 @@ INSTALLED_APPS = (
     'opal.core.search',
     'uclptb',
     'django.contrib.admin',
+    'referral',
 )
 
 # A sample logging configuration. The only tangible logging
