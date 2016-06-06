@@ -12,6 +12,7 @@ class Diagnosis(models.Diagnosis): pass
 class PastMedicalHistory(models.PastMedicalHistory): pass
 class Treatment(models.Treatment): pass
 class Investigation(models.Investigation): pass
+class ReferralRoute(models.ReferralRoute): pass
 
 
 class ContactDetails(models.PatientSubrecord):
@@ -49,7 +50,7 @@ class EnvironmentalTBRiskFactors(models.PatientSubrecord):
     current_homelessness = fields.NullBooleanField()
 
     last_date_of_prison = fields.DateField(null=True, blank=True)
-    currentl_prison_stay = fields.NullBooleanField()
+    current_prison_stay = fields.NullBooleanField()
 
     history_of_smoking_active = fields.NullBooleanField()
     history_of_smoking_passive = fields.NullBooleanField()
