@@ -83,7 +83,7 @@ STATIC_URL = '/assets/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_PATH, 'static'),
+    os.path.join(PROJECT_PATH, 'assets'),
 )
 
 # List of finder classes that know how to find static files in
@@ -164,7 +164,6 @@ INSTALLED_APPS = (
     'opal.core.search',
     'uclptb',
     'django.contrib.admin',
-    'referral',
 )
 
 # A sample logging configuration. The only tangible logging
