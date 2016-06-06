@@ -37,9 +37,9 @@ def create_heroku_instance(name, username):
     TODO make sure that we're fully committed git wise before pushing
     """
     with lcd(fabfile_dir):
-        local("heroku apps:create {}".format(name))
-        git_url = "https://git.heroku.com/{}.git".format(name)
-        local("git remote add {0} {1}".format(name, git_url))
+        # local("heroku apps:create {}".format(name))
+        # git_url = "https://git.heroku.com/{}.git".format(name)
+        # local("git remote add {0} {1}".format(name, git_url))
         push_to_heroku(name)
         with warn_only():
             # heroku somtimes has memory issues doing migrate
