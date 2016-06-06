@@ -38,6 +38,7 @@ class ContactDetails(models.PatientSubrecord):
 
 class EnvironmentalTBRiskFactors(models.PatientSubrecord):
     _is_singleton = True
+    _title = "Environmental Risk Factors"
 
 
     last_date_of_problem_drug_use = fields.DateField(null=True, blank=True)
@@ -60,6 +61,7 @@ class EnvironmentalTBRiskFactors(models.PatientSubrecord):
 
 class MedicalTBRiskFactors(models.PatientSubrecord):
     _is_singleton = True
+    _title = "Medical Risk Factors"
 
 
     mental_health_history = fields.NullBooleanField()
