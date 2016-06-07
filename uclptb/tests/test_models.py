@@ -1,5 +1,5 @@
 from opal.core.test import OpalTestCase
-from uclptb.episode_categories import TBEpisode
+from tb.episode_categories import TBEpisode
 
 
 class EpisodeCategoryTestCase(OpalTestCase):
