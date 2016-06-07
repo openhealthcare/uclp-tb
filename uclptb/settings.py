@@ -163,6 +163,7 @@ INSTALLED_APPS = (
     'opal',
     'opal.core.search',
     'referral',
+    'tb',
     'uclptb',
     'django.contrib.admin',
 )

@@ -1,26 +1,56 @@
 """
-Models for tb
+tb models.
 """
-from django.db import models
-from opal.models import EpisodeSubrecord
+from django.db.models import fields
+
+from opal import models
 
 
-class TBRiskFactors(EpisodeSubrecord):
-    previous_tb_where = models.CharField(max_length=255, blank=True)
-    previous_tb_when = models.DateField(blank=True, null=True)
-    previous_tb_how_long = models.CharField(max_length=255, blank=True)
+class EnvironmentalTBRiskFactors(models.PatientSubrecord):
+    _is_singleton = True
+    _title = "Environmental Risk Factors"
+    _icon = 'fa fa-photo'
 
-    hiv_positive = models.NullBooleanField()
-    type_1_diabetes = models.NullBooleanField()
-    type_2_diabetes = models.NullBooleanField()
-    known_tb_contact = models.NullBooleanField()
-    bcg_history = models.NullBooleanField()
-    bcg_scar_seen = models.NullBooleanField()
 
-    recent_travel_to_high_risk_area = models.NullBooleanField()
+    last_date_of_problem_drug_use = fields.DateField(null=True, blank=True)
+    current_problem_drug_use = fields.NullBooleanField()
 
-    history_of_active_smoking = models.NullBooleanField()
-    history_of_passive_field = models.NullBooleanField()
-    referred_to_smoking_cessation = models.NullBooleanField()
-    alcohol_misuse = models.NullBooleanField()
-    no_recourse_to_public_funds = models.NullBooleanField()
+    last_date_of_alcohol_misuse = fields.DateField(null=True, blank=True)
+    current_alcohol_misuse = fields.NullBooleanField()
+
+    last_date_of_homelessness = fields.DateField(null=True, blank=True)
+    current_homelessness = fields.NullBooleanField()
+
+    last_date_of_prison = fields.DateField(null=True, blank=True)
+    current_prison_stay = fields.NullBooleanField()
+
+    history_of_smoking_active = fields.NullBooleanField()
+    history_of_smoking_passive = fields.NullBooleanField()
+
+    recent_travel_to_high_risk_area = fields.NullBooleanField()
+
+
+class MedicalTBRiskFactors(models.PatientSubrecord):
+    _is_singleton = True
+    _title = "Medical Risk Factors"
+    _icon = 'fa fa-h-square'
+
+
+    mental_health_history = fields.NullBooleanField()
+    previous_tb = fields.DateField(null=True, blank=True)
+
+    hiv_positive = fields.NullBooleanField()
+    solid_organ_transplantation = fields.NullBooleanField()
+
+    haemotological_malignancy = fields.NullBooleanField()
+    jejunoileal_bypass = fields.NullBooleanField()
+    gastrectomy = fields.NullBooleanField()
+    diabetes = fields.NullBooleanField()
+
+    silicosis = fields.NullBooleanField()
+    chronic_renal = fields.NullBooleanField()
+
+    failure_haemodialysis = fields.NullBooleanField()
+
+    anti_tnf_alpha_treatment = fields.NullBooleanField()
+    other_immunosuppressive_drugs = fields.TextField()
