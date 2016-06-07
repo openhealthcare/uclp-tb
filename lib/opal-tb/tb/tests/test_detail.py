@@ -13,4 +13,4 @@ class TestDetail(OpalTestCase):
     def test_render_200(self):
         patient, episode = self.new_patient_and_episode_please()
         url = reverse("patient_detail")
-        self.assertContains(url, 200)
+        self.assertStatusCode(url, 200)

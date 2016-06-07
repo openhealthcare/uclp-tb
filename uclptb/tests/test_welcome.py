@@ -12,5 +12,5 @@ class TestWelcome(OpalTestCase):
 
     def test_render_200(self):
         patient, episode = self.new_patient_and_episode_please()
-        url = "templates/welcome.html"
-        self.assertContains(url, 200)
+        url = "/templates/welcome.html"
+        self.assertStatusCode(url, 200)

@@ -13,4 +13,4 @@ class TestReferral(OpalTestCase):
         # hard coding the url because its
         # hard coded in the navigation bar
         url = '/referrals/#/ucl_ptb'
-        self.assertContains(url, 200)
+        self.assertStatusCode(url, 200)

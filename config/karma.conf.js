@@ -7,6 +7,7 @@ module.exports = function(config){
         files: [
             //JASMINE,
             //JASMINE_ADAPTER,
+            "js/lib/utils/json3.min.js",
             "lib/bower_components/angular/angular.js",
             "lib/bower_components/angular-route/angular-route.js",
             "lib/bower_components/angular-resource/angular-resource.js",
