@@ -1,0 +1,29 @@
+{% load forms %}
+
+{% checkbox model="problem_of_drug_use" label="history of problem drug use" %}
+
+<div ng-show="problem_of_drug_use">
+  {% datepicker field="EnvironmentalTBRiskFactors.last_date_of_problem_drug_use" disabled="editing.environmental_tb_risk_factors.current_problem_drug_use" %}
+  {% checkbox field="EnvironmentalTBRiskFactors.current_problem_drug_use" %}
+</div>
+
+{% checkbox model="problem_of_alcohol_use" label="history of problem alcohold use" %}
+
+<div ng-show="problem_of_alcohol_use">
+  {% datepicker field="EnvironmentalTBRiskFactors.last_date_of_problem_drug_use" disabled="editing.environmental_tb_risk_factors.current_alcohol_misuse" %}
+  {% checkbox field="EnvironmentalTBRiskFactors.current_alcohol_misuse" %}
+</div>
+
+{% checkbox model="history_of_homelessness" label="history of homelessness" %}
+
+<div ng-show="history_of_homelessness">
+  {% datepicker field="EnvironmentalTBRiskFactors.last_date_of_homelessness" disabled="editing.environmental_tb_risk_factors.current_homelessness" %}
+  {% checkbox field="EnvironmentalTBRiskFactors.current_homelessness" %}
+</div>
+
+{% checkbox model="time_spent_in_prison" label="history of prison attendance" %}
+
+<div ng-show="time_spent_in_prison">
+  {% datepicker field="EnvironmentalTBRiskFactors.last_date_of_prison" disabled="editing.environmental_tb_risk_factors.current_prison_stay" %}
+  {% checkbox field="EnvironmentalTBRiskFactors.current_prison_stay" label="Currently in prison" %}
+</div>

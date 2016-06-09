@@ -1,7 +1,7 @@
 """
-Define tbshowcase schemas.
+Define uclptb schemas.
 """
-from tbshowcase import models
+from uclptb import models
 
 list_columns = [
     models.Demographics,

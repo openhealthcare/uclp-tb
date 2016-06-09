@@ -1,1 +1,1 @@
-web: gunicorn tbshowcase.wsgi
+web: gunicorn uclptb.wsgi

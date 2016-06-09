@@ -4,7 +4,7 @@ Defining OPAL PatientLists
 from opal import core
 from opal.models import Episode
 
-from tbshowcase import models
+from uclptb import models
 
 class AllPatientsList(core.patient_lists.PatientList):
     display_name = 'All Patients'
