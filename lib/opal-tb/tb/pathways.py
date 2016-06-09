@@ -17,11 +17,11 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
     display_name = "TB Screening"
     slug = "tb_screening"
     steps = (
-        # uclptb_models.Demographics,
-        # uclptb_models.ContactDetails,
-        # uclptb_models.ReferralRoute,
-        # tb_models.EnvironmentalTBRiskFactors,
-        # tb_models.MedicalTBRiskFactors,
+        uclptb_models.Demographics,
+        uclptb_models.ContactDetails,
+        uclptb_models.ReferralRoute,
+        tb_models.EnvironmentalTBRiskFactors,
+        tb_models.MedicalTBRiskFactors,
         MultSaveStep(model=uclptb_models.Investigation),
         MultSaveStep(model=uclptb_models.PastMedicalHistory),
     )
