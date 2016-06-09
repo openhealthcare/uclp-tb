@@ -18,10 +18,26 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
     slug = "tb_screening"
     steps = (
         uclptb_models.Demographics,
+        # inline first name and surname hide middle name
+
         uclptb_models.ContactDetails,
+
         uclptb_models.ReferralRoute,
+
+        # combine the 2 into one custom step
         tb_models.EnvironmentalTBRiskFactors,
-        tb_models.MedicalTBRiskFactors,
-        MultSaveStep(model=uclptb_models.Investigation),
+        # this needs display logic work
+
+        # tb_models.MedicalTBRiskFactors,
+        # inline check boxes
+
+        MultSaveStep(model=uclptb_models.SymptomComplex),
         MultSaveStep(model=uclptb_models.PastMedicalHistory),
+
+        # combine the 2 into one custom step
+        MultSaveStep(model=uclptb_models.Investigation),
+        # Radiology
+
+        uclptb_models.PatientConsultation
+        # PatientConsultation (in a timeline on the patient detail view)
     )

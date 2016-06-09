@@ -4,6 +4,8 @@ tb models.
 from django.db.models import fields
 
 from opal import models
+from opal.core import fields as opal_fields
+from opal.core import lookuplists
 
 
 class EnvironmentalTBRiskFactors(models.PatientSubrecord):
@@ -54,3 +56,19 @@ class MedicalTBRiskFactors(models.PatientSubrecord):
 
     anti_tnf_alpha_treatment = fields.NullBooleanField()
     other_immunosuppressive_drugs = fields.TextField()
+
+
+# class RadiologyScanType(lookuplists.LookupList):
+#     pass
+#
+#
+# class RadiologyScanResult(lookuplists.LookupList):
+#     pass
+#
+#
+# class Radiology(models.EpisodeSubrecord):
+#     scan_type = opal_fields.ForeignKeyOrFreeText(RadiologyScanType)
+#     scan_result = opal_fields.ForeignKeyOrFreeText(RadiologyScanResult)
+#     comments = fields.TextField()
+
+# ask in the tb channelf for how best to model this
