@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'compressor',
     'opal',
     'opal.core.search',
+    'pathway',
     'referral',
     'tb',
     'uclptb',

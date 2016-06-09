@@ -12,16 +12,16 @@ class EnvironmentalTBRiskFactors(models.PatientSubrecord):
     _icon = 'fa fa-photo'
 
 
-    last_date_of_problem_drug_use = fields.DateField(null=True, blank=True)
+    last_year_of_problem_drug_use = fields.CharField(max_length=20, blank=True, null=True)
     current_problem_drug_use = fields.NullBooleanField()
 
-    last_date_of_alcohol_misuse = fields.DateField(null=True, blank=True)
+    last_year_of_alcohol_misuse = fields.CharField(max_length=20, blank=True, null=True)
     current_alcohol_misuse = fields.NullBooleanField()
 
-    last_date_of_homelessness = fields.DateField(null=True, blank=True)
+    last_year_of_homelessness = fields.CharField(max_length=20, blank=True, null=True)
     current_homelessness = fields.NullBooleanField()
 
-    last_date_of_prison = fields.DateField(null=True, blank=True)
+    last_year_of_prison = fields.CharField(max_length=20, blank=True, null=True)
     current_prison_stay = fields.NullBooleanField()
 
     history_of_smoking_active = fields.NullBooleanField()
