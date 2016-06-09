@@ -5,8 +5,8 @@ source =
 omit =
     */migrations/*
     uclptb/tests/*
-    uclp/wsgi*
-    uclp/settings*
+    uclptb/wsgi*
+    uclptb/settings*
     
 [report]
 
