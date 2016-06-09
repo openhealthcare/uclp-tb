@@ -1,0 +1,14 @@
+[run]
+source =
+       uclptb
+
+omit =
+    */migrations/*
+    uclptb/tests/*
+    uclp/wsgi*
+    uclp/settings*
+    
+[report]
+
+exclude_lines =
+    def __unicode__
