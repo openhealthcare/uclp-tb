@@ -1,5 +1,5 @@
 from pathway.pathways import (
-    ModalPathway, Pathway, RedirectsToPatientMixin, MultSaveStep
+    ModalPathway, Pathway, RedirectsToPatientMixin, MultSaveStep, Step
 )
 from uclptb.models import Demographics
 from uclptb import models as uclptb_models
@@ -17,25 +17,28 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
     display_name = "TB Screening"
     slug = "tb_screening"
     steps = (
-        uclptb_models.Demographics,
-        # inline first name and surname hide middle name
-
-        uclptb_models.ContactDetails,
-
-        uclptb_models.ReferralRoute,
+    #     uclptb_models.Demographics,
+    #     # inline first name and surname hide middle name
+    #
+    #     uclptb_models.ContactDetails,
+    #
+    #     uclptb_models.ReferralRoute,
+    #
+    #     # combine the 2 into one custom step
+    #     tb_models.EnvironmentalTBRiskFactors,
+    #     # this needs display logic work
+    #
+    #     # tb_models.MedicalTBRiskFactors,
+    #     # inline check boxes
+    #
+    #     MultSaveStep(model=uclptb_models.SymptomComplex),
+    #     MultSaveStep(model=uclptb_models.PastMedicalHistory),
 
         # combine the 2 into one custom step
-        tb_models.EnvironmentalTBRiskFactors,
-        # this needs display logic work
-
-        # tb_models.MedicalTBRiskFactors,
-        # inline check boxes
-
-        MultSaveStep(model=uclptb_models.SymptomComplex),
-        MultSaveStep(model=uclptb_models.PastMedicalHistory),
-
-        # combine the 2 into one custom step
-        MultSaveStep(model=uclptb_models.Investigation),
+        MultSaveStep(
+            model=uclptb_models.Investigation,
+            controller_class="InvestigationFormCtrl"
+        ),
         # Radiology
 
         uclptb_models.PatientConsultation

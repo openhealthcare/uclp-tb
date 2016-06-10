@@ -1,6 +1,6 @@
 {% load forms %}
-{% input "autofocus" label="Test" model="editing.investigation.test" lookuplist="investigation_list" %}
-{% datepicker label="Date ordered" model="editing.investigation.date_ordered" %}
+{% input "autofocus" field="Investigation.test" lookuplist="microbiology_test_list" %}
+{% datepicker field="Investigation.date_ordered" %}
 {% input label="Details" model="editing.investigation.details" %}
 
 {% input label="Microscopy" model="editing.investigation.microscopy" show="testType == 'micro_test_mcs'" %}

@@ -8,7 +8,8 @@ class Application(application.OpalApplication):
     flow_module   = 'uclptb.flow'
     javascripts   = [
         'js/uclptb/routes.js',
-        'js/opal/controllers/discharge.js'
+        'js/opal/controllers/discharge.js',
+        'js/uclptb/controllers/investigations_form.js'
     ]
     default_episode_category = 'TB'
 
