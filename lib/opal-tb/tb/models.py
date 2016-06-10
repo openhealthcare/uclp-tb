@@ -4,6 +4,8 @@ tb models.
 from django.db.models import fields
 
 from opal import models
+from opal.core import fields as opal_fields
+from opal.core import lookuplists
 
 
 class EnvironmentalTBRiskFactors(models.PatientSubrecord):
@@ -54,3 +56,17 @@ class MedicalTBRiskFactors(models.PatientSubrecord):
 
     anti_tnf_alpha_treatment = fields.NullBooleanField()
     other_immunosuppressive_drugs = fields.TextField()
+
+
+class Lymphadenopathy(lookuplists.LookupList):
+    pass
+
+
+class TBRadiology(models.EpisodeSubrecord):
+    _title = "Radiology"
+    _icon = 'fa fa-laptop'
+
+    pleural_effusion = fields.NullBooleanField()
+    consolidation = fields.NullBooleanField()
+    cavity = fields.NullBooleanField()
+    lymphadenopathy = opal_fields.ForeignKeyOrFreeText(Lymphadenopathy)

@@ -1,5 +1,5 @@
 from pathway.pathways import (
-    ModalPathway, Pathway, RedirectsToPatientMixin, MultSaveStep
+    ModalPathway, Pathway, RedirectsToPatientMixin, MultSaveStep, Step
 )
 from uclptb.models import Demographics
 from uclptb import models as uclptb_models
@@ -18,10 +18,32 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
     slug = "tb_screening"
     steps = (
         uclptb_models.Demographics,
+        # inline first name and surname hide middle name
+
         uclptb_models.ContactDetails,
+
         uclptb_models.ReferralRoute,
+
+        # combine the 2 into one custom step
         tb_models.EnvironmentalTBRiskFactors,
+        # this needs display logic work
+
         tb_models.MedicalTBRiskFactors,
-        MultSaveStep(model=uclptb_models.Investigation),
+        # inline check boxes
+
+        MultSaveStep(model=uclptb_models.SymptomComplex),
         MultSaveStep(model=uclptb_models.PastMedicalHistory),
+
+        # combine the 2 into one custom step
+        MultSaveStep(
+            model=uclptb_models.Investigation,
+            controller_class="InvestigationFormCtrl"
+        ),
+        # Radiology
+        tb_models.TBRadiology,
+
+        MultSaveStep(
+            model=uclptb_models.PatientConsultation
+        )
+        # PatientConsultation (in a timeline on the patient detail view)
     )

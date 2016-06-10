@@ -13,6 +13,8 @@ class PastMedicalHistory(models.PastMedicalHistory): pass
 class Treatment(models.Treatment): pass
 class Investigation(models.Investigation): pass
 class ReferralRoute(models.ReferralRoute): pass
+class SymptomComplex(models.SymptomComplex): pass
+class PatientConsultation(models.PatientConsultation): pass
 
 
 class ContactDetails(models.PatientSubrecord):

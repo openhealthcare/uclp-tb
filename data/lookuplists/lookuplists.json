@@ -7214,6 +7214,92 @@
       "synonyms": []
     }
   ],
+  "referralorganisation": [
+    {
+      "name": "Primary care (GP)",
+      "synonyms": ["GP"]
+    },
+    {
+      "name": "Primary care (other)",
+      "synonyms": []
+    },
+    {
+      "name": "Secondary care",
+      "synonyms": []
+    },
+    {
+      "name": "TB Service",
+      "synonyms": []
+    },
+    {
+      "name": "Occupational health",
+      "synonyms": []
+    },
+    {
+      "name": "Internal",
+      "synonyms": []
+    },
+    {
+      "name": "MXU",
+      "synonyms": ["Mobile x-ray unit"]
+    },
+    {
+      "name": "Prison",
+      "synonyms": []
+    },
+    {
+      "name": "Port health",
+      "synonyms": ["HPA"]
+    },
+    {
+      "name": "Self referral",
+      "synonyms": []
+    }
+  ],
+  "lymphadenopathy":[
+    {
+      "name": "Neck",
+      "synonyms": []
+    },
+    {
+      "name": "Intra-Thoracic",
+      "synonyms": []
+    },
+    {
+      "name": "Intra-Abdominal",
+      "synonyms": []
+    },
+    {
+      "name": "Groin",
+      "synonyms": []
+    }
+  ],
+  "referralreason": [
+    {
+      "name": "Symptomatic",
+      "synonyms": []
+    },
+    {
+      "name": "TB contact screening",
+      "synonyms": []
+    },
+    {
+      "name": "New entrant screening",
+      "synonyms": []
+    },
+    {
+      "name": "Transferred",
+      "synonyms": []
+    },
+    {
+      "name": "Anti TNF treatment",
+      "synonyms": []
+    },
+    {
+      "name": "BCG Vaccination",
+      "synonyms": []
+    }
+  ],
   "symptom": [
     {
       "name": "Abdominal Pain",
