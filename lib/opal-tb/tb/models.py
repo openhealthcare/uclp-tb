@@ -58,17 +58,15 @@ class MedicalTBRiskFactors(models.PatientSubrecord):
     other_immunosuppressive_drugs = fields.TextField()
 
 
-# class RadiologyScanType(lookuplists.LookupList):
-#     pass
-#
-#
-# class RadiologyScanResult(lookuplists.LookupList):
-#     pass
-#
-#
-# class Radiology(models.EpisodeSubrecord):
-#     scan_type = opal_fields.ForeignKeyOrFreeText(RadiologyScanType)
-#     scan_result = opal_fields.ForeignKeyOrFreeText(RadiologyScanResult)
-#     comments = fields.TextField()
+class Lymphadenopathy(lookuplists.LookupList):
+    pass
 
-# ask in the tb channelf for how best to model this
+
+class TBRadiology(models.EpisodeSubrecord):
+    _title = "Radiology"
+    _icon = 'fa fa-laptop'
+
+    pleural_effusion = fields.NullBooleanField()
+    consolidation = fields.NullBooleanField()
+    cavity = fields.NullBooleanField()
+    lymphadenopathy = opal_fields.ForeignKeyOrFreeText(Lymphadenopathy)

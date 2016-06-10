@@ -28,7 +28,7 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
         tb_models.EnvironmentalTBRiskFactors,
         # this needs display logic work
 
-        # tb_models.MedicalTBRiskFactors,
+        tb_models.MedicalTBRiskFactors,
         # inline check boxes
 
         MultSaveStep(model=uclptb_models.SymptomComplex),
@@ -40,6 +40,7 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
             controller_class="InvestigationFormCtrl"
         ),
         # Radiology
+        tb_models.TBRadiology,
 
         uclptb_models.PatientConsultation
         # PatientConsultation (in a timeline on the patient detail view)

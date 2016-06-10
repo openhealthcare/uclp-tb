@@ -7256,6 +7256,24 @@
       "synonyms": []
     }
   ],
+  "lymphadenopathy":[
+    {
+      "name": "Neck",
+      "synonyms": []
+    },
+    {
+      "name": "Intra-Thoracic",
+      "synonyms": []
+    },
+    {
+      "name": "Intra-Abdominal",
+      "synonyms": []
+    },
+    {
+      "name": "Groin",
+      "synonyms": []
+    }
+  ],
   "referralreason": [
     {
       "name": "Symptomatic",

@@ -38,10 +38,15 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-    {% record_timeline models.PatientConsultation "when" %}
+    {% record_panel models.TBRadiology %}
     </div>
     <div class="col-md-6">
     {% record_panel models.Investigation %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+    {% record_timeline models.PatientConsultation "when" %}
     </div>
   </div>
 </div>
