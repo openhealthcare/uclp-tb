@@ -42,6 +42,8 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
         # Radiology
         tb_models.TBRadiology,
 
-        uclptb_models.PatientConsultation
+        MultSaveStep(
+            model=uclptb_models.PatientConsultation
+        )
         # PatientConsultation (in a timeline on the patient detail view)
     )
