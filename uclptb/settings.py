@@ -253,7 +253,7 @@ DEFAULT_DOMAIN = 'http://uclptb.com/'
 
 # Begins OPAL Settings you should edit !
 
-OPAL_BRAND_NAME = 'uclptb'
+OPAL_BRAND_NAME = 'elCID - UCLP TB'
 VERSION_NUMBER  = '<0.0.1'
 
 try:
