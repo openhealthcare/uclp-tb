@@ -15,37 +15,19 @@
   <div class="row">
     <div class="col-md-6">
     {% record_panel models.ContactDetails %}
+    {% record_panel models.EnvironmentalTBRiskFactors %}
+    {% record_panel models.MedicalTBRiskFactors %}
+    {% record_panel models.PastMedicalHistory %}
     </div>
     <div class="col-md-6">
     {% record_panel models.ReferralRoute %}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-    {% record_panel models.EnvironmentalTBRiskFactors %}
-    </div>
-    <div class="col-md-6">
-    {% record_panel models.MedicalTBRiskFactors %}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
     {% record_panel models.SymptomComplex %}
-    </div>
-    <div class="col-md-6">
-    {% record_panel models.PastMedicalHistory %}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
+    {% record_panel models.Investigation %}
     {% record_panel models.TBRadiology %}
     </div>
-    <div class="col-md-6">
-    {% record_panel models.Investigation %}
-    </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8 col-md-push-1">
     {% record_timeline models.PatientConsultation "when" %}
     </div>
   </div>
