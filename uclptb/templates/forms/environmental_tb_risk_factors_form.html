@@ -1,6 +1,6 @@
 {% load forms %}
 
-{% checkbox model="problem_of_drug_use" label="history of problem drug use" %}
+{% checkbox model="problem_of_drug_use" label="History of problem drug use" %}
 
 <div ng-show="problem_of_drug_use">
   {% input field="EnvironmentalTBRiskFactors.last_year_of_problem_drug_use" disabled="editing.environmental_tb_risk_factors.current_problem_drug_use" %}
@@ -8,7 +8,7 @@
   <hr>
 </div>
 
-{% checkbox model="problem_of_alcohol_use" label="history of problem alcohold use" %}
+{% checkbox model="problem_of_alcohol_use" label="History of problem alcohold use" %}
 
 <div ng-show="problem_of_alcohol_use">
   {% input field="EnvironmentalTBRiskFactors.last_year_of_alcohol_misuse" disabled="editing.environmental_tb_risk_factors.current_alcohol_misuse" %}
@@ -16,7 +16,7 @@
   <hr>
 </div>
 
-{% checkbox model="history_of_homelessness" label="history of homelessness" %}
+{% checkbox model="history_of_homelessness" label="History of homelessness" %}
 
 <div ng-show="history_of_homelessness">
   {% input field="EnvironmentalTBRiskFactors.last_year_of_homelessness" disabled="editing.environmental_tb_risk_factors.current_homelessness" %}
@@ -24,7 +24,7 @@
   <hr>
 </div>
 
-{% checkbox model="time_spent_in_prison" label="history of prison attendance" %}
+{% checkbox model="time_spent_in_prison" label="History of prison attendance" %}
 
 <div ng-show="time_spent_in_prison">
   {% input field="EnvironmentalTBRiskFactors.last_year_of_prison" disabled="editing.environmental_tb_risk_factors.current_prison_stay" %}
@@ -38,5 +38,5 @@
     <h4>History of Smoking</h4>
   </div>
 </div>
-  {% checkbox field="EnvironmentalTBRiskFactors.history_of_smoking_active" label="active" %}
-  {% checkbox field="EnvironmentalTBRiskFactors.history_of_smoking_passive" label="passive" %}
+  {% checkbox field="EnvironmentalTBRiskFactors.history_of_smoking_active" label="Active" %}
+  {% checkbox field="EnvironmentalTBRiskFactors.history_of_smoking_passive" label="Passive" %}
