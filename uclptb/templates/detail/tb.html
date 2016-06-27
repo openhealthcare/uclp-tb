@@ -8,6 +8,7 @@
     </div>
     <div class="panel-body text-center">
         <a class="btn btn-primary" href="/pathway/#/tb_screening/[[ episode.id ]]">TB Screening</a>
+        <a class="btn btn-primary" href="/pathway/#/contact_tracing/[[ episode.id ]]">Contact Tracing</a>
     </div>
   </div>
 </div
@@ -18,11 +19,13 @@
     {% record_panel models.EnvironmentalTBRiskFactors %}
     {% record_panel models.MedicalTBRiskFactors %}
     {% record_panel models.PastMedicalHistory %}
+    {% record_panel models.ContactTracing editable=False %}
     </div>
     <div class="col-md-6">
     {% record_panel models.ReferralRoute %}
     {% record_panel models.SymptomComplex %}
     {% record_panel models.Investigation %}
+    {% record_panel models.Treatment %}
     {% record_panel models.TBRadiology %}
     </div>
   </div>

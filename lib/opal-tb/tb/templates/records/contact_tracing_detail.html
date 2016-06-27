@@ -1,0 +1,10 @@
+<a href="/#/patient/[[ item.patient_id ]]">
+  [[ item.first_name ]]
+  [[ item.surname ]]
+  <div ng-show="item.date_of_birth">
+    ([[ item.date_of_birth | shortDate ]])
+  </div>
+  <div ng-show="item.hospital_number">
+    - [[ item.hospital_number ]]
+  </div>
+</a>
