@@ -199,7 +199,6 @@ LOGGING = {
 # Begins custom settings
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-AUTOCOMPLETE_SEARCH = True
 
 DATE_FORMAT = 'd/m/Y'
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
