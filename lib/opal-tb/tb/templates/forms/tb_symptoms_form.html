@@ -1,0 +1,14 @@
+{% load forms %}
+<div class="row">
+  <div ng-repeat="column in columns" class="col-md-6">
+    <div ng-repeat="symptomField in column" class="form-group">
+      <label class="control-label col-sm-6">[[ tbSymptomFields[symptomField] ]]</label>
+      <div class="col-sm-6">
+        <label class="radio-inline" ng-repeat="val in ['Yes', 'No']">
+          <input ng-change="updateSymptoms(symptomField)" ng-value="val === 'Yes'" type="radio" ng-model="editing.tb_symptoms[symptomField]">
+          [[ val ]]
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

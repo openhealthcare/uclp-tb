@@ -1,0 +1,12 @@
+<div class="form-horizontal">
+  {% load forms %}
+  {% select autofocus change="updateTbSymptoms()" field="SymptomComplex.symptoms" multiple=True tagging=False help_text="If a symptom isn't in the list, add it in the details box" %}
+  {% select field="SymptomComplex.duration" lookuplist="['3 days or less','4-10 days','11-21 days','22 days to 3 months','over 3 months']" %}
+  {% textarea field="SymptomComplex.details" %}
+  <hr />
+  <h4 class="text-center content-offset-below-20">
+    Please confirm if the patient had the following symptoms
+  </h4>
+
+  {% include models.TBSymptoms.get_form_template %}
+</div>

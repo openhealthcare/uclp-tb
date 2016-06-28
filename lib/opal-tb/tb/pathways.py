@@ -17,6 +17,13 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
     display_name = "TB Screening"
     slug = "tb_screening"
     steps = (
+
+        Step(
+            template_url="/templates/pathway/tbsymptoms.html",
+            title="Symptoms",
+            icon=uclptb_models.SymptomComplex.get_icon(),
+            controller_class="TBSymptomsFormCtrl"
+        ),
         uclptb_models.Demographics,
         # inline first name and surname hide middle name
 
@@ -31,7 +38,7 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
         tb_models.MedicalTBRiskFactors,
         # inline check boxes
 
-        MultSaveStep(model=uclptb_models.SymptomComplex),
+        Step(model=uclptb_models.SymptomComplex),
         MultSaveStep(model=uclptb_models.PastMedicalHistory),
 
         # combine the 2 into one custom step
