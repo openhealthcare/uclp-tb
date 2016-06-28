@@ -38,7 +38,6 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
         tb_models.MedicalTBRiskFactors,
         # inline check boxes
 
-        Step(model=uclptb_models.SymptomComplex),
         MultSaveStep(model=uclptb_models.PastMedicalHistory),
 
         # combine the 2 into one custom step
