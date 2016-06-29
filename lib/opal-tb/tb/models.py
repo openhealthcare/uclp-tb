@@ -70,21 +70,3 @@ class TBRadiology(models.EpisodeSubrecord):
     consolidation = fields.NullBooleanField()
     cavity = fields.NullBooleanField()
     lymphadenopathy = opal_fields.ForeignKeyOrFreeText(Lymphadenopathy)
-
-
-class TBSymptoms(models.EpisodeSubrecord):
-    """ with tb some symptoms are so
-        important that we need to make sure
-        they're caught
-    """
-    _title = "TB Symptoms"
-
-    cough = fields.BooleanField()
-    night_sweats = fields.BooleanField()
-    weight_loss = fields.BooleanField()
-    fatigue = fields.BooleanField()
-    fever = fields.BooleanField()
-    chills = fields.BooleanField()
-    loss_of_appetite = fields.BooleanField()
-    weight_loss = fields.BooleanField()
-    haemoptysis = fields.BooleanField()

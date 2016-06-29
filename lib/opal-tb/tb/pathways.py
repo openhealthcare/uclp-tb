@@ -17,6 +17,12 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
     display_name = "TB Screening"
     slug = "tb_screening"
     steps = (
+        uclptb_models.Demographics,
+        # inline first name and surname hide middle name
+
+        uclptb_models.ContactDetails,
+
+        uclptb_models.ReferralRoute,
 
         Step(
             template_url="/templates/pathway/tbsymptoms.html",
@@ -24,12 +30,6 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
             icon=uclptb_models.SymptomComplex.get_icon(),
             controller_class="TBSymptomsFormCtrl"
         ),
-        uclptb_models.Demographics,
-        # inline first name and surname hide middle name
-
-        uclptb_models.ContactDetails,
-
-        uclptb_models.ReferralRoute,
 
         # combine the 2 into one custom step
         tb_models.EnvironmentalTBRiskFactors,
