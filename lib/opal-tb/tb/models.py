@@ -98,23 +98,6 @@ class TBRadiology(models.EpisodeSubrecord):
     lymphadenopathy = opal_fields.ForeignKeyOrFreeText(Lymphadenopathy)
 
 
-"""
-    so we have contact tracing,
-    we want to be able to search for that
-    patient and have an episode created for that
-    patient, we want to be able to
-    see for that patient all the people who
-    are tracing them
-
-    so we want a relationship, but how do we
-    know to wipe this person off the list
-
-    we don't we'll just get any episode of tb
-    that has not ended and add in that
-    there should only be 1 instance of
-    having tb at one time.
-"""
-
 class ContactTracing(models.EpisodeSubrecord):
     _icon = 'fa fa-group'
     contact_episode = fields.ForeignKey(
@@ -186,17 +169,6 @@ class ContactTracing(models.EpisodeSubrecord):
 
     @transaction.atomic()
     def update_from_dict(self, data, user, *args, **kwargs):
-        """
-            user will only be able to do this once, otherwise
-            it becomes a click through to their episode,
-
-            but what if its the wrong episode, they get an option
-            in a modal to say, not this patient. The front end
-            can handle the deletion of the existing contact
-            and creation of a new Contract Tracing field.
-        """
-
-
         patient, created = self.get_or_create_patient(data, user)
         tb_episode = None
 
