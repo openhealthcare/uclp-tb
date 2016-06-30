@@ -1,0 +1,25 @@
+{% load forms %}
+<div class="form-horizontal">
+  {% load forms %}
+  {% select autofocus change="updateTbSymptoms()" field="SymptomComplex.symptoms" multiple=True tagging=False help_text="If a symptom isn't in the list, add it in the details box" %}
+  {% select field="SymptomComplex.duration" lookuplist="['3 days or less','4-10 days','11-21 days','22 days to 3 months','over 3 months']" %}
+  {% textarea field="SymptomComplex.details" %}
+  <hr />
+  <h4 class="text-center content-offset-below-20">
+    Please confirm if the patient had the following symptoms
+  </h4>
+
+  <div class="row">
+    <div ng-repeat="column in columns" class="col-md-6">
+      <div ng-repeat="symptomField in column" class="form-group">
+        <label class="control-label col-sm-6">[[ tbSymptomFields[symptomField] ]]</label>
+        <div class="col-sm-6">
+          <label class="radio-inline" ng-repeat="val in ['Yes', 'No']">
+            <input ng-change="updateSymptoms(symptomField)" ng-value="val === 'Yes'" type="radio" ng-model="tbSymptom[symptomField]">
+            [[ val ]]
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

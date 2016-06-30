@@ -32,12 +32,13 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
             model=uclptb_models.Demographics,
             template_url="/templates/personal_information_form.html",
             controller_class="PersonalInformationCtrl"
+
         ),
         Step(
             title="Presentation & History",
             model=uclptb_models.SymptomComplex,
             template_url="/templates/presentation_pathway.html",
-            controller_class="PersonalInformationCtrl"
+            controller_class="TBSymptomsFormCtrl"
         ),
         # # # combine the 2 into one custom step
         # tb_models.EnvironmentalTBRiskFactors,
