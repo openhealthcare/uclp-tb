@@ -1,0 +1,17 @@
+{% load forms %}
+
+<h4 class="text-center">Referral</h4>
+<div class="form-horizontal">
+  {% datepicker field="ReferralRoute.date_of_referral" %}
+  {% select field="ReferralRoute.referral_type" %}
+</div>
+<hr />
+<h4 class="text-center">Demographics</h4>
+<div class="form-horizontal">
+  {% include models.Demographics.get_form_template %}
+</div>
+  <hr />
+<h4 class="text-center">Contact Details</h4>
+<div class="form-horizontal">
+  {% include models.ContactDetails.get_form_template %}
+</div>

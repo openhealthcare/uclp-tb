@@ -14,6 +14,7 @@ class TbPlugin(plugins.OpalPlugin):
         # Add your javascripts here!
         'opal.controllers': [
             'js/tb/controllers/contact_tracing_form.js',
+            'js/tb/controllers/personal_information.js',
             # 'js/tb/services/larry.js',
         ]
     }

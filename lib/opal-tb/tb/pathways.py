@@ -27,33 +27,40 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
     display_name = "TB Screening"
     slug = "tb_screening"
     steps = (
-        uclptb_models.Demographics,
-        # inline first name and surname hide middle name
-
-        tb_models.ContactDetails,
-
-        uclptb_models.ReferralRoute,
-
-        # combine the 2 into one custom step
-        tb_models.EnvironmentalTBRiskFactors,
-        # this needs display logic work
-
-        tb_models.MedicalTBRiskFactors,
-        # inline check boxes
-
-        MultSaveStep(model=uclptb_models.SymptomComplex),
-        MultSaveStep(model=uclptb_models.PastMedicalHistory),
-
-        # combine the 2 into one custom step
-        MultSaveStep(
-            model=uclptb_models.Investigation,
-            controller_class="InvestigationFormCtrl"
+        Step(
+            title="Personal Information",
+            model=uclptb_models.Demographics,
+            template_url="/templates/personal_information_form.html",
+            controller_class="PersonalInformationCtrl"
         ),
+        Step(
+            title="Presentation & History",
+            model=uclptb_models.SymptomComplex,
+            template_url="/templates/presentation_pathway.html",
+            controller_class="PersonalInformationCtrl"
+        ),
+        # # # combine the 2 into one custom step
+        # tb_models.EnvironmentalTBRiskFactors,
+        # # this needs display logic work
+        #
+        # tb_models.MedicalTBRiskFactors,
+        # # inline check boxes
+        #
+        # MultSaveStep(model=uclptb_models.SymptomComplex),
+        # MultSaveStep(model=uclptb_models.PastMedicalHistory),
+        #
+        # # combine the 2 into one custom step
+        # MultSaveStep(
+        #     model=uclptb_models.Investigation,
+        #     controller_class="InvestigationFormCtrl"
+        # ),
         # Radiology
-        tb_models.TBRadiology,
+        Step(
+            model=tb_models.TBRadiology,
+            title="Tests",
+            template_url="/templates/tests_pathway_form.html",
+        ),
+        uclptb_models.PatientConsultation
 
-        MultSaveStep(
-            model=uclptb_models.PatientConsultation
-        )
         # PatientConsultation (in a timeline on the patient detail view)
     )
