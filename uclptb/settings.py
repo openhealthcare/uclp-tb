@@ -255,6 +255,7 @@ DEFAULT_DOMAIN = 'http://uclptb.com/'
 
 OPAL_BRAND_NAME = 'elCID - UCLP TB'
 VERSION_NUMBER  = '<0.0.1'
+AUTOCOMPLETE_SEARCH = True
 
 try:
     from local_settings import *
