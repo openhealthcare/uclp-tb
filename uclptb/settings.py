@@ -199,6 +199,7 @@ LOGGING = {
 # Begins custom settings
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+AUTOCOMPLETE_SEARCH = True
 
 DATE_FORMAT = 'd/m/Y'
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
@@ -238,7 +239,7 @@ OPAL_LOG_OUT_DURATION = OPAL_LOG_OUT_MINUTES*60*1000
 # OPAL_EXTRA_APPLICATION = ''
 
 INTEGRATING = False
-#
+#AUTOCOMPLETE_SEARCH = True
 # Uncomment these if you are integrating with other upstream systems via
 # Glossolalia (http://github.com/openhealthcare/glossolalia)
 #
@@ -255,6 +256,7 @@ DEFAULT_DOMAIN = 'http://uclptb.com/'
 
 OPAL_BRAND_NAME = 'elCID - UCLP TB'
 VERSION_NUMBER  = '<0.0.1'
+AUTOCOMPLETE_SEARCH = True
 
 try:
     from local_settings import *
