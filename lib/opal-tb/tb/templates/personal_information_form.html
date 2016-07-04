@@ -13,5 +13,10 @@
   <hr />
 <h4 class="text-center">Contact Details</h4>
 <div class="form-horizontal">
-  {% include models.ContactDetails.get_form_template %}
+  {% input label="Address line 1" model="editing.contact_details.address_line1" %}
+  {% input label="Address line 2" model="editing.contact_details.address_line2" %}
+  {% input label="City" model="editing.contact_details.city" %}
+  {% input label="Post Code" model="editing.contact_details.post_code" %}
+  {% input label="Telephone 1" model="editing.contact_details.telephone1" %}
+  {% input label="Telephone 2" model="editing.contact_details.telephone2" %}
 </div>
