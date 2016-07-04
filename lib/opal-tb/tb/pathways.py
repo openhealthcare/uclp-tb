@@ -13,6 +13,16 @@ class NextTBStage(ModalPathway):
     steps = (Demographics,)
 
 
+class TBContactTracing(RedirectsToPatientMixin, Pathway):
+    display_name = "Contact Tracing"
+    slug = "contact_tracing"
+    steps = (
+        MultSaveStep(
+            model=tb_models.ContactTracing,
+            controller_class="ContactTracingFormCtrl"
+        ),
+    )
+
 class TBScreening(RedirectsToPatientMixin, Pathway):
     display_name = "TB Screening"
     slug = "tb_screening"
@@ -20,7 +30,7 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
         uclptb_models.Demographics,
         # inline first name and surname hide middle name
 
-        uclptb_models.ContactDetails,
+        tb_models.ContactDetails,
 
         uclptb_models.ReferralRoute,
 

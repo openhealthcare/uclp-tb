@@ -16,6 +16,7 @@ class TbPlugin(plugins.OpalPlugin):
             "js/tb/controllers/tb_symptoms_form.js",
             # 'js/tb/app.js',
             # 'js/tb/controllers/larry.js',
+            'js/tb/controllers/contact_tracing_form.js',
             # 'js/tb/services/larry.js',
         ]
     }
