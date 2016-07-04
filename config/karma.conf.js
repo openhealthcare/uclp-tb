@@ -1,13 +1,38 @@
 module.exports = function(config){
+
+    var browsers, basePath, coverageReporter;
+
+    if(process.env.TRAVIS){
+        browsers = ["Firefox"];
+        basePath = '/home/travis/virtualenv/python2.7/src/opal/opal/static/js';
+        coverageReporter = {
+            type: 'lcovonly', // lcov or lcovonly are required for generating lcov.info files
+            dir: __dirname + '/../coverage/',
+        };
+    }
+    else{
+        browsers = ['PhantomJS'];
+        basePath = '../../opal/opal/static/js';
+        coverageReporter = {
+            type : 'html',
+            dir : __dirname + '/../htmlcov/js/'
+        };
+    }
+
+    var preprocessors = {};
+    preprocessors[__dirname + '/../uclptb/assets/js/uclptb/*'] = 'coverage';
+    preprocessors[__dirname + '/../tb/static/js/tb/controllers/*'] = 'coverage';
+
+
+
     config.set({
         frameworks: ['jasmine'],
-        browsers: ['Firefox'],
-        basePath:  '/home/travis/virtualenv/python2.7/src/opal/opal/static/js',
+        browsers: browsers,
+        basePath: basePath,
 
         files: [
             //JASMINE,
             //JASMINE_ADAPTER,
-            "js/lib/utils/json3.min.js",
             "lib/bower_components/angular/angular.js",
             "lib/bower_components/angular-route/angular-route.js",
             "lib/bower_components/angular-resource/angular-resource.js",
@@ -51,15 +76,22 @@ module.exports = function(config){
             'opal/controllers/*.js',
             // 'opal/app.js',
             // '../../../../elcid/elcid/assets/js/elcid/*.js',
-            __dirname+'/../pathway/static/js/pathway/*.js',
-            __dirname+'/../pathway/static/js/pathway/controllers/*.js',
-            __dirname+'/../pathway/static/js/pathway/services/*.js',
-            __dirname+'/../pathway/static/js/test/*.js',
+            __dirname + '/../../opal-pathway/pathway/static/js/pathway/controllers/*.js',
+            __dirname + '/../../opal-pathway/pathway/static/js/pathway/services/*.js',
+            __dirname + '/../tb/static/js/tb/controllers/*.js',
 
             // 'opaltest/*.js',
+            __dirname + '/../tb/static/js/tbtest/*.js'
             // '../../../../elcid/elcid/assets/js/elcidtest/*.js',
 
         ],
+
+        preprocessors: preprocessors,
+
+        reporters: ['progress', 'coverage'],
+        autoWatch: true,
+
+        coverageReporter: coverageReporter,
 
         // Stolen from http://oligofren.wordpress.com/2014/05/27/running-karma-tests-on-browserstack/
         browserDisconnectTimeout : 10000, // default 2000
@@ -68,5 +100,5 @@ module.exports = function(config){
         captureTimeout : 4*60*1000, //default 60000
 
 
-    })
+    });
 }

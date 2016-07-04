@@ -319,6 +319,7 @@
       "name": "Lopinavir",
       "synonyms": []
     },
+
     {
       "name": "Malarone",
       "synonyms": []
@@ -7311,6 +7312,10 @@
     },
     {
       "name": "Headache",
+      "synonyms": []
+    },
+    {
+      "name": "Loss of Appetite",
       "synonyms": []
     },
     {

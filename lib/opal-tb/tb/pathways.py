@@ -34,6 +34,13 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
 
         uclptb_models.ReferralRoute,
 
+        Step(
+            template_url="/templates/pathway/tbsymptoms.html",
+            title="Symptoms",
+            icon=uclptb_models.SymptomComplex.get_icon(),
+            controller_class="TBSymptomsFormCtrl"
+        ),
+
         # combine the 2 into one custom step
         tb_models.EnvironmentalTBRiskFactors,
         # this needs display logic work
@@ -41,7 +48,6 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
         tb_models.MedicalTBRiskFactors,
         # inline check boxes
 
-        MultSaveStep(model=uclptb_models.SymptomComplex),
         MultSaveStep(model=uclptb_models.PastMedicalHistory),
 
         # combine the 2 into one custom step
