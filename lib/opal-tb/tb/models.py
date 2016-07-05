@@ -202,3 +202,16 @@ class ContactTracing(models.EpisodeSubrecord):
         result.update(self.contact_episode.patient.demographics_set.first().to_dict(user))
         result.update(self.contact_episode.patient.contactdetails_set.first().to_dict(user))
         return result
+
+
+class SocialHistory(models.EpisodeSubrecord):
+    _is_singleton = True
+    _title = 'Social History'
+    _icon = 'fa fa-clock-o'
+
+    notes             = fields.TextField(blank=True, null=True)
+    drinking          = fields.CharField(max_length=250, blank=True, null=True)
+    alcohol_dependent = fields.NullBooleanField()
+    smoking           = fields.CharField(max_length=250, blank=True, null=True)
+    occupation        = fields.TextField(blank=True, null=True)
+    no_fixed_abode    = fields.NullBooleanField()
