@@ -40,9 +40,9 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
             template_url="/templates/presentation_pathway.html",
             controller_class="TBSymptomsFormCtrl"
         ),
-        Step(
-            model=tb_models.TBTests,
-        ),
+        # Step(
+        #     model=tb_models.TBTests,
+        # ),
         uclptb_models.PatientConsultation
 
         # PatientConsultation (in a timeline on the patient detail view)
