@@ -1,14 +1,11 @@
 """
 tb models.
 """
-import datetime
-
 from django.db import models as fields
 from django.db import models, transaction
 
 from opal import models
-from opal.core import fields as opal_fields
-from opal.core import lookuplists, subrecords
+from opal.core import subrecords
 
 from tb.episode_categories import TBEpisode
 
@@ -84,18 +81,21 @@ class MedicalTBRiskFactors(models.PatientSubrecord):
     other_immunosuppressive_drugs = fields.TextField()
 
 
-class Lymphadenopathy(lookuplists.LookupList):
-    pass
-
-
-class TBRadiology(models.EpisodeSubrecord):
-    _title = "Radiology"
+class TBTests(models.EpisodeSubrecord):
+    _is_singleton = True
+    _title = "Tests"
     _icon = 'fa fa-laptop'
 
-    pleural_effusion = fields.NullBooleanField()
-    consolidation = fields.NullBooleanField()
-    cavity = fields.NullBooleanField()
-    lymphadenopathy = opal_fields.ForeignKeyOrFreeText(Lymphadenopathy)
+    sputum_1 = fields.BooleanField(default=False)
+    sputum_2 = fields.BooleanField(default=False)
+    sputum_3 = fields.BooleanField(default=False)
+    sputum_pcr = fields.BooleanField(default=False)
+    fna = fields.BooleanField(default=False)
+    biopsy = fields.BooleanField(default=False)
+    qftt_spot = fields.BooleanField(default=False)
+    ct_scan = fields.BooleanField(default=False)
+    routine_blood_tests = fields.BooleanField(default=False)
+    chest_xray = fields.BooleanField(default=False)
 
 
 class ContactTracing(models.EpisodeSubrecord):
