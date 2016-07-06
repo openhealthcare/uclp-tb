@@ -10,3 +10,7 @@ class TBReferral(ReferralRoute):
 
     def get_success_link(self, episode):
         return '/#/patient/%s' % episode.patient.id
+
+    def post_create(self, episode, user):
+        episode.stage = 'Under Investigation'
+        episode.save()
