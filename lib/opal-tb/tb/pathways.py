@@ -31,8 +31,6 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
             title="Personal Information",
             model=uclptb_models.Demographics,
             template_url="/templates/personal_information_form.html",
-            controller_class="PersonalInformationCtrl"
-
         ),
         Step(
             title="Presentation & History",
