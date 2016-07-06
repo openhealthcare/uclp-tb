@@ -105,36 +105,28 @@ class ContactTracing(models.EpisodeSubrecord):
         related_name="contract_traced"
     )
 
-    def get_or_create_patient(self, data, user):
+    @classmethod
+    def build_field_schema(cls):
         Demographics = subrecords.get_subrecord_from_model_name('Demographics')
-        demographics_fields = Demographics._get_fieldnames_to_serialize()
-        demographics_data = {
-            i: v for i, v in data.iteritems() if v and i in demographics_fields
-        }
+        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
+        schema = Demographics.build_field_schema()
+        schema.extend(ContactDetails.build_field_schema())
+        return schema
 
-        filter_fields = [
-            "first_name",
-            "surname",
-            "hospital_number",
-            "nhs_number"
-        ]
-
-        filter_args = {
-            i: v for i, v in demographics_data.iteritems() if v and i in filter_fields
-        }
-
-        demographics = Demographics.objects.filter(
-            **filter_args
-        ).first()
-
-        if demographics:
-            created = False
-            patient = demographics.patient
+    def get_or_create_patient(self, data, user):
+        if "patient_id" in data:
+            patient = Patient.objects.get(id=data["patient_id"])
         else:
             created = True
             patient = models.Patient.objects.create()
-            demographics = patient.demographics_set.first()
-            demographics.update_from_dict(demographics_data, user)
+
+        Demographics = subrecords.get_subrecord_from_model_name('Demographics')
+        demographics = patient.demographics_set.first()
+        demographics_fields = Demographics._get_fieldnames_to_serialize()
+        demographics_data = {
+            i: v for i, v in data.iteritems() if v and i in demographics_fields and not i == "id"
+        }
+        demographics.update_from_dict(demographics_data, user)
 
         return patient, created
 
@@ -149,7 +141,7 @@ class ContactTracing(models.EpisodeSubrecord):
 
         if not contact_details.updated:
             contact_detail_data = {
-                i: v for i, v in data.iteritems() if i in contact_details_fields
+                i: v for i, v in data.iteritems() if i in contact_details_fields and not i == "id"
             }
 
             contact_details.update_from_dict(contact_detail_data, user)
@@ -201,6 +193,7 @@ class ContactTracing(models.EpisodeSubrecord):
 
         result.update(self.contact_episode.patient.demographics_set.first().to_dict(user))
         result.update(self.contact_episode.patient.contactdetails_set.first().to_dict(user))
+        result["id"] = self.id
         return result
 
 
