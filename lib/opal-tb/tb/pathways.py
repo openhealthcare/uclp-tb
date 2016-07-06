@@ -24,8 +24,8 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
     )
 
 class TBScreening(RedirectsToPatientMixin, Pathway):
-    display_name = "TB Screening"
-    slug = "tb_screening"
+    display_name = "TB Assessment"
+    slug = "tb_assessment"
     steps = (
         Step(
             title="Personal Information",
