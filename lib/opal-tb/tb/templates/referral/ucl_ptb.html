@@ -1,0 +1,10 @@
+{% extends 'referral/referral.html' %}
+{% block success_title %}
+  <i class="fa fa-check"></i>
+  [[ route.past_verb ]]
+  <a href="[[ success_link ]]">
+    [[ patient.demographics[0].first_name ]] [[ patient.demographics[0].surname]]
+  </a>
+  to
+  [[ route.name ]].
+{% endblock %}
