@@ -18,6 +18,6 @@ after_success:
  - cat coverage/coverage.json
  - coveralls debug --merge=coverage/coverage.json
  - coveralls --merge=coverage/coverage.json
-  - coveralls
+#  - coveralls
 notifications:
   slack: ohcuk:6spaME3CB7f2PGrMAcklYWqp
