@@ -262,3 +262,15 @@ try:
     from local_settings import *
 except:
     pass
+
+
+if 'test' in sys.argv:
+    INSTALLED_APPS += ('opal.tests',)
+    PASSWORD_HASHERS = (
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+    )
+    MIGRATION_MODULES = {
+        'opal': 'opal.nomigrations',
+        'tb': 'tb.nomigrations',
+        'uclptb': 'uclptb.nomigrations',
+    }
