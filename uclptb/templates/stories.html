@@ -1,0 +1,8 @@
+{% extends 'accepting.html' %}
+{% load stories %}
+
+{% block stories %}
+  {% story 'Add Patient' 'acceptance/addpatient' %}
+  {% story 'Assessment' 'acceptance/assessment' %}
+  {% story 'Contact Tracing' 'acceptance/contact' %}
+{% endblock %}
