@@ -55,30 +55,30 @@ class EnvironmentalTBRiskFactors(models.PatientSubrecord):
     recent_travel_to_high_risk_area = fields.NullBooleanField()
 
 
-class MedicalTBRiskFactors(models.PatientSubrecord):
+# class MedicalTBRiskFactors(models.PatientSubrecord):
+class TBRiskFactors(models.EpisodeSubrecord):
     _is_singleton = True
-    _title = "Medical Risk Factors"
-    _icon = 'fa fa-h-square'
+    _title = "TB Risk Factors"
+    _icon = 'fa fa-warning'
 
-
-    mental_health_history = fields.NullBooleanField()
-    previous_tb = fields.DateField(null=True, blank=True)
-
-    hiv_positive = fields.NullBooleanField()
-    solid_organ_transplantation = fields.NullBooleanField()
-
-    haemotological_malignancy = fields.NullBooleanField()
-    jejunoileal_bypass = fields.NullBooleanField()
-    gastrectomy = fields.NullBooleanField()
-    diabetes = fields.NullBooleanField()
-
-    silicosis = fields.NullBooleanField()
-    chronic_renal = fields.NullBooleanField()
-
-    failure_haemodialysis = fields.NullBooleanField()
-
+    hiv_status               = fields.CharField(max_length=250, blank=True, null=True)
+    diabetes                 = fields.CharField(max_length=250, blank=True, null=True)
+    corticosteroid_therapy   = fields.NullBooleanField()
     anti_tnf_alpha_treatment = fields.NullBooleanField()
-    other_immunosuppressive_drugs = fields.TextField()
+    chronic_lung_disease     = fields.NullBooleanField()
+
+    # mental_health_history = fields.NullBooleanField()
+    # previous_tb = fields.DateField(null=True, blank=True)
+    # hiv_positive = fields.NullBooleanField()
+    # solid_organ_transplantation = fields.NullBooleanField()
+    # haemotological_malignancy = fields.NullBooleanField()
+    # jejunoileal_bypass = fields.NullBooleanField()
+    # gastrectomy = fields.NullBooleanField()
+    # diabetes = fields.NullBooleanField()
+    # silicosis = fields.NullBooleanField()
+    # chronic_renal = fields.NullBooleanField()
+    # failure_haemodialysis = fields.NullBooleanField()
+    # other_immunosuppressive_drugs = fields.TextField()
 
 
 class TBTests(models.EpisodeSubrecord):

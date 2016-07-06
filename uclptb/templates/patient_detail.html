@@ -1,0 +1,21 @@
+{% extends 'patient_detail_base.html' %}
+{% load forms %}
+{% load panels %}
+{% block pre_demographics %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3>
+        {% icon "fa-bolt" %}
+        Actions
+      </h3>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <a class="btn btn-primary col-md-8" href="/pathway/#/tb_assessment/[[ episode.id ]]">Initial TB Assessment</a>
+      </li>
+      <li class="list-group-item">
+        <a class="btn btn-primary col-md-8" href="/pathway/#/contact_tracing/[[ episode.id ]]">Contact Tracing</a>
+      </li>
+    </ul>
+  </div>
+{% endblock %}
