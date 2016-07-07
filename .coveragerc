@@ -1,13 +1,16 @@
 [run]
 source =
        uclptb
+       tb
+
 
 omit =
     */migrations/*
+    tb/tests/*
     uclptb/tests/*
     uclptb/wsgi*
     uclptb/settings*
-    
+
 [report]
 
 exclude_lines =

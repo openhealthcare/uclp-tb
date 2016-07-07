@@ -76,8 +76,9 @@ module.exports = function(config){
             'opal/controllers/*.js',
             // 'opal/app.js',
             // '../../../../elcid/elcid/assets/js/elcid/*.js',
-            __dirname + '/../../opal-pathway/pathway/static/js/pathway/controllers/*.js',
-            __dirname + '/../../opal-pathway/pathway/static/js/pathway/services/*.js',
+            '../../../../opal-pathway/pathway/static/js/pathway/controllers/*.js',
+            '../../../../opal-pathway/pathway/static/js/pathway/services/*.js',
+
             __dirname + '/../tb/static/js/tb/controllers/*.js',
 
             // 'opaltest/*.js',
