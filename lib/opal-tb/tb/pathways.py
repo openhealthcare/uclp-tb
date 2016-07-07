@@ -23,7 +23,35 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
         ),
     )
 
-class TBScreening(RedirectsToPatientMixin, Pathway):
+class TBTreatment(RedirectsToPatientMixin, Pathway):
+    display_name = "TB Treatment"
+    slug = "tb_treatment"
+    steps = (
+        Step(
+            title="TB Type",
+            icon="fa fa-tag",
+            api_name="stage",
+            template_url="/templates/tb_type.html",
+            controller_class="TBTypeFormCtrl",
+        ),
+        Step(
+            title="Treatment",
+            icon="fa fa-medkit",
+            template_url="/templates/tb_treatment.html",
+            controller_class="BloodCultureFormCtrl",
+        )
+    )
+
+    def save(self, data, user):
+        stage = data.pop('stage')[0]
+        episode = self.episode
+        patient = super(TBTreatment, self).save(data, user)
+        episode.stage = stage
+        episode.save()
+        return patient
+
+
+class TBAssessment(RedirectsToPatientMixin, Pathway):
     display_name = "TB Assessment"
     slug = "tb_assessment"
     steps = (

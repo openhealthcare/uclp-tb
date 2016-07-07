@@ -1,0 +1,21 @@
+<div class="form-horizontal">
+  <h4 class="text-center">{{ models.Diagnosis.get_display_name }}</h4>
+  {% include models.Diagnosis.get_form_template %}
+</div>
+<hr />
+<div class="form-horizontal">
+  <h4 class="text-center">{{ models.Treatment.get_display_name }}</h4>
+  {% include models.Treatment.get_form_template %}
+</div>
+<hr />
+<div class="form-horizontal">
+  <h4 class="text-center">{{ models.BloodCulture.get_display_name }}</h4>
+  {% include models.BloodCulture.get_form_template %}
+</div>
+<div ng-show="editing.stage === 'Active TB'">
+  <hr />
+  <div class="form-horizontal">
+    <h4 class="text-center">{{ models.NHSEnglandNotification.get_display_name }}</h4>
+    {% include models.NHSEnglandNotification.get_form_template %}
+  </div>
+</div>
