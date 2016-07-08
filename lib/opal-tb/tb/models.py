@@ -133,17 +133,6 @@ class ContactTracing(models.EpisodeSubrecord):
 
         return schema
 
-    def check_updateable(self, some_data, some_model):
-        previous_updated = some_model.updated
-        if previous_updated:
-            if not some_data["updated"]:
-                raise exceptions.ConsistencyError
-            previous_updated = previous_updated.replace(microsecond=0)
-            now_updated = models.deserialize_datetime(some_data["updated"])
-            if  now_updated < previous_updated:
-                raise exceptions.ConsistencyError
-
-
     def get_or_create_patient(self, data, user):
         if self.contact_episode_id:
             created = False
@@ -151,17 +140,13 @@ class ContactTracing(models.EpisodeSubrecord):
         else:
             created = True
             patient = models.Patient.objects.create()
-
-        Demographics = subrecords.get_subrecord_from_model_name('Demographics')
-        demographics = patient.demographics_set.first()
-        demographics_fields = Demographics._get_fieldnames_to_serialize()
-        demographics_data = {
-            i: v for i, v in data.iteritems() if i in demographics_fields and not i == "id" and not i == "patient_id"
-        }
-
-        self.check_updateable(demographics_data, demographics)
-        demographics_data["consistency_token"] = demographics.consistency_token
-        demographics.update_from_dict(demographics_data, user)
+            Demographics = subrecords.get_subrecord_from_model_name('Demographics')
+            demographics = patient.demographics_set.first()
+            demographics_fields = Demographics._get_fieldnames_to_serialize()
+            demographics_data = {
+                i: v for i, v in data.iteritems() if i in demographics_fields and not i == "id" and not i == "patient_id"
+            }
+            demographics.update_from_dict(demographics_data, user)
 
         return patient, created
 
@@ -176,9 +161,6 @@ class ContactTracing(models.EpisodeSubrecord):
         contact_detail_data = {
             i: v for i, v in data.iteritems() if i in contact_details_fields and not i == "id" and not i == "patient_id"
         }
-
-        self.check_updateable(contact_detail_data, contact_details)
-        contact_detail_data["consistency_token"] = contact_details.consistency_token
         contact_details.update_from_dict(contact_detail_data, user)
 
     def get_episode(self, patient):
@@ -199,15 +181,10 @@ class ContactTracing(models.EpisodeSubrecord):
         patient, created = self.get_or_create_patient(data, user)
         tb_episode = None
 
-        if not created:
-            tb_episode = self.get_episode(patient)
+        if created:
+            self.update_contact_details(patient, data, user)
+            self.contact_episode = tb_episode = self.create_tb_episode(patient)
 
-        self.update_contact_details(patient, data, user)
-
-        if not tb_episode:
-            tb_episode = self.create_tb_episode(patient)
-
-        self.contact_episode = tb_episode
         self.set_created_by_id(data, user)
         self.set_updated_by_id(data, user)
         self.set_updated(data, user)
@@ -220,10 +197,9 @@ class ContactTracing(models.EpisodeSubrecord):
             of patient, contact details and
             episode stage
         """
-        result = super(ContactTracing, self).to_dict(user)
-        result.update(self.contact_episode.patient.demographics_set.first().to_dict(user))
+        result = self.contact_episode.patient.demographics_set.first().to_dict(user)
         result.update(self.contact_episode.patient.contactdetails_set.first().to_dict(user))
-        result["id"] = self.id
+        result.update(super(ContactTracing, self).to_dict(user))
         result["stage"] = self.contact_episode.stage
         return result
 
