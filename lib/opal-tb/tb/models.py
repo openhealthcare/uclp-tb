@@ -227,7 +227,7 @@ def get_for_lookup_list(model, values):
         models.Q(synonyms__name__in=values, synonyms__content_type=ct)
     )
 
-class NHSEnglandNotification(models.EpisodeSubrecord):
+class PHEEnglandNotification(models.EpisodeSubrecord):
     who = fields.CharField(max_length=250, blank=True, null=True)
     when = fields.DateField(null=True, blank=True)
 
