@@ -1,3 +1,7 @@
+"""
+OPAL Pathway definitions for the re-usable TB module.
+"""
+from pathway import pathways
 from pathway.pathways import (
     ModalPathway, Pathway, RedirectsToPatientMixin, MultSaveStep, Step
 )
@@ -45,4 +49,15 @@ class TBScreening(RedirectsToPatientMixin, Pathway):
         uclptb_models.PatientConsultation
 
         # PatientConsultation (in a timeline on the patient detail view)
+    )
+
+
+class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
+    """
+    The pathway we use to record the outcome of a course of TB.
+    """
+    display_name = "TB Treatment Outcome"
+    slug         = "tb_treatment_outcome"
+    steps = (
+        tb_models.TBOutcome,
     )
