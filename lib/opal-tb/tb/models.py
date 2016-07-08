@@ -263,6 +263,7 @@ class BloodCultureSource(lookuplists.LookupList):
 class BloodCulture(models.EpisodeSubrecord):
     _icon = 'fa fa-crosshairs'
     _title = 'Blood Culture'
+    _angular_service = 'BloodCultureRecord'
 
     lab_number = fields.CharField(max_length=255, blank=True)
     date_ordered = fields.DateField(null=True, blank=True)
@@ -352,7 +353,7 @@ class BloodCultureIsolate(models.TrackedModel):
 
         for k in organisms:
             v = data.get(k)
-            organism_models = get_for_lookup_list(fields.Microbiology_organism, [v])
+            organism_models = get_for_lookup_list(models.Microbiology_organism, [v])
             organism = None
 
             if organism_models:
@@ -367,7 +368,7 @@ class BloodCultureIsolate(models.TrackedModel):
             v = data.get(k)
 
             if v:
-                antimicrobials = get_for_lookup_list(fields.Antimicrobial, v)
+                antimicrobials = get_for_lookup_list(models.Antimicrobial, v)
                 field = getattr(self, k)
                 field.clear()
                 field.add(*antimicrobials)

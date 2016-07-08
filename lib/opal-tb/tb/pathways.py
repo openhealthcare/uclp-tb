@@ -38,7 +38,7 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
             title="Treatment",
             icon="fa fa-medkit",
             template_url="/templates/tb_treatment.html",
-            controller_class="BloodCultureFormCtrl",
+            controller_class="BloodCulturePathwayCtrl",
         )
     )
 
