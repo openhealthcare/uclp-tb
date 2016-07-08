@@ -215,3 +215,19 @@ class SocialHistory(models.EpisodeSubrecord):
     smoking           = fields.CharField(max_length=250, blank=True, null=True)
     occupation        = fields.TextField(blank=True, null=True)
     no_fixed_abode    = fields.NullBooleanField()
+
+class EnvironmentalRiskAssessment(models.EpisodeSubrecord):
+    _is_singleton = True
+    _title = 'Environmental Risk'
+    _icon = 'fa fa-photo'
+
+    household = fields.BooleanField(default=False)
+    shared_household = fields.BooleanField(default=False)
+    prison = fields.BooleanField(default=False)
+    homeless_hostel = fields.BooleanField(default=False)
+    health_care_setting = fields.BooleanField(default=False)
+    school_primary_and_above = fields.BooleanField(default=False)
+    school_nursery = fields.BooleanField(default=False)
+    congregate_drug_use = fields.BooleanField(default=False)
+    pub_or_club = fields.BooleanField(default=False)
+    other_setting = fields.CharField(null=True, blank=True, max_length=256)
