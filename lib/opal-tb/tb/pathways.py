@@ -17,6 +17,7 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
     display_name = "Contact Tracing"
     slug = "contact_tracing"
     steps = (
+        tb_models.EnvironmentalRiskAssessment,
         MultSaveStep(
             model=tb_models.ContactTracing,
             controller_class="ContactTracingFormCtrl"
