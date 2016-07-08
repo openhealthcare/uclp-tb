@@ -215,3 +215,14 @@ class SocialHistory(models.EpisodeSubrecord):
     smoking           = fields.CharField(max_length=250, blank=True, null=True)
     occupation        = fields.TextField(blank=True, null=True)
     no_fixed_abode    = fields.NullBooleanField()
+
+
+class TBOutcome(models.EpisodeSubrecord):
+    _is_singleton = True
+    _title = 'TB Treatment Outcome'
+    _icon = 'fa fa-th-list'
+
+    clinical_resolution              = fields.NullBooleanField()
+    radiological_resolution         = fields.NullBooleanField()
+    clinical_resolution_details     = fields.TextField(blank=True, null=True)
+    radiological_resolution_details = fields.TextField(blank=True, null=True)
