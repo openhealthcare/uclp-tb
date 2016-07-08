@@ -7,8 +7,6 @@ from tb.models import ContactTracing
 class ContactTracingTestCase(OpalTestCase):
     def setUp(self):
         self.patient, self.episode = self.new_patient_and_episode_please()
-
-
         self.other_patient, self.other_episode = self.new_patient_and_episode_please()
         self.other_patient.demographics_set.update(
             first_name="other",
@@ -97,6 +95,10 @@ class ContactTracingTestCase(OpalTestCase):
 
 
     def test_update_contact_tracing(self):
+        """
+        we don't allow updates for contact tracing, make sure
+        any update sent won't blow up or change anything
+        """
         ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
         Demographics = subrecords.get_subrecord_from_model_name('Demographics')
 
@@ -117,49 +119,14 @@ class ContactTracingTestCase(OpalTestCase):
         demographics = new_contact_tracing.contact_episode.patient.demographics_set.first()
         self.assertEqual(
             demographics.first_name,
-            example_update_dict["first_name"]
+            self.other_patient.demographics_set.first().first_name
         )
 
         contact_details = new_contact_tracing.contact_episode.patient.contactdetails_set.first()
         self.assertEqual(
             contact_details.address_line1,
-            example_update_dict["address_line1"]
+            self.other_patient.contactdetails_set.first().address_line1
         )
-
-    def test_consistency(self):
-        """ we should blow up if the the
-            demographics have been editted while we're doing our thing
-        """
-        new_contact_tracing = ContactTracing.objects.create(
-            episode=self.episode,
-            contact_episode=self.other_episode
-        )
-        self.other_patient.demographics_set.update(updated=datetime.datetime.now() - datetime.timedelta(1))
-        example_update_dict = self.get_test_dict()
-        example_update_dict["updated"] = None
-        with self.assertRaises(exceptions.ConsistencyError):
-            new_contact_tracing.update_from_dict(example_update_dict, self.user)
-
-        example_update_dict["updated"] = "06/07/2014 15:24:53"
-
-        with self.assertRaises(exceptions.ConsistencyError):
-            new_contact_tracing.update_from_dict(example_update_dict, self.user)
-
-    def test_contact_details_consistency(self):
-        """ we should blow up if the the contact details
-            have been editted while we're doing our thing
-        """
-        new_contact_tracing = ContactTracing.objects.create(
-            episode=self.episode,
-            contact_episode=self.other_episode
-        )
-        self.other_patient.demographics_set.update(updated=None)
-        self.other_patient.contactdetails_set.update(updated=datetime.datetime.now())
-        example_update_dict = self.get_test_dict()
-        example_update_dict["updated"] = "06/07/2014 15:24:53"
-        with self.assertRaises(exceptions.ConsistencyError):
-            new_contact_tracing.update_from_dict(example_update_dict, self.user)
-
 
     def test_create_new_contact_tracing(self):
         ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
@@ -188,7 +155,21 @@ class ContactTracingTestCase(OpalTestCase):
             episode=self.episode,
             contact_episode=self.other_episode
         )
+        distant_past = datetime.datetime.now() - datetime.timedelta(54)
+        new_contact_tracing.episode.patient.demographics_set.update(
+            created=distant_past, updated=distant_past
+        )
+        new_contact_tracing.episode.patient.contactdetails_set.update(
+            created=distant_past, updated=distant_past
+        )
+
+        recent_past = datetime.datetime.now() - datetime.timedelta(1)
+        new_contact_tracing.created = recent_past
+        new_contact_tracing.updated = recent_past
+
         result = new_contact_tracing.to_dict(self.user)
         self.assertEqual(result["first_name"], "other")
         self.assertEqual(result["id"], new_contact_tracing.id)
+        self.assertEqual(result["created"], new_contact_tracing.created)
+        self.assertEqual(result["updated"], new_contact_tracing.updated)
         self.assertEqual(result["address_line1"], "1 London")
