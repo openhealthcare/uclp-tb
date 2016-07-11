@@ -245,6 +245,7 @@ def get_for_lookup_list(model, values):
 
 class PHEnglandNotification(models.EpisodeSubrecord):
     _title = "Public Health England"
+    _is_singleton = True
     who = fields.CharField(max_length=250, blank=True, null=True)
     when = fields.DateField(null=True, blank=True)
 
@@ -262,6 +263,20 @@ class BloodCulture(models.EpisodeSubrecord):
     date_ordered = fields.DateField(null=True, blank=True)
     date_positive = fields.DateField(null=True, blank=True)
     source = ForeignKeyOrFreeText(BloodCultureSource)
+
+    @classmethod
+    def build_field_schema(cls):
+        schema = super(BloodCulture, cls).build_field_schema()
+
+        schema.append({
+            'name': "stage",
+            'title': "Isolates",
+            'type': "string",
+            'lookup_list': None,
+            'model': cls.__name__
+        })
+
+        return schema
 
     @classmethod
     def _get_fieldnames_to_serialize(cls):
