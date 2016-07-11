@@ -13,5 +13,4 @@ class TBReferral(ReferralRoute):
 
     def post_create(self, episode, user):
         episode.stage = 'Under Investigation'
-        import ipdb; ipdb.set_trace()
         episode.save()
