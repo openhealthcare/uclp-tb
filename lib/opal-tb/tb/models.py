@@ -202,8 +202,8 @@ class ContactTracing(models.EpisodeSubrecord):
             self.update_contact_details(patient, data, user)
             self.contact_episode = self.create_tb_episode(patient)
 
-        self.relationship_to_index = data["relationship_to_index"]
-        self.reason_at_risk = data["reason_at_risk"]
+        self.relationship_to_index = data.pop("relationship_to_index", None)
+        self.reason_at_risk = data.pop("reason_at_risk", None)
         self.set_created_by_id(data, user)
         self.set_updated_by_id(data, user)
         self.set_updated(data, user)
