@@ -1,6 +1,6 @@
 import datetime
 from opal.core.test import OpalTestCase
-from opal.core import subrecords, exceptions
+from opal.core import subrecords
 from tb.models import ContactTracing
 
 
@@ -48,6 +48,8 @@ class ContactTracingTestCase(OpalTestCase):
             "patient_id": 11,
             "post_code": None,
             "religion": None,
+            "relationship_to_index": "Mother",
+            "reason_at_risk": "Shared household",
             "sex": "",
             "sex_fk_id": None,
             "sex_ft": "",
@@ -148,6 +150,17 @@ class ContactTracingTestCase(OpalTestCase):
         self.assertEqual(
             contact_details.address_line1,
             example_update_dict["address_line1"]
+        )
+
+        # update dict alters the dictionary, so refresh
+        example_update_dict = self.get_test_dict()
+
+        self.assertEqual(
+            new_contact_tracing.reason_at_risk, example_update_dict["reason_at_risk"]
+        )
+        self.assertEqual(
+            new_contact_tracing.relationship_to_index,
+            example_update_dict["relationship_to_index"]
         )
 
     def test_to_dict(self):
