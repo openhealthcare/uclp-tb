@@ -1,6 +1,6 @@
 import datetime
 from opal.core.test import OpalTestCase
-from opal.core import subrecords, exceptions
+from opal.core import subrecords
 from tb.models import ContactTracing
 
 

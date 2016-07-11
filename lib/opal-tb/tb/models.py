@@ -101,6 +101,14 @@ class TBTests(models.EpisodeSubrecord):
     chest_xray = fields.BooleanField(default=False)
 
 
+class RelationshipToIndex(lookuplists.LookupList):
+    pass
+
+
+class ReasonAtRisk(lookuplists.LookupList):
+    pass
+
+
 class ContactTracing(models.EpisodeSubrecord):
     """ contact tracing works by having 2 sub models
         essentially demographics and contact details
@@ -116,6 +124,13 @@ class ContactTracing(models.EpisodeSubrecord):
     contact_episode = fields.ForeignKey(
         models.Episode,
         related_name="contact_traced"
+    )
+
+    relationship_to_index = ForeignKeyOrFreeText(
+        RelationshipToIndex,
+    )
+    reason_at_risk = ForeignKeyOrFreeText(
+        ReasonAtRisk, verbose_name="reason for considering at risk"
     )
 
     @classmethod
@@ -182,12 +197,13 @@ class ContactTracing(models.EpisodeSubrecord):
     @transaction.atomic()
     def update_from_dict(self, data, user, *args, **kwargs):
         patient, created = self.get_or_create_patient(data, user)
-        tb_episode = None
 
         if created:
             self.update_contact_details(patient, data, user)
-            self.contact_episode = tb_episode = self.create_tb_episode(patient)
+            self.contact_episode = self.create_tb_episode(patient)
 
+        self.relationship_to_index = data["relationship_to_index"]
+        self.reason_at_risk = data["reason_at_risk"]
         self.set_created_by_id(data, user)
         self.set_updated_by_id(data, user)
         self.set_updated(data, user)
