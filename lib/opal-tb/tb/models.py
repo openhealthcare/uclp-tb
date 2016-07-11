@@ -152,7 +152,7 @@ class ContactTracing(models.EpisodeSubrecord):
         return schema
 
     def get_or_create_patient(self, data, user):
-        if self.contact_episode_id:
+        if self.id:
             created = False
             patient = self.contact_episode.patient
         else:
