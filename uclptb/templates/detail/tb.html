@@ -37,13 +37,11 @@
           </div>
           <div class="panel-body">
             <p>Stage: [[ episode.stage ]]</p>
-            <p ng-show="episode.ph_england_notification.length">
-
+            <p ng-show="episode.ph_england_notification[0].when">
                 <span ng-show="episode.ph_england_notification[0].who">[[ episode.ph_england_notification[0].who ]]</span>
                 <span ng-hide="episode.ph_england_notification[0].who">Public Health England</span>
                 notified
                 <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
-
             </p>
             <div ng-show="episode.blood_culture.length">
               <span ng-repeat="item in [episode.blood_culture[episode.blood_culture.length - 1]]">
