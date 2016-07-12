@@ -37,7 +37,7 @@
           </div>
           <div class="panel-body">
             <p>Stage: [[ episode.stage ]]</p>
-            <p ng-show="episode.ph_england_notification.length">
+            <p ng-show="episode.ph_england_notification[0].who || episode.ph_england_notification[0].when">
                 <span ng-show="episode.ph_england_notification[0].who">[[ episode.ph_england_notification[0].who ]]</span>
                 <span ng-hide="episode.ph_england_notification[0].who">Public Health England</span>
                 notified
