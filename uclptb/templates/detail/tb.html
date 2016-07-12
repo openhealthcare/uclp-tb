@@ -38,18 +38,11 @@
           <div class="panel-body">
             <p>Stage: [[ episode.stage ]]</p>
             <p ng-show="episode.ph_england_notification.length">
-
                 <span ng-show="episode.ph_england_notification[0].who">[[ episode.ph_england_notification[0].who ]]</span>
                 <span ng-hide="episode.ph_england_notification[0].who">Public Health England</span>
                 notified
                 <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
-
             </p>
-            <div ng-show="episode.blood_culture.length">
-              <span ng-repeat="item in [episode.blood_culture[episode.blood_culture.length - 1]]">
-                {% include models.BloodCulture.get_display_template %}
-              </span>
-            </div>
           </div>
         </div>
         {% record_panel models.SymptomComplex %}
@@ -76,7 +69,6 @@
         {% record_panel models.SymptomComplex %}
         {% record_panel models.Investigation %}
         {% record_panel models.Treatment %}
-        {% record_panel models.BloodCulture %}
         {% record_panel models.PHEnglandNotification %}
         {% record_timeline models.PatientConsultation "when" %}
         {% record_panel models.TBOutcome %}
