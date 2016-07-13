@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from opal import models
 from opal.core import subrecords, exceptions
+from opal.core.lookuplists import LookupList
 
 from tb.episode_categories import TBEpisode
 from opal.core.fields import ForeignKeyOrFreeText
@@ -234,6 +235,8 @@ class SocialHistory(models.EpisodeSubrecord):
     smoking           = fields.CharField(max_length=250, blank=True, null=True)
     occupation        = fields.TextField(blank=True, null=True)
     no_fixed_abode    = fields.NullBooleanField()
+    intravenous_drug_use = fields.CharField(max_length=250, blank=True, null=True)
+    incarceration = fields.CharField(max_length=250, blank=True, null=True)
 
 
 def get_for_lookup_list(model, values):
@@ -244,7 +247,7 @@ def get_for_lookup_list(model, values):
     )
 
 class PHEnglandNotification(models.EpisodeSubrecord):
-    _title = "Public Health England"
+    _title = "Notification"
     _is_singleton = True
     who = fields.CharField(max_length=250, blank=True, null=True)
     when = fields.DateField(null=True, blank=True)
@@ -260,6 +263,8 @@ class TBOutcome(models.EpisodeSubrecord):
     clinical_resolution_details     = fields.TextField(blank=True, null=True)
     radiological_resolution_details = fields.TextField(blank=True, null=True)
 
+class TBSite(LookupList):
+    pass
 
 class EnvironmentalRiskAssessment(models.EpisodeSubrecord):
     _is_singleton = True

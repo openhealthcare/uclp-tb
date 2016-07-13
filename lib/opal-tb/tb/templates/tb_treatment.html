@@ -1,6 +1,18 @@
+{% load forms %}
 <div class="form-horizontal">
   <h4 class="text-center">{{ models.Diagnosis.get_display_name }}</h4>
-  {% include models.Diagnosis.get_form_template %}
+  {% radio  label="Type" model="localEditing.pulmonary" lookuplist="['Pulmonary TB', 'Extra-Pulmonary TB']" %}
+  {% select label="Site" model="localEditing.site" lookuplist='tbsite_list' %}
+  {% radio  label="Smear Tests" model="localEditing.smear_tests" lookuplist="['Positive', 'Negative', 'Not Done']" %}
+  {% radio  label="Culture" model="localEditing.culture_tests" lookuplist="['Positive', 'Negative', 'Not Done']" %}
+  <button class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Another Site</button>
+
+  <h4 class="text-center content-offset">Sensitivities</h4>
+  {% checkbox label="Fully Sensitive" model="fully_sensitive" %}
+  {% checkbox label="Isoniazid Resistant" model="isoniazid_resistant" %}
+  {% checkbox label="Rifampicin Resistant" model="rifampicin_resistant" %}
+  {% checkbox label="Ethambutol Resistant" model="ethambutol_resistant" %}
+  {% input label="Other" model="other_resistant" %}
 </div>
 <hr />
 <div class="form-horizontal">

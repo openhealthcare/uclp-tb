@@ -1,7 +1,12 @@
 """
 uclptb models.
 """
-from django.db.models import fields
+from django.db import models as fields
+
+import opal.models as omodels
+
+from opal.models import EpisodeSubrecord
+from opal.core.fields import ForeignKeyOrFreeText
 
 from opal import models
 
@@ -15,3 +20,12 @@ class Investigation(models.Investigation): pass
 class ReferralRoute(models.ReferralRoute): pass
 class SymptomComplex(models.SymptomComplex): pass
 class PatientConsultation(models.PatientConsultation): pass
+
+
+class Travel(EpisodeSubrecord):
+    _icon = 'fa fa-plane'
+
+    destination         = ForeignKeyOrFreeText(omodels.Destination)
+    dates               = fields.CharField(max_length=255, blank=True)
+    reason_for_travel   = ForeignKeyOrFreeText(omodels.Travel_reason)
+    specific_exposures  = fields.CharField(max_length=255, blank=True)
