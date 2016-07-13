@@ -85,6 +85,7 @@ class TBRiskFactors(models.EpisodeSubrecord):
     # other_immunosuppressive_drugs = fields.TextField()
 
 
+
 class TBTests(models.EpisodeSubrecord):
     _is_singleton = True
     _title = "Tests"
@@ -265,6 +266,17 @@ class TBOutcome(models.EpisodeSubrecord):
 
 class TBSite(LookupList):
     pass
+
+
+class TBLocation(models.EpisodeSubrecord):
+    sites = fields.ManyToManyField(TBSite)
+    _is_singleton = True
+
+    def to_dict(self, user):
+        result = super(TBLocation, self).to_dict(user)
+        result["sites"] = list(self.sites.values_list("name", flat=True))
+        return result
+
 
 class EnvironmentalRiskAssessment(models.EpisodeSubrecord):
     _is_singleton = True
