@@ -1,18 +1,13 @@
 {% load forms %}
 <div class="form-horizontal">
   <h4 class="text-center">{{ models.Diagnosis.get_display_name }}</h4>
-  {% radio  label="Type" model="localEditing.pulmonary" lookuplist="['Pulmonary TB', 'Extra-Pulmonary TB']" %}
+  {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
+  {% checkbox label="Pulmonary" model="localEditing.hasPulmonary" change="pulmonaryChange()" %}
 
-
+  <h4 class="text-center content-offset">Test Results</h4>
   <span ng-repeat="test in tests">
     {% radio label="[[ test.test ]]" model="test.result" lookuplist="['Positive', 'Negative', 'Not Done']" %}
   </span>
-  {% select label="Site" model="localEditing.site" lookuplist='tbsite_list' %}
-  {% comment %}
-  {% radio  label="Smear Tests" model="localEditing.smear_tests" lookuplist="['Positive', 'Negative', 'Not Done']" %}
-  {% radio  label="Culture" model="localEditing.culture_tests" lookuplist="['Positive', 'Negative', 'Not Done']" %}
-  {% endcomment %}
-  <button class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Another Site</button>
 
   <h4 class="text-center content-offset">Sensitivities</h4>
   {% checkbox label="Fully Sensitive" model="fully_sensitive" %}
