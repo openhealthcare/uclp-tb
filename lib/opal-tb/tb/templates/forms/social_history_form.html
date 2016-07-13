@@ -4,8 +4,8 @@
 <span ng-show="editing.social_history.drinking == 'Excess'">
   {% checkbox field="SocialHistory.alcohol_dependent" %}
 </span>
-{% radio field="SocialHistory.smoking" lookuplist="['Never', 'Current', 'Ex']" %}
-{% radio field="SocialHistory.intravenous_drug_use" lookuplist="['Never', 'Current', 'Ex']" %}
+{% radio field="SocialHistory.smoking" lookuplist="['Never', 'Current', 'Past']" %}
+{% radio field="SocialHistory.intravenous_drug_use" lookuplist="['Never', 'Current', 'Past']" %}
 {% radio field="SocialHistory.incarceration" lookuplist="['Never', 'Current', 'Previous']" %}
 {% textarea  field="SocialHistory.occupation"  %}
 {% checkbox field="SocialHistory.no_fixed_abode" %}
