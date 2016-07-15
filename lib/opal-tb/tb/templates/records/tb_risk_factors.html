@@ -1,5 +1,38 @@
-<span ng-show="item.hiv_status">HIV: [[ item.hiv_status ]]<br /></span>
-<span ng-show="item.diabetes">[[ item.diabetes ]] Diabetes</br /></span>
-<span ng-show="item.corticosteroid_therapy">Corticosteroid Therapy<br /></span>
-<span ng-show="item.anti_tnf_alpha_treatment">Anti TNF Alpha Treatment<br /></span>
-<span ng-show="item.chronic_lung_Disease">Chronic Lung disease<br /></span>
+<div class="row" ng-show="item.hiv_status">
+  <div class="col-md-6">
+    <b>HIV:</b>
+  </div>
+  <div class="col-md-6">
+    [[ item.hiv_status ]]
+  </div>
+</div>
+
+<div class="row" ng-show="item.diabetes">
+  <div class="col-md-6">
+    <b>Diabetes:</b>
+  </div>
+  <div class="col-md-6">
+    [[ item.diabetes]]
+  </div>
+</div>
+
+<div class="row" ng-show="item.corticosteroid_therapy">
+  <div class="col-md-6">
+    <b>Corticosteroid Therapy</b>
+  </div>
+</div>
+<div class="row" ng-show="item.anti_tnf_alpha_treatment">
+  <div class="col-md-6">
+    <b>Anti TNF Alpha Treatment
+ </b>
+  </div>
+  <div class="col-md-6">
+  </div>
+</div>
+<div class="row" ng-show="item.chronic_lung_Disease">
+  <div class="col-md-6">
+    <b>Chronic Lung disease</b>
+  </div>
+  <div class="col-md-6">
+  </div>
+</div>

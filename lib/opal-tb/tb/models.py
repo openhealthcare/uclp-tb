@@ -250,6 +250,8 @@ def get_for_lookup_list(model, values):
 class PHEnglandNotification(models.EpisodeSubrecord):
     _title = "Notification"
     _is_singleton = True
+    _icon = 'fa fa-flag'
+
     who = fields.CharField(max_length=250, blank=True, null=True)
     when = fields.DateField(null=True, blank=True)
 

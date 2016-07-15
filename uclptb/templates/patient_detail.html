@@ -1,6 +1,7 @@
 {% extends 'patient_detail_base.html' %}
 {% load forms %}
 {% load panels %}
+
 {% block pre_demographics %}
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -10,17 +11,32 @@
       </h3>
     </div>
     <ul class="list-group">
-      <li class="list-group-item">
+
+      <li class="list-group-item" ng-show="episode.stage=='Under Investigation'">
         <a class="btn btn-primary col-md-8" href="/pathway/#/tb_assessment/[[ episode.id ]]">Initial TB Assessment</a>
       </li>
-      <li class="list-group-item">
-        <a class="btn btn-primary col-md-8" href="/pathway/#/tb_treatment/[[ episode.id ]]">TB Treatment</a>
+
+      <li class="list-group-item"
+          ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active TB'"
+          >
+        <button class="btn btn-primary col-md-8 pointer" ng-click="episode.recordEditor.editItem('ph_england_notification', 0)">
+          {% icon "fa-flag" %} Record Notification
+        </button>
       </li>
       <li class="list-group-item">
-        <a class="btn btn-primary col-md-8" href="/pathway/#/contact_tracing/[[ episode.id ]]">Contact Tracing</a>
+        <a class="btn btn-primary col-md-8" href="/pathway/#/tb_treatment/[[ episode.id ]]">
+          {% icon "fa-medkit" %} TB Treatment
+        </a>
       </li>
       <li class="list-group-item">
-        <a class="btn btn-primary col-md-8" href="/pathway/#/tb_treatment_outcome/[[ episode.id ]]">Treatment Outcome</a>
+        <a class="btn btn-primary col-md-8 text-left" href="/pathway/#/contact_tracing/[[ episode.id ]]">
+          {% icon "fa-users" %} Contact Tracing
+        </a>
+      </li>
+      <li class="list-group-item" ng-hide="episode.stage=='Under Investigation'">
+        <a class="btn btn-primary col-md-8" href="/pathway/#/tb_treatment_outcome/[[ episode.id ]]">
+          {% icon "fa-home" %} Treatment Outcome
+        </a>
       </li>
     </ul>
   </div>

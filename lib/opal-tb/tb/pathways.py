@@ -3,7 +3,7 @@ OPAL Pathway definitions for the re-usable TB module.
 """
 from pathway import pathways
 from pathway.pathways import (
-    ModalPathway, Pathway, RedirectsToPatientMixin, MultSaveStep, Step
+    ModalPathway, Pathway, RedirectsToPatientMixin, Step
 )
 from uclptb.models import Demographics
 from uclptb import models as uclptb_models
@@ -88,3 +88,10 @@ class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
     steps = (
         tb_models.TBOutcome,
     )
+
+    def save(self, data, user):
+        patient = super(TreatmentOutcome, self).save(data, user)
+        episode = self.episode
+        episode.stage = 'Discharged'
+        episode.save()
+        return patient

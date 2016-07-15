@@ -15,16 +15,21 @@
             </h3>
           </div>
           <div class="panel-body">
-            <p>Previous TB (Placeholder)</p>
+            <!-- <p>Previous TB (Placeholder)</p> -->
             <div ng-repeat="item in episode.travel">
               {% include models.Travel.get_display_template %}
             </div>
             <div ng-repeat="item in episode.tb_risk_factors">
               {% include models.TBRiskFactors.get_display_template %}
             </div>
-            <p ng-show="episode.social_history[0].smoking && Tepisode.social_history[0].smoking != 'Never'">
-              Smoking: [[ episode.social_history[0].smoking ]]
-            </p>
+            <div class="row" ng-show="episode.social_history[0].smoking && Tepisode.social_history[0].smoking != 'Never'">
+              <div class="col-md-6">
+                <b>Smoking:</b>
+              </div>
+              <div class="col-md-6">
+               [[ episode.social_history[0].smoking ]]
+              </div>
+            </div>
           </div>
         </div>
         {% record_panel models.ReferralRoute %}
@@ -44,6 +49,9 @@
                 <span ng-hide="episode.ph_england_notification[0].who">Public Health England</span>
                 notified
                 <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
+            </p>
+            <p ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active TB'">
+              <b>PHE notification not complete</b>
             </p>
             <div ng-repeat="item in episode.investigation">
               {% include models.Investigation.get_display_template %}
@@ -74,6 +82,7 @@
         {% record_panel models.ReferralRoute %}
         {% record_panel models.PastMedicalHistory %}
         {% record_panel models.SocialHistory %}
+        {% record_panel models.Travel %}
         {% record_panel models.TBRiskFactors %}
         {% record_panel models.SymptomComplex %}
         {% record_panel models.Investigation %}
