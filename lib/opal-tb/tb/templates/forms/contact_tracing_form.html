@@ -1,15 +1,14 @@
 {% load forms %}
-{% input "autofocus" field="Demographics.hospital_number" %}
-{% select field="Demographics.title" static="editing.demographics.external_system" %}
-{% input field="Demographics.first_name" static="editing.demographics.external_system" %}
-{% input field="Demographics.surname" static="editing.demographics.external_system" %}
-{% date_of_birth_field %}
+{% input field="Demographics.hospital_number" model="editing.contact_tracing.hospital_number" %}
+{% input field="Demographics.first_name" model="editing.contact_tracing.first_name" %}
+{% input field="Demographics.surname" model="editing.contact_tracing.surname" %}
 
+{% input field="ContactTracing.relationship_to_index" %}
+{% input field="ContactTracing.reason_at_risk" %}
+
+{% date_of_birth_field model_name="editing.contact_tracing.date_of_birth"  %}
 {% input label="Address line 1" model="editing.contact_details.address_line1" %}
 {% input label="Address line 2" model="editing.contact_details.address_line2" %}
 {% input label="City" model="editing.contact_details.city" %}
 {% input label="Post Code" model="editing.contact_details.post_code" %}
 {% input label="Telephone 1" model="editing.contact_details.telephone1" %}
-
-{% input field="ContactTracing.relationship_to_index" %}
-{% input field="ContactTracing.reason_at_risk" %}

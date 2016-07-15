@@ -1,0 +1,8 @@
+{% load pathways %}
+<h4 class="text-center">{{ models.EnvironmentalRiskAssessment.get_display_name }}</h4>
+<div class="form-horizontal content-offset-below">
+  {% include models.EnvironmentalRiskAssessment.get_form_template %}
+</div>
+<hr />
+<h4 class="text-center content-offset">{{ models.ContactTracing.get_display_name }}</h4>
+{% multisave models.ContactTracing %}
