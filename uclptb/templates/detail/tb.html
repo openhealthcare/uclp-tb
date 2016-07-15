@@ -50,6 +50,9 @@
                 notified
                 <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
             </p>
+            <p ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active TB'">
+              <b>PHE notification not complete</b>
+            </p>
             <div ng-repeat="item in episode.investigation">
               {% include models.Investigation.get_display_template %}
             </div>
@@ -79,6 +82,7 @@
         {% record_panel models.ReferralRoute %}
         {% record_panel models.PastMedicalHistory %}
         {% record_panel models.SocialHistory %}
+        {% record_panel models.Travel %}
         {% record_panel models.TBRiskFactors %}
         {% record_panel models.SymptomComplex %}
         {% record_panel models.Investigation %}
