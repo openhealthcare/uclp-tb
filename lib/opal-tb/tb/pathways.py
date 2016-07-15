@@ -3,7 +3,7 @@ OPAL Pathway definitions for the re-usable TB module.
 """
 from pathway import pathways
 from pathway.pathways import (
-    ModalPathway, Pathway, RedirectsToPatientMixin, MultSaveStep, Step
+    ModalPathway, Pathway, RedirectsToPatientMixin, Step
 )
 from uclptb.models import Demographics
 from uclptb import models as uclptb_models
@@ -22,9 +22,10 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
     slug = "contact_tracing"
     steps = (
         tb_models.EnvironmentalRiskAssessment,
-        MultSaveStep(
+        Step(
             model=tb_models.ContactTracing,
-            controller_class="ContactTracingFormCtrl"
+            controller_class="ContactTracingFormCtrl",
+            template_url="/templates/contact_tracing.html"
         ),
     )
 
