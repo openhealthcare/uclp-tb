@@ -1,6 +1,20 @@
+{% load forms %}
 <div class="form-horizontal">
   <h4 class="text-center">{{ models.Diagnosis.get_display_name }}</h4>
-  {% include models.Diagnosis.get_form_template %}
+  {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
+  {% checkbox label="Pulmonary" model="localEditing.hasPulmonary" change="pulmonaryChange()" %}
+
+  <h4 class="text-center content-offset">Test Results</h4>
+  <span ng-repeat="test in tests">
+    {% radio label="[[ test.test ]]" model="test.result" lookuplist="['Positive', 'Negative', 'Not Done']" %}
+  </span>
+
+  <h4 class="text-center content-offset">Sensitivities</h4>
+  {% checkbox label="Fully Sensitive" model="fully_sensitive" %}
+  {% checkbox label="Isoniazid Resistant" model="isoniazid_resistant" %}
+  {% checkbox label="Rifampicin Resistant" model="rifampicin_resistant" %}
+  {% checkbox label="Ethambutol Resistant" model="ethambutol_resistant" %}
+  {% input label="Other" model="other_resistant" %}
 </div>
 <hr />
 <div class="form-horizontal">

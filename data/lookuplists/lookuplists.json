@@ -1643,6 +1643,44 @@
       "name": "Zimbabwe"
     }
   ],
+  "tbsite": [
+    {
+      "synonyms": [],
+      "name": "Bone"
+    },
+    {
+      "synonyms": [],
+      "name": "CNS"
+    },
+    {
+      "synonyms": [],
+      "name": "Lymph Node"
+    },
+    {
+      "synonyms": [],
+      "name": "Ocular"
+    },
+    {
+      "synonyms": [],
+      "name": "Plural"
+    },
+    {
+      "synonyms": [],
+      "name": "Renal Tract"
+    },
+    {
+      "synonyms": [],
+      "name": "Abdominal Lymph nodes"
+    },
+    {
+      "synonyms": [],
+      "name": "Pulmonary"
+    },
+    {
+      "synonyms": [],
+      "name": "Spinal"
+    }
+  ],
   "travel_reason": [
     {
       "synonyms": [

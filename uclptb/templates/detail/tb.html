@@ -16,7 +16,9 @@
           </div>
           <div class="panel-body">
             <p>Previous TB (Placeholder)</p>
-            <p>Geographic Exposure (Placeholder)</p>
+            <div ng-repeat="item in episode.travel">
+              {% include models.Travel.get_display_template %}
+            </div>
             <div ng-repeat="item in episode.tb_risk_factors">
               {% include models.TBRiskFactors.get_display_template %}
             </div>
@@ -36,17 +38,24 @@
             </h3>
           </div>
           <div class="panel-body">
-            <p>Stage: [[ episode.stage ]]</p>
+            <p><b>[[ episode.stage ]] <span ng-show="episode.tb_location[0].sites.length">([[ episode.tb_location[0].sites.join(", ") ]])</span></b></p>
             <p ng-show="episode.ph_england_notification[0].who || episode.ph_england_notification[0].when">
                 <span ng-show="episode.ph_england_notification[0].who">[[ episode.ph_england_notification[0].who ]]</span>
                 <span ng-hide="episode.ph_england_notification[0].who">Public Health England</span>
                 notified
                 <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
             </p>
+            <div ng-repeat="item in episode.investigation">
+              {% include models.Investigation.get_display_template %}
+            </div>
+            <div ng-repeat="item in episode.diagnosis[0]">
+              {% include models.Diagnosis.get_display_template %}
+            </div>
+
+
           </div>
         </div>
         {% record_panel models.SymptomComplex %}
-        {% record_panel models.Investigation %}
         {% record_panel models.Treatment %}
       </div>
     </div>
@@ -76,7 +85,6 @@
     </div>
   </tab>
 <tab heading="Contact Tracing">
-  <h2><i>Contact Tracing details (placeholder)</i></h2>
   <div class="row">
     <div class="col-md-8">
       {% record_panel models.EnvironmentalRiskAssessment %}
