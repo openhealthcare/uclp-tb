@@ -89,3 +89,10 @@ class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
     steps = (
         tb_models.TBOutcome,
     )
+
+    def save(self, data, user):
+        patient = super(TreatmentOutcome, self).save(data, user)
+        episode = self.episode
+        episode.stage = 'Discharged'
+        episode.save()
+        return patient
