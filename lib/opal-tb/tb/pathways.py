@@ -3,7 +3,7 @@ OPAL Pathway definitions for the re-usable TB module.
 """
 from pathway import pathways
 from pathway.pathways import (
-    ModalPathway, Pathway, RedirectsToPatientMixin, MultSaveStep, Step
+    ModalPathway, Pathway, RedirectsToPatientMixin, Step
 )
 from uclptb.models import Demographics
 from uclptb import models as uclptb_models

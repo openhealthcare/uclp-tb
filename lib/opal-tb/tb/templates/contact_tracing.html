@@ -1,5 +1,8 @@
-<div ng-repeat="editing in allEditing">
-  <span ng-include src="step.form_url"></span>
+<div class="content-offset-below" ng-repeat="editing in allEditing">
+  <h4>Contact Tracing [[ $index + 1 ]] <a ng-click="remove($index)"><i class="fa fa-times-circle"></i></a></h4>
+  <div class="form-horizontal">
+    {% include models.ContactTracing.get_form_template %}
+  </div>
 </div>
 <div class="row">
   <div class="col-sm-11">
