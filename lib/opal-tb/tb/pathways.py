@@ -28,22 +28,23 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
     )
 
 class TBTreatment(RedirectsToPatientMixin, Pathway):
-    display_name = "TB Treatment"
-    slug = "tb_treatment"
+    display_name  = "TB Treatment"
+    slug          = "tb_treatment"
+    template_url = '/templates/pathway/treatment_form_base.html'
     steps = (
-        Step(
-            title="TB Type",
-            icon="fa fa-tag",
-            api_name="stage",
-            template_url="/templates/tb_type.html",
-            controller_class="TBTypeFormCtrl",
-        ),
+        # Step(
+        #     title="TB Type",
+        #     icon="fa fa-tag",
+        #     api_name="stage",
+        #     template_url="/templates/tb_type.html",
+        #     controller_class="TBTypeFormCtrl",
+        # ),
         Step(
             title="Diagnosis & Treatment",
             icon="fa fa-medkit",
             template_url="/templates/tb_treatment.html",
             controller_class="TBTreatmentCtrl",
-        )
+        ),
     )
 
     def save(self, data, user):
