@@ -63,14 +63,15 @@
 
           </div>
         </div>
-        {% record_panel models.SymptomComplex %}
         {% record_panel models.Treatment %}
       </div>
     </div>
     <hr />
     <div class="row">
       <div class="col-md-8 col-md-push-1">
+        {% record_panel models.SymptomComplex %}
         {% record_timeline models.PatientConsultation "when" %}
+        {% record_timeline models.Investigation "date_ordered" %}
       </div>
     </div>
   </tab>
