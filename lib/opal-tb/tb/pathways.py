@@ -3,18 +3,10 @@ OPAL Pathway definitions for the re-usable TB module.
 """
 from pathway import pathways
 from pathway.pathways import (
-    ModalPathway, Pathway, RedirectsToPatientMixin, Step
+    Pathway, RedirectsToPatientMixin, Step
 )
-from uclptb.models import Demographics
 from uclptb import models as uclptb_models
 from tb import models as tb_models
-
-
-class NextTBStage(ModalPathway):
-    display_name = "Next TB Stage"
-    slug = "next_tb_stage"
-
-    steps = (Demographics,)
 
 
 class TBContactTracing(RedirectsToPatientMixin, Pathway):
