@@ -25,17 +25,11 @@ class TBAssessment(RedirectsToPatientMixin, Pathway):
     slug = "tb_assessment"
     steps = (
         Step(
-            title="Personal Information",
-            model=uclptb_models.Demographics,
-            template_url="/templates/personal_information_form.html",
-        ),
-        Step(
             title="Presentation & History",
             model=uclptb_models.SymptomComplex,
             template_url="/templates/presentation_pathway.html",
             controller_class="TBSymptomsFormCtrl"
         ),
-        uclptb_models.PatientConsultation
     )
 
 
