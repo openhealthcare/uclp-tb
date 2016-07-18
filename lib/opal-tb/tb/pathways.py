@@ -25,13 +25,6 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
     slug          = "tb_treatment"
     template_url = '/templates/pathway/treatment_form_base.html'
     steps = (
-        # Step(
-        #     title="TB Type",
-        #     icon="fa fa-tag",
-        #     api_name="stage",
-        #     template_url="/templates/tb_type.html",
-        #     controller_class="TBTypeFormCtrl",
-        # ),
         Step(
             title="Diagnosis & Treatment",
             icon="fa fa-medkit",
@@ -66,12 +59,7 @@ class TBAssessment(RedirectsToPatientMixin, Pathway):
             template_url="/templates/presentation_pathway.html",
             controller_class="TBSymptomsFormCtrl"
         ),
-        # Step(
-        #     model=tb_models.TBTests,
-        # ),
         uclptb_models.PatientConsultation
-
-        # PatientConsultation (in a timeline on the patient detail view)
     )
 
 
