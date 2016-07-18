@@ -246,12 +246,12 @@ def get_for_lookup_list(model, values):
     )
 
 class PHEnglandNotification(models.EpisodeSubrecord):
-    _title = "Notification"
+    _title = "Public Health Notification"
     _is_singleton = True
     _icon = 'fa fa-flag'
 
-    who = fields.CharField(max_length=250, blank=True, null=True)
-    when = fields.DateField(null=True, blank=True)
+    who = fields.CharField(max_length=250, blank=True, null=True, verbose_name="Notified by")
+    when = fields.DateField(null=True, blank=True, verbose_name="Notification date")
 
 
 class TBOutcome(models.EpisodeSubrecord):
@@ -259,7 +259,7 @@ class TBOutcome(models.EpisodeSubrecord):
     _title = 'TB Treatment Outcome'
     _icon = 'fa fa-th-list'
 
-    clinical_resolution              = fields.NullBooleanField()
+    clinical_resolution             = fields.NullBooleanField()
     radiological_resolution         = fields.NullBooleanField()
     clinical_resolution_details     = fields.TextField(blank=True, null=True)
     radiological_resolution_details = fields.TextField(blank=True, null=True)
