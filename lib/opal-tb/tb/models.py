@@ -19,6 +19,7 @@ class ContactDetails(models.PatientSubrecord):
     _is_singleton = True
     _advanced_searchable = False
     _icon = 'fa fa-phone'
+    _title = 'Contact Details'
 
     address_line1 = fields.CharField("Address line 1", max_length = 45,
                                      blank=True, null=True)
@@ -229,7 +230,7 @@ class SocialHistory(models.EpisodeSubrecord):
     _icon = 'fa fa-clock-o'
 
     notes             = fields.TextField(blank=True, null=True)
-    drinking          = fields.CharField(max_length=250, blank=True, null=True)
+    drinking          = fields.CharField(max_length=250, blank=True, null=True, verbose_name="Alcohol")
     alcohol_dependent = fields.NullBooleanField()
     smoking           = fields.CharField(max_length=250, blank=True, null=True)
     occupation        = fields.TextField(blank=True, null=True)
