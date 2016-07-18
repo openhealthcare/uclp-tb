@@ -12,7 +12,6 @@ class TbPlugin(plugins.OpalPlugin):
     urls = urlpatterns
     javascripts = {
         'opal.controllers': [
-            'js/tb/controllers/contact_tracing_form.js',
             'js/tb/controllers/tb_treatment.js',
             "js/tb/controllers/tb_symptoms_form.js",
             "js/tb/controllers/tb_type.js",

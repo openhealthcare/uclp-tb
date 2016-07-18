@@ -1,20 +1,13 @@
 """
 OPAL Pathway definitions for the re-usable TB module.
 """
+from django.db import transaction
 from pathway import pathways
 from pathway.pathways import (
-    ModalPathway, Pathway, RedirectsToPatientMixin, Step
+    Pathway, RedirectsToPatientMixin, Step, delete_others
 )
-from uclptb.models import Demographics
 from uclptb import models as uclptb_models
 from tb import models as tb_models
-
-
-class NextTBStage(ModalPathway):
-    display_name = "Next TB Stage"
-    slug = "next_tb_stage"
-
-    steps = (Demographics,)
 
 
 class TBContactTracing(RedirectsToPatientMixin, Pathway):
@@ -28,29 +21,32 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
     )
 
 class TBTreatment(RedirectsToPatientMixin, Pathway):
-    display_name = "TB Treatment"
-    slug = "tb_treatment"
+    display_name  = "TB Treatment"
+    slug          = "tb_treatment"
+    template_url = '/templates/pathway/treatment_form_base.html'
     steps = (
-        Step(
-            title="TB Type",
-            icon="fa fa-tag",
-            api_name="stage",
-            template_url="/templates/tb_type.html",
-            controller_class="TBTypeFormCtrl",
-        ),
+        # Step(
+        #     title="TB Type",
+        #     icon="fa fa-tag",
+        #     api_name="stage",
+        #     template_url="/templates/tb_type.html",
+        #     controller_class="TBTypeFormCtrl",
+        # ),
         Step(
             title="Diagnosis & Treatment",
             icon="fa fa-medkit",
             template_url="/templates/tb_treatment.html",
             controller_class="TBTreatmentCtrl",
-        )
+        ),
     )
 
+    @transaction.atomic
     def save(self, data, user):
         stage = data.pop('stage')[0]
         episode = self.episode
         patient = super(TBTreatment, self).save(data, user)
         episode.stage = stage
+        delete_others(data, uclptb_models.Treatment, patient=self.patient, episode=self.episode)
         episode.save()
         return patient
 

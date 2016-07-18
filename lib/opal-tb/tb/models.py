@@ -1,17 +1,18 @@
 """
 tb models.
 """
+from datetime import datetime
+
 from django.db import models as fields
 from django.db import models, transaction
 from django.contrib.contenttypes.models import ContentType
 
 from opal import models
-from opal.core import subrecords, exceptions
 from opal.core.lookuplists import LookupList
 
 from tb.episode_categories import TBEpisode
 from opal.core.fields import ForeignKeyOrFreeText
-from opal.core import lookuplists
+from opal.core import lookuplists, subrecords
 
 
 class ContactDetails(models.PatientSubrecord):
@@ -59,7 +60,6 @@ class EnvironmentalTBRiskFactors(models.PatientSubrecord):
     recent_travel_to_high_risk_area = fields.NullBooleanField()
 
 
-# class MedicalTBRiskFactors(models.PatientSubrecord):
 class TBRiskFactors(models.EpisodeSubrecord):
     _is_singleton = True
     _title = "TB Risk Factors"
@@ -70,20 +70,6 @@ class TBRiskFactors(models.EpisodeSubrecord):
     corticosteroid_therapy   = fields.NullBooleanField()
     anti_tnf_alpha_treatment = fields.NullBooleanField()
     chronic_lung_disease     = fields.NullBooleanField()
-
-    # mental_health_history = fields.NullBooleanField()
-    # previous_tb = fields.DateField(null=True, blank=True)
-    # hiv_positive = fields.NullBooleanField()
-    # solid_organ_transplantation = fields.NullBooleanField()
-    # haemotological_malignancy = fields.NullBooleanField()
-    # jejunoileal_bypass = fields.NullBooleanField()
-    # gastrectomy = fields.NullBooleanField()
-    # diabetes = fields.NullBooleanField()
-    # silicosis = fields.NullBooleanField()
-    # chronic_renal = fields.NullBooleanField()
-    # failure_haemodialysis = fields.NullBooleanField()
-    # other_immunosuppressive_drugs = fields.TextField()
-
 
 
 class TBTests(models.EpisodeSubrecord):
@@ -101,6 +87,18 @@ class TBTests(models.EpisodeSubrecord):
     ct_scan = fields.BooleanField(default=False)
     routine_blood_tests = fields.BooleanField(default=False)
     chest_xray = fields.BooleanField(default=False)
+
+
+class Observations(models.EpisodeSubrecord):
+    _sort           = 'datetime'
+    _icon           = 'fa fa-line-chart'
+
+    weight = fields.FloatField()
+
+    # in many ways this isn't necessary as it should always be the created timestamp
+    # in practice those fields are for audit purposes so lets seperate it out for
+    # now
+    datetime = fields.DateTimeField(auto_now_add=True)
 
 
 class RelationshipToIndex(lookuplists.LookupList):
