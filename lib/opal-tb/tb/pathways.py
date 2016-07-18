@@ -20,6 +20,25 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
         ),
     )
 
+class TBAssessment(RedirectsToPatientMixin, Pathway):
+    display_name = "TB Assessment"
+    slug = "tb_assessment"
+    steps = (
+        Step(
+            title="Personal Information",
+            model=uclptb_models.Demographics,
+            template_url="/templates/personal_information_form.html",
+        ),
+        Step(
+            title="Presentation & History",
+            model=uclptb_models.SymptomComplex,
+            template_url="/templates/presentation_pathway.html",
+            controller_class="TBSymptomsFormCtrl"
+        ),
+        uclptb_models.PatientConsultation
+    )
+
+
 class TBTreatment(RedirectsToPatientMixin, Pathway):
     display_name  = "TB Treatment"
     slug          = "tb_treatment"
@@ -42,25 +61,6 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
         delete_others(data, uclptb_models.Treatment, patient=self.patient, episode=self.episode)
         episode.save()
         return patient
-
-
-class TBAssessment(RedirectsToPatientMixin, Pathway):
-    display_name = "TB Assessment"
-    slug = "tb_assessment"
-    steps = (
-        Step(
-            title="Personal Information",
-            model=uclptb_models.Demographics,
-            template_url="/templates/personal_information_form.html",
-        ),
-        Step(
-            title="Presentation & History",
-            model=uclptb_models.SymptomComplex,
-            template_url="/templates/presentation_pathway.html",
-            controller_class="TBSymptomsFormCtrl"
-        ),
-        uclptb_models.PatientConsultation
-    )
 
 
 class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
