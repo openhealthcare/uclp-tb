@@ -9,6 +9,7 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
+          [[ editing.stage ]]
           {% radio model="editing.stage" label="TB Type" lookuplist="['Active', 'Latent', 'NTM']" %}
           {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
         </div> <!-- Form -->
@@ -82,7 +83,7 @@
           </div>
         </div>
 
-        <div class="row form-horizontal content-offset-20" ng-repeat="plan in localEditing.treatmentPlan">
+        <div class="row form-horizontal content-offset-20" ng-repeat="plan in localEditing.treatmentPlan" ng-show="existingTreatmentFilter(plan)">
           <div class="col-md-3">
             <input type="text" class="form-control" ng-model="plan.drug" bs-typeahead  bs-options="i for i in antimicrobial_list" />
           </div>
@@ -96,10 +97,10 @@
             <input type="text" class="form-control" ng-model="plan.end_date" bs-datepicker   />
           </div>
           <div class="col-md-1">
-            <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary" data-title="remove" bs-tooltip>
+            <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary" data-title="Remove" bs-tooltip>
               {% icon "fa-trash" %}
             </button>
-            <button ng-hide="!plan.id || today(plan.end_date)" ng-click="stopTreatment($index)" class="btn btn-secondary" data-title="stop" bs-tooltip>
+            <button ng-hide="!plan.id || today(plan.end_date)" ng-click="stopTreatment($index)" class="btn btn-secondary" data-title="Stop" bs-tooltip>
               {% icon "fa-stop" %}
             </button>
           </div>
@@ -107,7 +108,7 @@
 
         <div class="row content-offset-20">
           <div class="col-md-1 col-md-offset-11">
-            <button class="btn-primary btn" ng-click="addTreatment()">
+            <button class="btn-primary btn" ng-click="addTreatment()" data-title="Add Another" bs-tooltip>
               {% icon "glyphicon-plus" %}
             </button>
           </div>
