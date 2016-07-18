@@ -1,7 +1,7 @@
 """
 tb models.
 """
-from datetime import datetime
+from datetime import datetime, date
 
 from django.db import models as fields
 from django.db import models, transaction
@@ -188,11 +188,19 @@ class ContactTracing(models.EpisodeSubrecord):
             if not tb_episode.end:
                 return tb_episode
 
+    def create_referral_route(self, episode):
+        referral_route = episode.referralroute_set.first()
+        referral_route.referral_type = "TB contact screening"
+        referral_route.date_of_referral = date
+        pass
+
     def create_tb_episode(self, patient):
-        return patient.create_episode(
+        episode = patient.create_episode(
             category_name=TBEpisode.get_slug().upper(),
             stage=TBEpisode.stages.CONTACT_TRACING
         )
+
+        return episode
 
     @transaction.atomic()
     def update_from_dict(self, data, user, *args, **kwargs):
