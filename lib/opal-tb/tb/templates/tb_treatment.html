@@ -96,9 +96,12 @@
             <input type="text" class="form-control" ng-model="plan.end_date" bs-datepicker   />
           </div>
           <div class="col-md-1">
-            <button class="btn btn-secondary" ng-show="$index > 0">
+            <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary" data-title="remove" bs-tooltip>
               {% icon "fa-trash" %}
-          </button>
+            </button>
+            <button ng-hide="!plan.id || today(plan.end_date)" ng-click="stopTreatment($index)" class="btn btn-secondary" data-title="stop" bs-tooltip>
+              {% icon "fa-stop" %}
+            </button>
           </div>
         </div>
 
