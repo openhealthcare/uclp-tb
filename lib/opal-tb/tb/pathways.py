@@ -1,20 +1,13 @@
 """
 OPAL Pathway definitions for the re-usable TB module.
 """
+from django.db import transaction
 from pathway import pathways
 from pathway.pathways import (
-    ModalPathway, Pathway, RedirectsToPatientMixin, Step
+    Pathway, RedirectsToPatientMixin, Step, delete_others
 )
-from uclptb.models import Demographics
 from uclptb import models as uclptb_models
 from tb import models as tb_models
-
-
-class NextTBStage(ModalPathway):
-    display_name = "Next TB Stage"
-    slug = "next_tb_stage"
-
-    steps = (Demographics,)
 
 
 class TBContactTracing(RedirectsToPatientMixin, Pathway):
@@ -26,35 +19,6 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
             template_url="/templates/contact_tracing.html"
         ),
     )
-
-
-class TBTreatment(RedirectsToPatientMixin, Pathway):
-    display_name = "TB Treatment"
-    slug = "tb_treatment"
-    steps = (
-        Step(
-            title="TB Type",
-            icon="fa fa-tag",
-            api_name="stage",
-            template_url="/templates/tb_type.html",
-            controller_class="TBTypeFormCtrl",
-        ),
-        Step(
-            title="Diagnosis & Treatment",
-            icon="fa fa-medkit",
-            template_url="/templates/tb_treatment.html",
-            controller_class="TBTreatmentCtrl",
-        )
-    )
-
-    def save(self, data, user):
-        stage = data.pop('stage')[0]
-        episode = self.episode
-        patient = super(TBTreatment, self).save(data, user)
-        episode.stage = stage
-        episode.save()
-        return patient
-
 
 class TBAssessment(RedirectsToPatientMixin, Pathway):
     display_name = "TB Assessment"
@@ -71,13 +35,32 @@ class TBAssessment(RedirectsToPatientMixin, Pathway):
             template_url="/templates/presentation_pathway.html",
             controller_class="TBSymptomsFormCtrl"
         ),
-        # Step(
-        #     model=tb_models.TBTests,
-        # ),
         uclptb_models.PatientConsultation
-
-        # PatientConsultation (in a timeline on the patient detail view)
     )
+
+
+class TBTreatment(RedirectsToPatientMixin, Pathway):
+    display_name  = "TB Treatment"
+    slug          = "tb_treatment"
+    template_url = '/templates/pathway/treatment_form_base.html'
+    steps = (
+        Step(
+            title="Diagnosis & Treatment",
+            icon="fa fa-medkit",
+            template_url="/templates/tb_treatment.html",
+            controller_class="TBTreatmentCtrl",
+        ),
+    )
+
+    @transaction.atomic
+    def save(self, data, user):
+        stage = data.pop('stage')[0]
+        episode = self.episode
+        patient = super(TBTreatment, self).save(data, user)
+        episode.stage = stage
+        delete_others(data, uclptb_models.Treatment, patient=self.patient, episode=self.episode)
+        episode.save()
+        return patient
 
 
 class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
