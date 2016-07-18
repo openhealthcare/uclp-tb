@@ -14,24 +14,22 @@
         </div>
       </div>
     </div>
-    <div ng-repeat="item in timelineSubrecords" class="row content-offset-20">
+    <div ng-repeat="metaInformation in timelineData" class="row content-offset-20">
       <div class="col-md-3 patient-timeline">
         <a
            class="pointer"
-           ng-click="episode.recordEditor.editItem(item.columnName, $index)">
+           ng-click="episode.recordEditor.editItem(metaInformation.columnName, getIndex(metaInformation.subrecord))">
           <div class="patient-timeline-speech-bubble">
-            <i class="fa fa-comments patient-timeline-speech-bubble-icon"></i>
+            <i class="[[ metaInformation.icon ]] patient-timeline-speech-bubble-icon"></i>
           </div>
-          <div ng-show="included[item.columnName]">
-            <div class="patient-timeline-date">
-              [[ item[included[item.columnName].when] | momentDateFormat:'DD MMM YYYY' ]]
-            </div>
+          <div class="patient-timeline-date">
+            [[ metaInformation.subrecord[metaInformation.when] | momentDateFormat:'DD MMM YYYY' ]]
           </div>
         </a>
       </div>
       <div class="col-md-9">
-        <div class="patient-timeline-entry">
-          <div ng-include="included[item.columnName].templateUrl"></div>
+        <div ng-repeat="item in [metaInformation.subrecord]" class="patient-timeline-entry">
+          <div ng-include src="metaInformation.templateUrl"></div>
         </div>
       </div>
     </div>
