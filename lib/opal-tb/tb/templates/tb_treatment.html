@@ -2,7 +2,6 @@
 <div class="row">
   <div class="col-md-8">
     <div class="panel panel-default">
-
       <div class="panel-heading">
         <h3>
           {% icon "fa-stethoscope" %} Diagnosis
@@ -10,7 +9,7 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          {% radio model="localEditing.tb_type" label="TB Type" lookuplist="['Active', 'Latent', 'NTM']"%}
+          {% radio model="editing.stage" label="TB Type" lookuplist="['Active', 'Latent', 'NTM']"%}
           {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
         </div> <!-- Form -->
       </div>   <!-- Body -->
@@ -91,15 +90,15 @@
             <input type="text" class="form-control" ng-model="plan.dose" />
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.start" bs-datepicker   />
+            <input type="text" class="form-control" ng-model="plan.start_date" bs-datepicker   />
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.stop" bs-datepicker   />
+            <input type="text" class="form-control" ng-model="plan.end_date" bs-datepicker   />
           </div>
           <div class="col-md-1">
             <button class="btn btn-secondary" ng-show="$index > 0">
               {% icon "fa-trash" %}
-            </button>
+          </button>
           </div>
         </div>
 
