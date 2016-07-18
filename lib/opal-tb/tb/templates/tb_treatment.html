@@ -1,30 +1,137 @@
 {% load forms %}
-<div class="form-horizontal">
-  <h4 class="text-center">{{ models.Diagnosis.get_display_name }}</h4>
-  {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
-  {% checkbox label="Pulmonary" model="localEditing.hasPulmonary" change="pulmonaryChange()" %}
-
-  <h4 class="text-center content-offset">Test Results</h4>
-  <span ng-repeat="test in tests">
-    {% radio label="[[ test.test ]]" model="test.result" lookuplist="['Positive', 'Negative', 'Not Done']" %}
-  </span>
-
-  <h4 class="text-center content-offset">Sensitivities</h4>
-  {% checkbox label="Fully Sensitive" model="fully_sensitive" %}
-  {% checkbox label="Isoniazid Resistant" model="isoniazid_resistant" %}
-  {% checkbox label="Rifampicin Resistant" model="rifampicin_resistant" %}
-  {% checkbox label="Ethambutol Resistant" model="ethambutol_resistant" %}
-  {% input label="Other" model="other_resistant" %}
-</div>
-<hr />
-<div class="form-horizontal">
-  <h4 class="text-center">{{ models.Treatment.get_display_name }}</h4>
-  {% include models.Treatment.get_form_template %}
-</div>
-<div ng-show="editing.stage === 'Active TB'">
-  <hr />
-  <div class="form-horizontal">
-    <h4 class="text-center">{{ models.PHEnglandNotification.get_display_name }}</h4>
-    {% include models.PHEnglandNotification.get_form_template %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>
+          {% icon "fa-stethoscope" %} Diagnosis
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-horizontal">
+          [[ editing.stage ]]
+          {% radio model="editing.stage" label="TB Type" lookuplist="['Active', 'Latent', 'NTM']" %}
+          {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
+        </div> <!-- Form -->
+      </div>   <!-- Body -->
+    </div>     <!-- panel -->
+  </div>       <!-- Column -->
+  <div class="col-md-4">
+    <p class="sidebar-help content-offset">
+      What type of TB does this patient have,<br /> and where is it located?
+    </p>
   </div>
-</div>
+</div> <!-- Row -->
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 >
+          {% icon "fa-crosshairs" %} Test Results
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-horizontal">
+          <span ng-repeat="test in tests">
+            {% radio label="[[ test.test ]]" model="test.result" lookuplist="['Positive', 'Negative', 'Not Done']" %}
+          </span>
+
+          <h4 class="text-center ">Sensitivities</h4>
+          {% checkbox label="Fully Sensitive" model="fully_sensitive" %}
+          {% checkbox label="Isoniazid Resistant" model="isoniazid_resistant" %}
+          {% checkbox label="Rifampicin Resistant" model="rifampicin_resistant" %}
+          {% checkbox label="Ethambutol Resistant" model="ethambutol_resistant" %}
+          {% input label="Other" model="other_resistant" lookuplist="antimicrobial_list" %}
+        </div>
+      </div>   <!-- Body -->
+
+    </div>     <!-- panel -->
+  </div>       <!-- Column -->
+  <div class="col-md-4">
+    <p class="sidebar-help content-offset">
+      A brief summary of the key test results for this patient.
+    </p>
+  </div>
+</div> <!-- Row -->
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <h3 >
+          {% icon "fa-medkit" %} Treatment Plan
+        </h3>
+      </div>
+      <div class="panel-body">
+
+        <form class="form-horizontal">
+          {% input label="Weight" model="localEditing.weight" unit="kg" %}
+        </form
+        <hr />
+        <div class="row text-center">
+          <div class="col-md-3">
+            <b>Drug</b>
+          </div>
+          <div class="col-md-2">
+            <b>Dose</b>
+          </div>
+          <div class="col-md-3">
+            <b>Start</b>
+          </div>
+          <div class="col-md-3">
+            <b>Stop</b>
+          </div>
+        </div>
+
+        <div class="row form-horizontal content-offset-20" ng-repeat="plan in localEditing.treatmentPlan" ng-show="existingTreatmentFilter(plan)">
+          <div class="col-md-3">
+            <input type="text" class="form-control" ng-model="plan.drug" bs-typeahead  bs-options="i for i in antimicrobial_list" />
+          </div>
+          <div class="col-md-2">
+            <input type="text" class="form-control" ng-model="plan.dose" />
+          </div>
+          <div class="col-md-3">
+            <input type="text" class="form-control" ng-model="plan.start_date" bs-datepicker   />
+          </div>
+          <div class="col-md-3">
+            <input type="text" class="form-control" ng-model="plan.end_date" bs-datepicker   />
+          </div>
+          <div class="col-md-1">
+            <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary" data-title="Remove" bs-tooltip>
+              {% icon "fa-trash" %}
+            </button>
+            <button ng-hide="!plan.id || today(plan.end_date)" ng-click="stopTreatment($index)" class="btn btn-secondary" data-title="Stop" bs-tooltip>
+              {% icon "fa-stop" %}
+            </button>
+          </div>
+        </div>
+
+        <div class="row content-offset-20">
+          <div class="col-md-1 col-md-offset-11">
+            <button class="btn-primary btn" ng-click="addTreatment()" data-title="Add Another" bs-tooltip>
+              {% icon "glyphicon-plus" %}
+            </button>
+          </div>
+        </div>
+
+      </div> <!-- Panel body -->
+    </div> <!-- Panel -->
+  </div>   <!--  Column -->
+  <div class="col-md-4">
+    <div class="well">
+      <h4 class="text-center">Standard treatments</h4>
+      <p>
+        Isoniazid (with pyridoxine), rifampicin, pyrazinamide and ethambutol for 2 months <b>then</b>
+      </p>
+      <p>
+        Isoniazid (with pyridoxine) and rifampicin for a further 4 months.
+      </p>
+      <center>
+        <button class="btn btn-primary btn-lg" ng-disabled="!localEditing.weight" ng-click="useTreatmentPlan(1)">
+          {% icon "glyphicon-plus" %}
+          Use this treatment
+        </button>
+      </center>
+    </div>
+  </div>
+</div>     <!--  Row -->
