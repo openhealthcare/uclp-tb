@@ -130,12 +130,19 @@ class ContactTracingTestCase(OpalTestCase):
             self.other_patient.contactdetails_set.first().address_line1
         )
 
+        referral_route = new_contact_tracing.contact_episode.referralroute_set.first()
+        self.assertEqual(referral_route.referral_type, '')
+
+
     def test_create_new_contact_tracing(self):
         ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
         Demographics = subrecords.get_subrecord_from_model_name('Demographics')
 
         new_contact_tracing = ContactTracing(episode=self.episode)
         example_update_dict = self.get_test_dict()
+        self.user.first_name = "Indiana"
+        self.user.last_name = "Jones"
+        self.user.save()
         new_contact_tracing.update_from_dict(example_update_dict, self.user)
         self.assertEqual(ContactTracing.objects.count(), 1)
         self.assertEqual(Demographics.objects.count(), 3)
@@ -161,6 +168,16 @@ class ContactTracingTestCase(OpalTestCase):
         self.assertEqual(
             new_contact_tracing.relationship_to_index,
             example_update_dict["relationship_to_index"]
+        )
+        referral_route = new_contact_tracing.contact_episode.referralroute_set.first()
+        self.assertEqual(referral_route.referral_type, "TB contact screening")
+        self.assertEqual(referral_route.referral_name, "I Jones")
+        self.assertEqual(
+            referral_route.date_of_referral, datetime.date.today()
+        )
+        self.assertTrue(referral_route.internal)
+        self.assertTrue(
+            referral_route.referral_organisation, "Respiratory Medicine"
         )
 
     def test_to_dict(self):

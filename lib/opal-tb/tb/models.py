@@ -188,19 +188,22 @@ class ContactTracing(models.EpisodeSubrecord):
             if not tb_episode.end:
                 return tb_episode
 
-    def create_referral_route(self, episode):
-        referral_route = episode.referralroute_set.first()
-        referral_route.referral_type = "TB contact screening"
-        referral_route.date_of_referral = date
-        pass
+    def create_referral_route(self, episode, user):
+        referral = episode.referralroute_set.first()
+        referral.referral_type = "TB contact screening"
+        referral.date_of_referral = date.today()
+        referral.internal = True
+        referral.referral_organisation = "Respiratory Medicine"
+        if user.first_name and user.last_name:
+            referral_name = "{} {}".format(user.first_name[:1], user.last_name)
+            referral.referral_name = referral_name
+        referral.save()
 
     def create_tb_episode(self, patient):
-        episode = patient.create_episode(
+        return patient.create_episode(
             category_name=TBEpisode.get_slug().upper(),
             stage=TBEpisode.stages.CONTACT_TRACING
         )
-
-        return episode
 
     @transaction.atomic()
     def update_from_dict(self, data, user, *args, **kwargs):
@@ -209,6 +212,7 @@ class ContactTracing(models.EpisodeSubrecord):
         if created:
             self.update_contact_details(patient, data, user)
             self.contact_episode = self.create_tb_episode(patient)
+            self.create_referral_route(self.contact_episode, user)
 
         self.relationship_to_index = data.pop("relationship_to_index", None)
         self.reason_at_risk = data.pop("reason_at_risk", None)
