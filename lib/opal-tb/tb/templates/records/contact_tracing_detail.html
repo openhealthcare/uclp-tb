@@ -2,14 +2,17 @@
   <a href="/#/patient/[[ item.patient_id ]]">
     [[ item.first_name ]]
     [[ item.surname ]]
-    <div ng-show="item.date_of_birth">
+    <span ng-show="item.date_of_birth">
       ([[ item.date_of_birth | shortDate ]])
-    </div>
-    <div ng-show="item.hospital_number">
+    </span>
+    <span ng-show="item.hospital_number">
       - [[ item.hospital_number ]]
-    </div>
+    </span>
+    <span ng-show="item.stage">
+      - [[ item.stage ]]
+    </span>
   </a>
 </div>
 <div>
-  [[ item.reason_at_risk ]]<span ng-show="item.relationship_to_index">([[ item.relationship_to_index ]])</span>
+  [[ item.reason_at_risk ]]<span ng-show="item.relationship_to_index"> ([[ item.relationship_to_index ]])</span>
 </div>
