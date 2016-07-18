@@ -9,7 +9,7 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          {% radio model="editing.stage" label="TB Type" lookuplist="['Active', 'Latent', 'NTM']"%}
+          {% radio model="editing.stage" label="TB Type" lookuplist="['Active', 'Latent', 'NTM']" %}
           {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
         </div> <!-- Form -->
       </div>   <!-- Body -->
@@ -65,7 +65,7 @@
 
         <form class="form-horizontal">
           {% input label="Weight" model="localEditing.weight" unit="kg" %}
-        </form>
+        </form
         <hr />
         <div class="row text-center">
           <div class="col-md-3">
