@@ -27,6 +27,7 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
         ),
     )
 
+
 class TBTreatment(RedirectsToPatientMixin, Pathway):
     display_name = "TB Treatment"
     slug = "tb_treatment"
