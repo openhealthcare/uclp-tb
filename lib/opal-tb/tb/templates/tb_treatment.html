@@ -119,9 +119,12 @@
   </div>   <!--  Column -->
   <div class="col-md-4">
     <div class="well">
-      <h4 class="text-center">Standard treatments</h4>
+      <h4 class="text-center">First line regimen</h4>
       <p>
-        Isoniazid (with pyridoxine), rifampicin, pyrazinamide and ethambutol for 2 months <b>then</b>
+        Isoniazid (with pyridoxine), rifampicin, pyrazinamide and ethambutol for 2 months
+      </p>
+      <p class="text-center">
+        <b>then</b>
       </p>
       <p>
         Isoniazid (with pyridoxine) and rifampicin for a further 4 months.
@@ -135,3 +138,24 @@
     </div>
   </div>
 </div>     <!--  Row -->
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>
+          {% icon "fa-comments" %} Patient Consultation
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-horizontal">
+          {% include models.PatientConsultation.get_form_template %}
+        </div> <!-- Form -->
+      </div>   <!-- Body -->
+    </div>     <!-- panel -->
+  </div>       <!-- Column -->
+  <div class="col-md-4">
+    <p class="sidebar-help content-offset">
+      A record of this consultation.
+    </p>
+  </div>
+</div> <!-- Row -->

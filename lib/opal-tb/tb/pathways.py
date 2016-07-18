@@ -20,18 +20,30 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
         ),
     )
 
+class TBAssessment(RedirectsToPatientMixin, Pathway):
+    display_name = "TB Assessment"
+    slug = "tb_assessment"
+    steps = (
+        Step(
+            title="Personal Information",
+            model=uclptb_models.Demographics,
+            template_url="/templates/personal_information_form.html",
+        ),
+        Step(
+            title="Presentation & History",
+            model=uclptb_models.SymptomComplex,
+            template_url="/templates/presentation_pathway.html",
+            controller_class="TBSymptomsFormCtrl"
+        ),
+        uclptb_models.PatientConsultation
+    )
+
+
 class TBTreatment(RedirectsToPatientMixin, Pathway):
     display_name  = "TB Treatment"
     slug          = "tb_treatment"
     template_url = '/templates/pathway/treatment_form_base.html'
     steps = (
-        # Step(
-        #     title="TB Type",
-        #     icon="fa fa-tag",
-        #     api_name="stage",
-        #     template_url="/templates/tb_type.html",
-        #     controller_class="TBTypeFormCtrl",
-        # ),
         Step(
             title="Diagnosis & Treatment",
             icon="fa fa-medkit",
@@ -49,30 +61,6 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
         delete_others(data, uclptb_models.Treatment, patient=self.patient, episode=self.episode)
         episode.save()
         return patient
-
-
-class TBAssessment(RedirectsToPatientMixin, Pathway):
-    display_name = "TB Assessment"
-    slug = "tb_assessment"
-    steps = (
-        Step(
-            title="Personal Information",
-            model=uclptb_models.Demographics,
-            template_url="/templates/personal_information_form.html",
-        ),
-        Step(
-            title="Presentation & History",
-            model=uclptb_models.SymptomComplex,
-            template_url="/templates/presentation_pathway.html",
-            controller_class="TBSymptomsFormCtrl"
-        ),
-        # Step(
-        #     model=tb_models.TBTests,
-        # ),
-        uclptb_models.PatientConsultation
-
-        # PatientConsultation (in a timeline on the patient detail view)
-    )
 
 
 class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
