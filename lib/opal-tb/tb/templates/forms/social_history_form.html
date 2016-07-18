@@ -1,5 +1,4 @@
 {% load forms %}
-{% textarea  field="SocialHistory.notes"  %}
 {% radio field="SocialHistory.drinking" lookuplist="['None', 'Occasional', 'Excess']" %}
 <span ng-show="editing.social_history.drinking == 'Excess'">
   {% checkbox field="SocialHistory.alcohol_dependent" %}
@@ -9,3 +8,4 @@
 {% radio field="SocialHistory.incarceration" lookuplist="['Never', 'Current', 'Previous']" %}
 {% textarea  field="SocialHistory.occupation"  %}
 {% checkbox field="SocialHistory.no_fixed_abode" %}
+{% textarea  field="SocialHistory.notes"  %}
