@@ -9,7 +9,6 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          [[ editing.stage ]]
           {% radio model="editing.stage" label="TB Type" lookuplist="['Active', 'Latent', 'NTM']" %}
           {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
         </div> <!-- Form -->
