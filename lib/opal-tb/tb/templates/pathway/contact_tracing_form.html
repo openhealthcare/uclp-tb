@@ -1,0 +1,6 @@
+{% load forms %}
+{% input field="Demographics.first_name" model="editing.contact_tracing.first_name" %}
+{% input field="Demographics.surname" model="editing.contact_tracing.surname" %}
+{% input field="ContactTracing.relationship_to_index" %}
+{% input field="ContactTracing.reason_at_risk" %}
+{% date_of_birth_field model_name="editing.contact_tracing.date_of_birth"  %}

@@ -1,7 +1,7 @@
 """
 tb models.
 """
-from datetime import datetime
+from datetime import datetime, date
 
 from django.db import models as fields
 from django.db import models, transaction
@@ -19,6 +19,7 @@ class ContactDetails(models.PatientSubrecord):
     _is_singleton = True
     _advanced_searchable = False
     _icon = 'fa fa-phone'
+    _title = 'Contact Details'
 
     address_line1 = fields.CharField("Address line 1", max_length = 45,
                                      blank=True, null=True)
@@ -188,6 +189,17 @@ class ContactTracing(models.EpisodeSubrecord):
             if not tb_episode.end:
                 return tb_episode
 
+    def create_referral_route(self, episode, user):
+        referral = episode.referralroute_set.first()
+        referral.referral_type = "TB contact screening"
+        referral.date_of_referral = date.today()
+        referral.internal = True
+        referral.referral_organisation = "Respiratory Medicine"
+        if user.first_name and user.last_name:
+            referral_name = "{} {}".format(user.first_name[:1], user.last_name)
+            referral.referral_name = referral_name
+        referral.save()
+
     def create_tb_episode(self, patient):
         return patient.create_episode(
             category_name=TBEpisode.get_slug().upper(),
@@ -201,6 +213,7 @@ class ContactTracing(models.EpisodeSubrecord):
         if created:
             self.update_contact_details(patient, data, user)
             self.contact_episode = self.create_tb_episode(patient)
+            self.create_referral_route(self.contact_episode, user)
 
         self.relationship_to_index = data.pop("relationship_to_index", None)
         self.reason_at_risk = data.pop("reason_at_risk", None)
@@ -229,7 +242,7 @@ class SocialHistory(models.EpisodeSubrecord):
     _icon = 'fa fa-clock-o'
 
     notes             = fields.TextField(blank=True, null=True)
-    drinking          = fields.CharField(max_length=250, blank=True, null=True)
+    drinking          = fields.CharField(max_length=250, blank=True, null=True, verbose_name="Alcohol")
     alcohol_dependent = fields.NullBooleanField()
     smoking           = fields.CharField(max_length=250, blank=True, null=True)
     occupation        = fields.TextField(blank=True, null=True)
@@ -246,12 +259,12 @@ def get_for_lookup_list(model, values):
     )
 
 class PHEnglandNotification(models.EpisodeSubrecord):
-    _title = "Notification"
+    _title = "Public Health Notification"
     _is_singleton = True
     _icon = 'fa fa-flag'
 
-    who = fields.CharField(max_length=250, blank=True, null=True)
-    when = fields.DateField(null=True, blank=True)
+    who = fields.CharField(max_length=250, blank=True, null=True, verbose_name="Notified by")
+    when = fields.DateField(null=True, blank=True, verbose_name="Notification date")
 
 
 class TBOutcome(models.EpisodeSubrecord):
@@ -259,7 +272,7 @@ class TBOutcome(models.EpisodeSubrecord):
     _title = 'TB Treatment Outcome'
     _icon = 'fa fa-th-list'
 
-    clinical_resolution              = fields.NullBooleanField()
+    clinical_resolution             = fields.NullBooleanField()
     radiological_resolution         = fields.NullBooleanField()
     clinical_resolution_details     = fields.TextField(blank=True, null=True)
     radiological_resolution_details = fields.TextField(blank=True, null=True)

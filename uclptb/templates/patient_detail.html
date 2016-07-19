@@ -27,7 +27,7 @@
           {% icon "fa-flag" %} Record Notification
         </button>
       </li>
-      <li class="list-group-item">
+      <li class="list-group-item" ng-hide="episode.environmental_risk_assessment[0].updated">
         <a class="btn btn-primary col-md-8 btn-text-left"
            href="/pathway/#/contact_tracing/[[ episode.id ]]">
           {% icon "fa-users" %} Contact Tracing

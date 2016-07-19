@@ -19,9 +19,6 @@
             <div ng-repeat="item in episode.travel">
               {% include models.Travel.get_display_template %}
             </div>
-            <div ng-repeat="item in episode.tb_risk_factors">
-              {% include models.TBRiskFactors.get_display_template %}
-            </div>
             <div class="row" ng-show="episode.social_history[0].smoking && Tepisode.social_history[0].smoking != 'Never'">
               <div class="col-md-6">
                 <b>Smoking:</b>
@@ -82,7 +79,6 @@
         {% record_panel models.PastMedicalHistory %}
         {% record_panel models.SocialHistory %}
         {% record_panel models.Travel %}
-        {% record_panel models.TBRiskFactors %}
         {% record_panel models.SymptomComplex %}
         {% record_panel models.Investigation %}
         {% record_panel models.Treatment %}
