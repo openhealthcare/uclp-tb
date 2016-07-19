@@ -2,6 +2,11 @@
   <div class="panel-heading">
     <h3>
         Patient History
+
+        <div ng-repeat="information in metaInformationDisplay" ng-click="episode.recordEditor.newItem(information.columnName)" data-title="[[ information.display_name ]]" bs-tooltip  class="pointer pull-right" style="background-color: black;  border-radius: 50%; height: 35px; width: 35px; text-align: center; padding: 6px; font-size: 14px; line-height: 20px; margin-left: 5px;">
+          <i style="color: white;" class="[[ information.icon ]]"></i>
+        </div>
+        <i style="margin-top: 5px;" class="fa fa-plus pull-right"></i>
     </h3>
   </div>
   <div class="panel-body">
@@ -22,7 +27,7 @@
         </div>
       </div>
       <div class="col-md-10">
-        <div ng-show="getMetaDataFromMomentAndName(date, 'treatment_stop').length" class="row">
+        <div ng-show="getMetaDataFromMomentAndName(date, 'treatment_stop').length" class="row content-offset-below-10">
           <div class="col-md-1">
             <div style="background-color: black;  border-radius: 50%; height: 35px; width: 35px; text-align: center; padding: 6px;">
               <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'treatment_stop')[0].icon ]]"></i>
@@ -30,12 +35,12 @@
           </div>
           <div class="col-md-11">
               <span ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'treatment_stop')">
-                <span ng-show="$first">Stopped Treatment of </span><a ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]([[ metaData.subrecord.dose ]])</a><span ng-show="!$last">, </span>
+                <span ng-show="$first">Stopped Treatment of </span><a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]<span ng-show="metaData.subrecord.dose">([[ metaData.subrecord.dose ]])</span></a><span ng-show="!$last">, </span>
               </span>
           </div>
         </div>
 
-        <div ng-show="getMetaDataFromMomentAndName(date, 'treatment_start').length" class="row">
+        <div ng-show="getMetaDataFromMomentAndName(date, 'treatment_start').length" class="row content-offset-below-10">
           <div class="col-md-1">
             <div  ng-hide="getMetaDataFromMomentAndName(date, 'treatment_stop').length" style="background-color: black;  border-radius: 50%; height: 35px; width: 35px; text-align: center; padding: 6px;">
               <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'treatment_start')[0].icon ]]"></i>
@@ -43,12 +48,12 @@
           </div>
           <div class="col-md-11">
               <span ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'treatment_start')">
-                <span ng-show="$first">Started Treatment of </span><a ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]([[ metaData.subrecord.dose ]])</a><span ng-show="!$last">, </span>
+                <span ng-show="$first">Started Treatment of </span><a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]<span ng-show="metaData.subrecord.dose">([[ metaData.subrecord.dose ]])</span></a><span ng-show="!$last">, </span>
               </span>
           </div>
         </div>
 
-        <div ng-show="getMetaDataFromMomentAndName(date, 'investigation').length" class="row">
+        <div ng-show="getMetaDataFromMomentAndName(date, 'investigation').length" class="row content-offset-below-10">
           <div class="col-md-1">
             <div style="background-color: black;  border-radius: 50%; height: 35px; width: 35px; text-align: center; padding: 6px;">
               <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'investigation')[0].icon ]]"></i>
@@ -56,13 +61,13 @@
           </div>
           <div class="col-md-11">
             <span ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'investigation')">
-                <span ng-show="$first">Tests of </span><a ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.test ]]</a><span ng-show="!$last">,</span>
+                <span ng-show="$first">Tests of </span><a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.test ]]</a><span ng-show="!$last">,</span>
               <span ng-show="$last"> ordered</span>
             </span>
           </div>
         </div>
 
-        <div ng-show="getMetaDataFromMomentAndName(date, 'symptom_complex').length" class="row">
+        <div ng-show="getMetaDataFromMomentAndName(date, 'symptom_complex').length" class="row content-offset-below-10">
           <div class="col-md-1">
             <div style="background-color: black;  border-radius: 50%; height: 35px; width: 35px; text-align: center; padding: 6px;">
               <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'symptom_complex')[0].icon ]]"></i>
@@ -71,13 +76,13 @@
           <div class="col-md-11">
             <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'symptom_complex')">
               <div ng-repeat="item in [metaData.subrecord]">
-                <a ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
+                <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
               </div>
             </div>
           </div>
         </div>
 
-        <div ng-show="getMetaDataFromMomentAndName(date, 'patient_consultation').length" class="row">
+        <div ng-show="getMetaDataFromMomentAndName(date, 'patient_consultation').length" class="row content-offset-below-10">
           <div class="col-md-1">
             <div style="background-color: black;  border-radius: 50%; height: 35px; width: 35px; text-align: center; padding: 6px;">
               <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'patient_consultation')[0].icon ]]"></i>
@@ -86,7 +91,7 @@
           <div class="col-md-11">
             <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'patient_consultation')">
               <div ng-repeat="item in [metaData.subrecord]">
-                <a ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
+                <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
               </div>
             </div>
           </div>
