@@ -29,7 +29,6 @@
               </div>
             </div>
           </div>
-          {% record_panel models.ReferralRoute %}
         </div>
         <div class="col-md-6">
           <div class="panel panel-active">
@@ -56,7 +55,7 @@
               <div ng-repeat="item in episode.diagnosis[0]">
                 {% include models.Diagnosis.get_display_template %}
               </div>
-              <div class="content-offset-10">
+              <div class="content-offset-10" ng-show="episode.stage=='Active TB'">
                 {% include 'partials/current_treatments.html' %}
               </div>
             </div>
