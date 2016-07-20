@@ -93,7 +93,7 @@
             <input type="text" class="form-control" ng-model="plan.start_date" bs-datepicker   />
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.end_date" bs-datepicker   />
+            <input type="text" class="form-control" ng-model="plan.planned_end_date" bs-datepicker   />
           </div>
           <div class="col-md-1">
             <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary" data-title="Remove" bs-tooltip>
