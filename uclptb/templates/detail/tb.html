@@ -2,103 +2,112 @@
 {% load panels %}
 <div class="col-md-12">
 
-<tabset justified="true">
-  <tab heading="Patient Overview">
+  <tabset justified="true">
+    <tab heading="Patient Overview">
 
-    <div class="row">
-      <div class="col-md-6">
-        <div class="panel panel-active">
-          <div class="panel-heading">
-            <h3>
-              {% icon "fa-warning" %}
-              Risks
-            </h3>
-          </div>
-          <div class="panel-body">
-            <!-- <p>Previous TB (Placeholder)</p> -->
-            <div ng-repeat="item in episode.travel">
-              {% include models.Travel.get_display_template %}
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-active">
+            <div class="panel-heading">
+              <h3>
+                {% icon "fa-warning" %}
+                Risks
+              </h3>
             </div>
-            <div class="row" ng-show="episode.social_history[0].smoking && Tepisode.social_history[0].smoking != 'Never'">
-              <div class="col-md-6">
-                <b>Smoking:</b>
+            <div class="panel-body">
+              <!-- <p>Previous TB (Placeholder)</p> -->
+              <div ng-repeat="item in episode.travel">
+                {% include models.Travel.get_display_template %}
               </div>
-              <div class="col-md-6">
-               [[ episode.social_history[0].smoking ]]
+              <div class="row" ng-show="episode.social_history[0].smoking && Tepisode.social_history[0].smoking != 'Never'">
+                <div class="col-md-6">
+                  <b>Smoking:</b>
+                </div>
+                <div class="col-md-6">
+                  [[ episode.social_history[0].smoking ]]
+                </div>
               </div>
             </div>
           </div>
+          {% record_panel models.ReferralRoute %}
         </div>
-        {% record_panel models.ReferralRoute %}
-      </div>
-      <div class="col-md-6">
-        <div class="panel panel-active">
-          <div class="panel-heading">
-            <h3>
-              {% icon "fa-user" %}
-              Status
-            </h3>
-          </div>
-          <div class="panel-body">
-            <p><b>[[ episode.stage ]] <span ng-show="episode.tb_location[0].sites.length">([[ episode.tb_location[0].sites.join(", ") ]])</span></b></p>
-            <p ng-show="episode.ph_england_notification[0].who || episode.ph_england_notification[0].when">
+        <div class="col-md-6">
+          <div class="panel panel-active">
+            <div class="panel-heading">
+              <h3>
+                {% icon "fa-user" %}
+                Status
+              </h3>
+            </div>
+            <div class="panel-body">
+              <p><b>[[ episode.stage ]] <span ng-show="episode.tb_location[0].sites.length">([[ episode.tb_location[0].sites.join(", ") ]])</span></b></p>
+              <p ng-show="episode.ph_england_notification[0].who || episode.ph_england_notification[0].when">
                 <span ng-show="episode.ph_england_notification[0].who">[[ episode.ph_england_notification[0].who ]]</span>
                 <span ng-hide="episode.ph_england_notification[0].who">Public Health England</span>
                 notified
                 <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
-            </p>
-            <p ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active TB'">
-              <b>PHE notification not complete</b>
-            </p>
-            <div ng-repeat="item in episode.investigation">
-              {% include models.Investigation.get_display_template %}
-            </div>
-            <div ng-repeat="item in episode.diagnosis[0]">
-              {% include models.Diagnosis.get_display_template %}
-            </div>
+              </p>
+              <p ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active TB'">
+                <b>PHE notification not complete</b>
+              </p>
+              <div ng-repeat="item in episode.investigation">
+                {% include models.Investigation.get_display_template %}
+              </div>
+              <div ng-repeat="item in episode.diagnosis[0]">
+                {% include models.Diagnosis.get_display_template %}
+              </div>
 
 
+            </div>
+          </div>
+          <div ng-hide="episode.stage == 'Contact tracing'">
+            {% record_panel models.Treatment %}
           </div>
         </div>
-        {% record_panel models.Treatment %}
       </div>
-    </div>
-    <hr />
-    <div class="row">
-      <div class="col-md-8 col-md-push-1">
-        {% record_panel models.SymptomComplex %}
-        {% record_timeline models.PatientConsultation "when" %}
-        {% record_timeline models.Investigation "date_ordered" %}
+      <hr />
+      <div class="row">
+        <div class="col-md-8 col-md-push-1" ng-show="episode.stage=='Contact tracing'">
+          <center>
+            <button class="btn btn-lg btn-primary">
+              {% icon "fa-user" %} Record details of TB exposure
+            </button>
+          </center>
+        </div>
+        <div class="col-md-8 col-md-push-1" ng-hide="episode.stage=='Contact tracing'">
+          {% record_panel models.SymptomComplex %}
+          {% record_timeline models.PatientConsultation "when" %}
+          {% record_timeline models.Investigation "date_ordered" %}
+        </div>
       </div>
-    </div>
-  </tab>
+    </tab>
 
-  <tab heading="Detailed History">
-    <div class="row">
-      <div class="col-md-8">
-        {% record_panel models.ContactDetails %}
-        {% record_panel models.ReferralRoute %}
-        {% record_panel models.PastMedicalHistory %}
-        {% record_panel models.SocialHistory %}
-        {% record_panel models.Travel %}
-        {% record_panel models.SymptomComplex %}
-        {% record_panel models.Investigation %}
-        {% record_panel models.Treatment %}
-        {% record_panel models.PHEnglandNotification %}
-        {% record_timeline models.PatientConsultation "when" %}
-        {% record_panel models.TBOutcome %}
+    <tab heading="Detailed History">
+      <div class="row">
+        <div class="col-md-8">
+          {% record_panel models.ContactDetails %}
+          {% record_panel models.ReferralRoute %}
+          {% record_panel models.PastMedicalHistory %}
+          {% record_panel models.SocialHistory %}
+          {% record_panel models.Travel %}
+          {% record_panel models.SymptomComplex %}
+          {% record_panel models.Investigation %}
+          {% record_panel models.Treatment %}
+          {% record_panel models.PHEnglandNotification %}
+          {% record_timeline models.PatientConsultation "when" %}
+          {% record_panel models.TBOutcome %}
+        </div>
       </div>
-    </div>
-  </tab>
-<tab heading="Contact Tracing">
-  <div class="row">
-    <div class="col-md-8">
-      {% record_panel models.EnvironmentalRiskAssessment %}
-      {% record_panel models.ContactTracing editable="False" %}
-    </div>
-  </div>
-</tab>
+    </tab>
+    <tab heading="Contact Tracing">
+      <div class="row">
+        <div class="col-md-8">
+          {% record_panel models.EnvironmentalRiskAssessment %}
+          {% record_panel models.ContactTracing editable="False" %}
+        </div>
+      </div>
+    </tab>
 
-</tabset>
+  </tabset>
 
 </div>
