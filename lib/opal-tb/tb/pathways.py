@@ -10,6 +10,17 @@ from uclptb import models as uclptb_models
 from tb import models as tb_models
 
 
+class TBPersonalInformation(RedirectsToPatientMixin, Pathway):
+    display_name = "Personal Information"
+    slug = "tb_personal_information"
+    steps = (
+        Step(
+            title="Patient Information",
+            icon="fa fa-user",
+            template_url="/templates/personal_information_form.html"
+        ),
+    )
+
 class TBContactTracing(RedirectsToPatientMixin, Pathway):
     display_name = "Contact Tracing"
     slug = "contact_tracing"

@@ -15,6 +15,6 @@ class Application(application.OpalApplication):
 
     menuitems = [
         dict(
-            href='/referrals/#/ucl_ptb', display='Add Patient', icon='fa fa-plus',
+            href='/pathway/#/tb_personal_information', display='Add Patient', icon='fa fa-plus',
             activepattern='/referrals/#/ucl_ptb'),
     ]
