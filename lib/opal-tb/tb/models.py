@@ -30,8 +30,8 @@ class ContactDetails(models.PatientSubrecord):
                                      blank=True, null=True)
     post_code     = fields.CharField("Post Code", max_length = 10,
                                      blank=True, null=True)
-    tel1          = fields.CharField(blank=True, null=True, max_length=50)
-    tel2          = fields.CharField(blank=True, null=True, max_length=50)
+    tel1          = fields.CharField(verbose_name="Telephone 1", blank=True, null=True, max_length=50)
+    tel2          = fields.CharField(verbose_name="Telephone 2", blank=True, null=True, max_length=50)
 
     class Meta:
         verbose_name_plural = "Contact details"
