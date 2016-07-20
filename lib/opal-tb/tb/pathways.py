@@ -11,15 +11,23 @@ from tb import models as tb_models
 
 
 class TBPersonalInformation(RedirectsToPatientMixin, Pathway):
-    display_name = "Personal Information"
+    display_name = "Add Patient"
     slug = "tb_personal_information"
     steps = (
         Step(
-            title="Patient Information",
+            title="Add Patient",
             icon="fa fa-user",
             template_url="/templates/personal_information_form.html"
         ),
     )
+
+    def save(self, data, user):
+        patient = super(TBPersonalInformation, self).save(data, user)
+        episode = patient.episode_set.first()
+        episode.stage = 'Under Investigation'
+        episode.save()
+        return patient
+
 
 class TBContactTracing(RedirectsToPatientMixin, Pathway):
     display_name = "Contact Tracing"
