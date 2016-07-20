@@ -191,10 +191,10 @@ class ContactTracing(models.EpisodeSubrecord):
 
     def create_referral_route(self, episode, user):
         referral = episode.referralroute_set.first()
-        referral.referral_type = "TB contact screening"
+        referral.referral_type = "TB contact tracing"
         referral.date_of_referral = date.today()
         referral.internal = True
-        referral.referral_organisation = "Respiratory Medicine"
+        referral.referral_organisation = "TB Clinic"
         if user.first_name and user.last_name:
             referral_name = "{} {}".format(user.first_name[:1], user.last_name)
             referral.referral_name = referral_name

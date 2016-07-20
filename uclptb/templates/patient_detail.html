@@ -10,7 +10,7 @@
         Actions
       </h3>
     </div>
-    <ul class="list-group">
+    <ul class="list-group" ng-hide="episode.stage=='Contact tracing'">
 
       <li class="list-group-item" ng-show="episode.stage=='Under Investigation'">
         <a class="btn btn-primary btn-text-left col-md-8"
@@ -27,7 +27,7 @@
           {% icon "fa-flag" %} Record Notification
         </button>
       </li>
-      <li class="list-group-item" ng-hide="episode.environmental_risk_assessment[0].updated">
+      <li class="list-group-item" >
         <a class="btn btn-primary col-md-8 btn-text-left"
            href="/pathway/#/contact_tracing/[[ episode.id ]]">
           {% icon "fa-users" %} Contact Tracing
