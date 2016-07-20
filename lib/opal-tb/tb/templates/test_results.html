@@ -1,0 +1,7 @@
+<div ng-controller="TestResultsCtrl">
+  <div ng-repeat="item in testResults">
+    {% include models.TestResult.get_display_template %}
+  </div>
+
+  <button ng-click="orderUsualTests()">Order Usual Tests</button>
+</div>
