@@ -10,19 +10,20 @@ from uclptb import models as uclptb_models
 from tb import models as tb_models
 
 
-class TBPersonalInformation(RedirectsToPatientMixin, Pathway):
+class TBAddPatient(RedirectsToPatientMixin, Pathway):
     display_name = "Add Patient"
-    slug = "tb_personal_information"
+    slug = "tb_add_patient"
+    template_url = '/templates/pathway/treatment_form_base.html'
     steps = (
         Step(
             title="Add Patient",
             icon="fa fa-user",
-            template_url="/templates/personal_information_form.html"
+            template_url="/templates/pathway/add_patient_form.html"
         ),
     )
 
     def save(self, data, user):
-        patient = super(TBPersonalInformation, self).save(data, user)
+        patient = super(TBAddPatient, self).save(data, user)
         episode = patient.episode_set.first()
         episode.stage = 'Under Investigation'
         episode.save()
