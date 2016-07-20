@@ -96,6 +96,22 @@
             </div>
           </div>
         </div>
+
+        <div ng-show="getMetaDataFromMomentAndName(date, 'referral_route').length" class="row content-offset-below-10">
+          <div class="col-md-1">
+            <div style="background-color: #333;  border-radius: 50%; height: 35px; width: 35px; text-align: center; padding: 6px;">
+              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'referral_route')[0].icon ]]"></i>
+            </div>
+          </div>
+          <div class="col-md-11">
+            <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'referral_route')">
+              <div ng-repeat="item in [metaData.subrecord]">
+                <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
