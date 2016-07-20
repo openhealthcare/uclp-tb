@@ -170,14 +170,14 @@ class ContactTracingTestCase(OpalTestCase):
             example_update_dict["relationship_to_index"]
         )
         referral_route = new_contact_tracing.contact_episode.referralroute_set.first()
-        self.assertEqual(referral_route.referral_type, "TB contact screening")
+        self.assertEqual(referral_route.referral_type, "TB contact tracing")
         self.assertEqual(referral_route.referral_name, "I Jones")
         self.assertEqual(
             referral_route.date_of_referral, datetime.date.today()
         )
         self.assertTrue(referral_route.internal)
         self.assertTrue(
-            referral_route.referral_organisation, "Respiratory Medicine"
+            referral_route.referral_organisation, "TB Clinic"
         )
 
     def test_to_dict(self):
