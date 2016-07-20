@@ -56,8 +56,9 @@
               <div ng-repeat="item in episode.diagnosis[0]">
                 {% include models.Diagnosis.get_display_template %}
               </div>
-              <hr />
-              {% include 'partials/current_treatments.html' %}
+              <div class="content-offset-10">
+                {% include 'partials/current_treatments.html' %}
+              </div>
             </div>
           </div>
         </div>
