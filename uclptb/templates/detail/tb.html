@@ -46,7 +46,7 @@
                 notified
                 <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
               </p>
-              <p ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active TB'">
+              <p ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active'">
                 <b>PHE notification not complete</b>
               </p>
               <div ng-repeat="item in episode.investigation">
@@ -55,8 +55,8 @@
               <div ng-repeat="item in episode.diagnosis[0]">
                 {% include models.Diagnosis.get_display_template %}
               </div>
-              <div class="content-offset-10" ng-show="episode.stage=='Active TB'">
-                {% include 'partials/current_treatments.html' %}
+              <div class="content-offset-10" ng-show="episode.stage=='Active'">
+                {% include 'partials/current_tb_treatment.html' %}
               </div>
             </div>
           </div>

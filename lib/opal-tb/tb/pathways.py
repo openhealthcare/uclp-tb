@@ -42,12 +42,13 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
 
 class TBAssessment(RedirectsToPatientMixin, Pathway):
     display_name = "TB Assessment"
+    template_url = '/templates/pathway/treatment_form_base.html'
     slug = "tb_assessment"
     steps = (
         Step(
             title="Presentation & History",
             model=uclptb_models.SymptomComplex,
-            template_url="/templates/presentation_pathway.html",
+            template_url="/templates/pathway/initial_assessment.html",
             controller_class="TBSymptomsFormCtrl"
         ),
     )

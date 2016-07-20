@@ -52,6 +52,19 @@
     </p>
   </div>
 </div> <!-- Row -->
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>{% icon "fa-medkit" %}Current Treatment</h3>
+      </div>
+      {% include 'partials/current_treatments.html' %}
+    </div>
+  </div>
+</div>
+
+
 <div class="row">
   <div class="col-md-8">
     <div class="panel panel-default">
@@ -62,7 +75,6 @@
         </h3>
       </div>
       <div class="panel-body">
-
         <form class="form-horizontal">
           {% input label="Weight" model="localEditing.weight" unit="kg" %}
           {% datepicker label="Treatment start date" model="localEditing.treatmentStartDate" %}
