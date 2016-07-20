@@ -1,0 +1,4 @@
+<div ng-repeat="item in episode.treatment"
+     ng-show="!item.end_date">
+  {% include models.Treatment.get_display_template %}
+</div>
