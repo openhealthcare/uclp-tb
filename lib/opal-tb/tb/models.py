@@ -246,7 +246,7 @@ class SocialHistory(models.EpisodeSubrecord):
     alcohol_dependent = fields.NullBooleanField()
     smoking           = fields.CharField(max_length=250, blank=True, null=True)
     occupation        = fields.TextField(blank=True, null=True)
-    no_fixed_abode    = fields.NullBooleanField()
+    homelessness      = fields.TextField(blank=True, null=True)
     intravenous_drug_use = fields.CharField(max_length=250, blank=True, null=True)
     incarceration = fields.CharField(max_length=250, blank=True, null=True)
 
