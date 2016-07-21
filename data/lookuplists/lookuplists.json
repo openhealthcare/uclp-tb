@@ -2165,7 +2165,15 @@
       "name": "MDT"
     }
   ],
-  "antimicrobial": [
+    "antimicrobial": [
+        {
+            "synonyms": [],
+            "name": "Metformin"
+        },
+        {
+            "synonyms": [],
+            "name": "Gliclazide"
+        },
     {
       "synonyms": [],
       "name": "Abacavir"
@@ -6926,6 +6934,10 @@
       "synonyms": [],
       "name": "Shared Workspace"
     }
+      {
+          "synonyms": [],
+          "name": "Shared House"
+      }
   ],
   "referraltype": [
     {
