@@ -7,15 +7,22 @@
     </h3>
   </div>
   <div class="panel-body">
-    <p><b>[[ episode.stage ]] <span ng-show="episode.tb_location[0].sites.length">([[ episode.tb_location[0].sites.join(", ") ]])</span></b></p>
-    <p ng-show="episode.ph_england_notification[0].who || episode.ph_england_notification[0].when">
-      <span ng-show="episode.ph_england_notification[0].who">[[ episode.ph_england_notification[0].who ]]</span>
-      <span ng-hide="episode.ph_england_notification[0].who">Public Health England</span>
-      notified
-      <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
-    </p>
-    <p ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active'">
-      <b>PHE notification not complete</b>
+    <p>
+      <b>
+        [[ episode.stage ]]
+        <span ng-show="episode.tb_location[0].sites.length">([[ episode.tb_location[0].sites.join(", ") ]])</span>
+      </b>
+      <span class="pull-right" ng-show="episode.ph_england_notification[0].who || episode.ph_england_notification[0].when">
+        <i>
+          <span ng-show="episode.ph_england_notification[0].who">[[ episode.ph_england_notification[0].who ]]</span>
+          <span ng-hide="episode.ph_england_notification[0].who">Public Health England</span>
+          notified
+          <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
+        </i>
+      </span>
+      <span class="pull-right" ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active'">
+        <i>PHE notification not complete</i>
+      </span>
     </p>
     <div ng-repeat="item in episode.test_result">
       {% include models.TestResult.get_display_template %}

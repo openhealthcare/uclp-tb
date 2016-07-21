@@ -3,6 +3,10 @@
 {% datepicker field="TestResult.date_ordered"  %}
 {% datepicker field="TestResult.date_received"  %}
 {% select field="TestResult.status" lookuplist="['Pending', 'Received']" %}
-{% textarea field="TestResult.result"  %}
-{% select field="TestResult.sensitive_antibiotics" multiple=True tagging=False %}
-{% select field="TestResult.resistant_antibiotics" multiple=True tagging=False %}
+<span ng-show="editing.test_result.name=='Smear'">{% radio field="TestResult.result" lookuplist="['+', '++', '+++']"%}</span>
+<span ng-show="editing.test_result.name=='Culture'">
+  {% radio field="TestResult.result" lookuplist="['Negative', 'Positive']"%}
+  {% select field="TestResult.sensitive_antibiotics" multiple=True tagging=False %}
+  {% select field="TestResult.resistant_antibiotics" multiple=True tagging=False %}
+</span>
+<span ng-show="editing.test_result.name=='GeneXpert'">{% radio field="TestResult.result" lookuplist="['Negative', 'Positive']"%}</span>
