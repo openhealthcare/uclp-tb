@@ -1,7 +1,6 @@
 {% load forms %}
 {% load panels %}
 <div class="col-md-12">
-
   <tabset justified="true">
     <tab heading="Patient Overview">
 
@@ -53,7 +52,10 @@
         </div>
       </div>
     </tab>
-
+    <tab heading="Test Results">
+      <div class="row">
+        {% include "test_results.html" %}
+      </div>
+    </tab>
   </tabset>
-
 </div>

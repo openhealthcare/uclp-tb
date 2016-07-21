@@ -306,3 +306,21 @@ class EnvironmentalRiskAssessment(models.EpisodeSubrecord):
     congregate_drug_use = fields.BooleanField(default=False)
     pub_or_club = fields.BooleanField(default=False)
     other_setting = fields.CharField(null=True, blank=True, max_length=256)
+
+
+class TestResult(models.EpisodeSubrecord):
+    _icon = 'fa fa-crosshairs'
+    _title = "Tests"
+    _angular_service = 'TestResultRecord'
+
+    name = fields.CharField(max_length=255)
+    date_ordered = fields.DateField(null=True, blank=True)
+    date_received = fields.DateField(null=True, blank=True)
+    status = fields.CharField(max_length=255, default="Pending")
+    result = fields.TextField(null=True, blank=True)
+    sensitive_antibiotics = fields.ManyToManyField(
+        models.Antimicrobial, related_name="test_result_sensitive"
+    )
+    resistant_antibiotics = fields.ManyToManyField(
+        models.Antimicrobial, related_name="test_result_resistant"
+    )

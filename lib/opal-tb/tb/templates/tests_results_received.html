@@ -1,0 +1,12 @@
+{% load pathways %}
+<div ng-show="!loading" class="row">
+  <div ng-show="editing.test_result.length" class="col-md-12 ">
+    {% multisave models.TestResult initialise_empty=False %}
+  </div>
+  <div ng-hide="editing.test_result.length" class="col-md-12 text-center">
+    <h3>No Pending Results At This Time</h3>
+  </div>
+</div>
+<div ng-show="loading" class="row text-center">
+  <h2>Loading...<br /><i class="fa fa-cog fa-spin" ></i></h2>
+</div>
