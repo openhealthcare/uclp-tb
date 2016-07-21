@@ -17,8 +17,8 @@
     <p ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active'">
       <b>PHE notification not complete</b>
     </p>
-    <div ng-repeat="item in episode.investigation">
-      {% include models.Investigation.get_display_template %}
+    <div ng-repeat="item in episode.test_result">
+      {% include models.TestResult.get_display_template %}
     </div>
     <div ng-repeat="item in episode.diagnosis[0]">
       {% include models.Diagnosis.get_display_template %}

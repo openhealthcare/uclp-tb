@@ -10,28 +10,30 @@ from uclptb import models as uclptb_models
 from tb import models as tb_models
 
 class TBOrderTest(ModalPathway):
-    display_name = "Tests Ordered"
+    display_name = "Add Tests"
     slug = "tests_ordered_pathway"
     template_url = "/templates/test_results_pathway_base.html"
+    icon="fa fa-mail-forward"
 
     steps = (
         Step(
             model=tb_models.TestResult,
             template_url="/templates/tests_ordered.html",
-            controller_class="OrderedTestsCtrl"
+            controller_class="OrderedTestsCtrl",
         ),
     )
 
 class TBResultsReceived(ModalPathway):
-    display_name = "Result Received"
+    display_name = "Add Results"
     slug = "results_received_pathway"
     template_url = "/templates/test_results_pathway_base.html"
+    icon="fa fa-reply"
 
     steps = (
         Step(
             model=tb_models.TestResult,
             template_url="/templates/tests_results_received.html",
-            controller_class="ResultsReceivedCtrl"
+            controller_class="ResultsReceivedCtrl",
         ),
     )
 

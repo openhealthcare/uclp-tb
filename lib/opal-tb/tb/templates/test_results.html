@@ -1,5 +1,5 @@
 <div class="col-md-12">
-  <div ng-controller="resultsTabCtrl" class="panel panel-default content-offset-20">
+  <div class="panel panel-default content-offset-20">
     <div class="panel-heading">
       <h3>
         <i class="fa fa-crosshairs"></i> Investigations
@@ -9,13 +9,13 @@
       {% include "_partials/results_table.html" %}
       <div class="row">
         <div class="col-md-6 text-center">
-          <button class="btn btn-primary btn-lg" ng-click="orderedTests()">
-            <i class="fa fa-mail-forward"></i> Tests Ordered
+          <button class="btn btn-primary btn-lg" open-pathway="tests_ordered_pathway">
+            <i class="fa fa-mail-forward"></i> Add Tests
           </button>
         </div>
         <div class="col-md-6 text-center">
-          <button class="btn btn-primary btn-lg" ng-click="resultsReceived()">
-            <i class="fa fa-reply"></i> Results Received
+          <button class="btn btn-primary btn-lg" open-pathway="results_received_pathway">
+            <i class="fa fa-reply"></i> Add Results
           </button>
         </div>
       </div>
