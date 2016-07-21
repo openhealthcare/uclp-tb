@@ -17,7 +17,6 @@ class TbPlugin(plugins.OpalPlugin):
             "js/tb/controllers/tb_type.js",
             "js/tb/controllers/ordered_tests.js",
             "js/tb/controllers/results_received.js",
-            "js/tb/directives.js",
             "js/tb/controllers/results_tab.js",
             "js/tb/directives.js",
         ],
