@@ -8,3 +8,7 @@
 .patient-timeline-now .patient-timeline-now-text {
     margin-bottom: none;
 }
+
+.panel-combined-timeline .col-md-8{
+  padding-top: 9px;
+}

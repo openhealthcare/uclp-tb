@@ -47,7 +47,8 @@
           </div>
           <div class="col-md-8">
             <span ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'treatment_stop')">
-              <span ng-show="$first">Stopped Treatment of </span><a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]<span ng-show="metaData.subrecord.dose">([[ metaData.subrecord.dose ]])</span></a><span ng-show="!$last">, </span>
+              <span ng-show="$first">Stopped Treatment:<br />
+              </span><a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]<span ng-show="metaData.subrecord.dose">([[ metaData.subrecord.dose ]])</span></a><span ng-show="!$last"><br /></span>
             </span>
           </div>
         </div>
@@ -60,7 +61,8 @@
           </div>
           <div class="col-md-8">
             <span ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'treatment_start')">
-              <span ng-show="$first">Started Treatment of </span><a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]<span ng-show="metaData.subrecord.dose">([[ metaData.subrecord.dose ]])</span></a><span ng-show="!$last">, </span>
+              <span ng-show="$first"><b>Started Treatment:</b><br /></span>
+              <a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]<span ng-show="metaData.subrecord.dose"> ([[ metaData.subrecord.dose ]])</span></a><span ng-show="!$last"><br /></span>
             </span>
           </div>
         </div>
@@ -88,6 +90,7 @@
           <div class="col-md-8">
             <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'symptom_complex')">
               <div ng-repeat="item in [metaData.subrecord]">
+                <span ng-show="$first"><b>Symptoms:</b><br /></span>
                 <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
               </div>
             </div>
@@ -103,6 +106,7 @@
           <div class="col-md-8">
             <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'patient_consultation')">
               <div ng-repeat="item in [metaData.subrecord]">
+                <span ng-show="$first"><b>Consultation:</b><br /></span>
                 <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
               </div>
             </div>
