@@ -1,7 +1,44 @@
-<div ng-controller="TestResultsCtrl">
-  <div ng-repeat="item in testResults">
-    {% include models.TestResult.get_display_template %}
-  </div>
+<div class="col-md-12">
+  <div ng-controller="resultsTabCtrl" class="panel panel-default content-offset-20">
+    <div class="panel-heading">
+      <h3>
+        <i class="fa fa-crosshairs"></i> Investigations
+      </h3>
+    </div>
+    <div class="panel-body">
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Ordered</th>
+          <th>Status</th>
+          <th>Received</th>
+          <th>Result</th>
+          <th>Sensitive Antibiotics</th>
+          <th>Resistant Antibiotics</th>
+        </tr>
+        <tr ng-repeat="test_result in episode.test_result">
+          <td>[[ test_result.name ]]</td>
+          <td>[[ test_result.date_ordered | shortDate ]]</td>
+          <td>[[ test_result.status ]]</td>
+          <td>[[ test_result.result ]]</td>
+          <td>[[ test_result.date_recieved | shortDate ]]</td>
+          <td>[[ test_result.sensitive_antibiotics.join(", ") ]]</td>
+          <td>[[ test_result.resistant_antibiotics.join(", ") ]]</td>
+        </tr>
+      </table>
 
-  <button ng-click="orderUsualTests()">Order Usual Tests</button>
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <button class="btn btn-primary btn-lg" ng-click="orderedTests()">
+            <i class="fa fa-mail-forward"></i> Tests Ordered
+          </button>
+        </div>
+        <div class="col-md-6 text-center">
+          <button class="btn btn-primary btn-lg" ng-click="resultsReceived()">
+            <i class="fa fa-reply"></i> Results Received
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

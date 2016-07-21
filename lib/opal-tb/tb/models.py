@@ -309,6 +309,8 @@ class EnvironmentalRiskAssessment(models.EpisodeSubrecord):
 
 
 class TestResult(models.EpisodeSubrecord):
+    _icon = 'fa fa-crosshairs'
+    _title = "Tests"
     _angular_service = 'TestResultRecord'
 
     name = fields.CharField(max_length=255)

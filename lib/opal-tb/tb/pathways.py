@@ -4,11 +4,36 @@ OPAL Pathway definitions for the re-usable TB module.
 from django.db import transaction
 from pathway import pathways
 from pathway.pathways import (
-    Pathway, RedirectsToPatientMixin, Step, delete_others
+    Pathway, RedirectsToPatientMixin, Step, delete_others, ModalPathway
 )
 from uclptb import models as uclptb_models
 from tb import models as tb_models
 
+class TBOrderTest(ModalPathway):
+    display_name = "Tests Ordered"
+    slug = "tests_ordered_pathway"
+    template_url = "/templates/test_results_pathway_base.html"
+
+    steps = (
+        Step(
+            model=tb_models.TestResult,
+            template_url="/templates/tests_ordered.html",
+            controller_class="OrderedTestsCtrl"
+        ),
+    )
+
+class TBResultsReceived(ModalPathway):
+    display_name = "Result Received"
+    slug = "results_received_pathway"
+    template_url = "/templates/test_results_pathway_base.html"
+
+    steps = (
+        Step(
+            model=tb_models.TestResult,
+            template_url="/templates/tests_results_received.html",
+            controller_class="ResultsReceivedCtrl"
+        ),
+    )
 
 class TBContactTracing(RedirectsToPatientMixin, Pathway):
     display_name = "Contact Tracing"

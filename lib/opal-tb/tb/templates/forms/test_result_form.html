@@ -1,5 +1,8 @@
 {% load forms %}
 {% input  field="TestResult.name"  %}
-{% datepicker  field="TestResult.date_ordered"  %}
-{% input  field="TestResult.status"  %}
-{% textarea  field="TestResult.result"  %}
+{% datepicker field="TestResult.date_ordered"  %}
+{% datepicker field="TestResult.date_received"  %}
+{% select field="TestResult.status" lookuplist="['Pending', 'Received']" %}
+{% textarea field="TestResult.result"  %}
+{% select field="TestResult.sensitive_antibiotics" multiple=True tagging=False %}
+{% select field="TestResult.resistant_antibiotics" multiple=True tagging=False %}
