@@ -30,8 +30,8 @@ class ContactDetails(models.PatientSubrecord):
                                      blank=True, null=True)
     post_code     = fields.CharField("Post Code", max_length = 10,
                                      blank=True, null=True)
-    tel1          = fields.CharField(blank=True, null=True, max_length=50)
-    tel2          = fields.CharField(blank=True, null=True, max_length=50)
+    tel1          = fields.CharField(verbose_name="Telephone 1", blank=True, null=True, max_length=50)
+    tel2          = fields.CharField(verbose_name="Telephone 2", blank=True, null=True, max_length=50)
 
     class Meta:
         verbose_name_plural = "Contact details"
@@ -191,10 +191,10 @@ class ContactTracing(models.EpisodeSubrecord):
 
     def create_referral_route(self, episode, user):
         referral = episode.referralroute_set.first()
-        referral.referral_type = "TB contact screening"
+        referral.referral_type = "TB contact tracing"
         referral.date_of_referral = date.today()
         referral.internal = True
-        referral.referral_organisation = "Respiratory Medicine"
+        referral.referral_organisation = "TB Clinic"
         if user.first_name and user.last_name:
             referral_name = "{} {}".format(user.first_name[:1], user.last_name)
             referral.referral_name = referral_name
@@ -246,7 +246,7 @@ class SocialHistory(models.EpisodeSubrecord):
     alcohol_dependent = fields.NullBooleanField()
     smoking           = fields.CharField(max_length=250, blank=True, null=True)
     occupation        = fields.TextField(blank=True, null=True)
-    no_fixed_abode    = fields.NullBooleanField()
+    homelessness      = fields.TextField(blank=True, null=True)
     intravenous_drug_use = fields.CharField(max_length=250, blank=True, null=True)
     incarceration = fields.CharField(max_length=250, blank=True, null=True)
 

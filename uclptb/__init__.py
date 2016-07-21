@@ -12,9 +12,11 @@ class Application(application.OpalApplication):
         'js/uclptb/controllers/investigations_form.js'
     ]
     default_episode_category = 'TB'
-
+    styles = [
+        'css/tb.css'
+    ]
     menuitems = [
         dict(
-            href='/referrals/#/ucl_ptb', display='Add Patient', icon='fa fa-plus',
+            href='/pathway/#/tb_add_patient', display='Add Patient', icon='fa fa-plus',
             activepattern='/referrals/#/ucl_ptb'),
     ]

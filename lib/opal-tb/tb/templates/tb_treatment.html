@@ -10,7 +10,7 @@
       <div class="panel-body">
         <div class="form-horizontal">
           {% radio model="editing.stage" label="TB Type" lookuplist="['Active', 'Latent', 'NTM']" %}
-          {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True %}
+          {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True tagging=False %}
         </div> <!-- Form -->
       </div>   <!-- Body -->
     </div>     <!-- panel -->
@@ -52,6 +52,19 @@
     </p>
   </div>
 </div> <!-- Row -->
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>{% icon "fa-medkit" %}Current Treatment</h3>
+      </div>
+      {% include 'partials/current_treatments.html' %}
+    </div>
+  </div>
+</div>
+
+
 <div class="row">
   <div class="col-md-8">
     <div class="panel panel-default">
@@ -62,9 +75,9 @@
         </h3>
       </div>
       <div class="panel-body">
-
         <form class="form-horizontal">
           {% input label="Weight" model="localEditing.weight" unit="kg" %}
+          {% datepicker label="Treatment start date" model="localMetadata.treatmentStartDate" %}
         </form
         <hr />
         <div class="row text-center">
@@ -93,7 +106,7 @@
             <input type="text" class="form-control" ng-model="plan.start_date" bs-datepicker   />
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.end_date" bs-datepicker   />
+            <input type="text" class="form-control" ng-model="plan.planned_end_date" bs-datepicker   />
           </div>
           <div class="col-md-1">
             <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary" data-title="Remove" bs-tooltip>
@@ -154,7 +167,7 @@
   </div>       <!-- Column -->
   <div class="col-md-4">
     <p class="sidebar-help content-offset">
-      A record of this consultation.
+      Summary of review, impression and plan.
     </p>
   </div>
 </div> <!-- Row -->

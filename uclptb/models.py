@@ -15,12 +15,13 @@ class Location(models.Location): pass
 class Allergies(models.Allergies): pass
 class Diagnosis(models.Diagnosis): pass
 class PastMedicalHistory(models.PastMedicalHistory): pass
-class Treatment(models.Treatment): pass
 class Investigation(models.Investigation): pass
 class ReferralRoute(models.ReferralRoute): pass
 class SymptomComplex(models.SymptomComplex): pass
 class PatientConsultation(models.PatientConsultation): pass
 
+class Treatment(models.Treatment):
+    planned_end_date = fields.DateField(blank=True, null=True)
 
 class Travel(EpisodeSubrecord):
     _icon = 'fa fa-plane'

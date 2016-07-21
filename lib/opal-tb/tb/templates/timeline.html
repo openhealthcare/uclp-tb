@@ -1,0 +1,134 @@
+{% load forms %}
+<div class="panel panel-default panel-combined-timeline">
+  <div class="panel-heading">
+    <center>
+      <button class="btn btn-lg btn-primary" ng-click="timelineAddVisible = !timelineAddVisible">
+        {% icon "glyphicon-plus" %} Add entry
+      </button>
+    </center>
+    <div ng-show="timelineAddVisible" class="timeline-add-record">
+      <div class="row">
+
+      <div ng-repeat="information in metaInformationDisplay"
+           ng-click="episode.recordEditor.newItem(information.columnName)"
+           >
+        <div class="col-md-4 content-offset-20">
+          <center>
+            <button class="btn btn-primary col-md-12">
+              <i class="[[ information.icon ]]"></i> [[ information.display_name ]]
+            </button>
+          </center>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="patient-timeline-now">
+          <div class="patient-timeline-now-text bg-secondary">
+            Now
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-repeat="date in dates" class="row content-offset-20">
+      <div class="col-md-12 patient-timeline">
+        <div class="date">[[ date | momentDateFormat:'DD MMM' ]] [[ date | momentDateFormat:'YYYY' ]]</div>
+      </div>
+      <div class="col-md-12">
+        <div ng-show="getMetaDataFromMomentAndName(date, 'treatment_stop').length" class="row content-offset-below-10">
+          <div class="col-md-1 col-md-offset-1">
+            <div class="timeline-item-icon">
+              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'treatment_stop')[0].icon ]]"></i>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <span ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'treatment_stop')">
+              <span ng-show="$first">Stopped Treatment:<br />
+              </span><a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]<span ng-show="metaData.subrecord.dose">([[ metaData.subrecord.dose ]])</span></a><span ng-show="!$last"><br /></span>
+            </span>
+          </div>
+        </div>
+
+        <div ng-show="getMetaDataFromMomentAndName(date, 'treatment_start').length" class="row content-offset-below-10">
+          <div class="col-md-1 col-md-offset-1">
+            <div  ng-hide="getMetaDataFromMomentAndName(date, 'treatment_stop').length" class="timeline-item-icon">
+              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'treatment_start')[0].icon ]]"></i>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <span ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'treatment_start')">
+              <span ng-show="$first"><b>Started Treatment:</b><br /></span>
+              <a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.drug ]]<span ng-show="metaData.subrecord.dose"> ([[ metaData.subrecord.dose ]])</span></a><span ng-show="!$last"><br /></span>
+            </span>
+          </div>
+        </div>
+
+        <div ng-show="getMetaDataFromMomentAndName(date, 'investigation').length" class="row content-offset-below-10">
+          <div class="col-md-1 col-md-offset-1">
+            <div class="timeline-item-icon">
+              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'investigation')[0].icon ]]"></i>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <span ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'investigation')">
+              <span ng-show="$first">Tests of </span><a class="pointer" ng-click="editItem(metaData.subrecord)">[[ metaData.subrecord.test ]]</a><span ng-show="!$last">,</span>
+              <span ng-show="$last"> ordered</span>
+            </span>
+          </div>
+        </div>
+
+        <div ng-show="getMetaDataFromMomentAndName(date, 'symptom_complex').length" class="row content-offset-below-10">
+          <div class="col-md-1 col-md-offset-1">
+            <div class="timeline-item-icon" n>
+              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'symptom_complex')[0].icon ]]"></i>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'symptom_complex')">
+              <div ng-repeat="item in [metaData.subrecord]">
+                <span ng-show="$first"><b>Symptoms:</b><br /></span>
+                <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-show="getMetaDataFromMomentAndName(date, 'patient_consultation').length" class="row content-offset-below-10">
+          <div class="col-md-1 col-md-offset-1">
+            <div class="timeline-item-icon">
+              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'patient_consultation')[0].icon ]]"></i>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'patient_consultation')">
+              <div ng-repeat="item in [metaData.subrecord]">
+                <span ng-show="$first"><b>Consultation:</b><br /></span>
+                <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-show="getMetaDataFromMomentAndName(date, 'referral_route').length" class="row content-offset-below-10">
+          <div class="col-md-1 col-md-offset-1">
+            <div class="timeline-item-icon">
+              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'referral_route')[0].icon ]]"></i>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'referral_route')">
+              <div ng-repeat="item in [metaData.subrecord]">
+                <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

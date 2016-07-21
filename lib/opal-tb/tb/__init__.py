@@ -19,6 +19,7 @@ class TbPlugin(plugins.OpalPlugin):
             "js/tb/controllers/results_received.js",
             "js/tb/directives.js",
             "js/tb/controllers/results_tab.js",
+            "js/tb/directives.js",
         ],
         'opal.services': [
             "js/tb/services/test_result_record.js",

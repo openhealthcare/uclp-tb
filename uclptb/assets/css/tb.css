@@ -1,0 +1,23 @@
+.patient-timeline .date {
+  font-weight: bold;
+  color: #f76c51;
+  text-align: left;
+  padding-left: 24px;
+  border-bottom: 1px solid #f76c51;
+}
+.patient-timeline-now .patient-timeline-now-text {
+    margin-bottom: none;
+}
+
+.panel-combined-timeline .col-md-8{
+  padding-top: 9px;
+}
+.timeline-item-icon {
+    background-color: #333;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    text-align: center;
+    padding: 7px;
+    margin-left: -15px;
+}

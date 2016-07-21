@@ -35,6 +35,26 @@ class TBResultsReceived(ModalPathway):
         ),
     )
 
+class TBAddPatient(RedirectsToPatientMixin, Pathway):
+    display_name = "Add Patient"
+    slug = "tb_add_patient"
+    template_url = '/templates/pathway/treatment_form_base.html'
+    steps = (
+        Step(
+            title="Add Patient",
+            icon="fa fa-user",
+            template_url="/templates/pathway/add_patient_form.html"
+        ),
+    )
+
+    def save(self, data, user):
+        patient = super(TBAddPatient, self).save(data, user)
+        episode = patient.episode_set.first()
+        episode.stage = 'Under Investigation'
+        episode.save()
+        return patient
+
+
 class TBContactTracing(RedirectsToPatientMixin, Pathway):
     display_name = "Contact Tracing"
     slug = "contact_tracing"
@@ -47,12 +67,13 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
 
 class TBAssessment(RedirectsToPatientMixin, Pathway):
     display_name = "TB Assessment"
+    template_url = '/templates/pathway/treatment_form_base.html'
     slug = "tb_assessment"
     steps = (
         Step(
             title="Presentation & History",
             model=uclptb_models.SymptomComplex,
-            template_url="/templates/presentation_pathway.html",
+            template_url="/templates/pathway/initial_assessment.html",
             controller_class="TBSymptomsFormCtrl"
         ),
     )
@@ -75,9 +96,9 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
     def save(self, data, user):
         stage = data.pop('stage')[0]
         episode = self.episode
+        # delete_others(data, uclptb_models.Treatment, patient=self.patient, episode=self.episode)
         patient = super(TBTreatment, self).save(data, user)
         episode.stage = stage
-        delete_others(data, uclptb_models.Treatment, patient=self.patient, episode=self.episode)
         episode.save()
         return patient
 

@@ -1,0 +1,23 @@
+<table class="table">
+  <tr>
+    <th>Start</th>
+    <th>Drug</th>
+    <th></th>
+  </tr>
+  <tr ng-repeat="item in episode.treatment"
+      ng-show="!item.end_date">
+    <td>
+      <span ng-show="item.start_date">[[item.start_date | shortDate]]</span>
+      <span ng-show="item.end_date">-[[item.end_date | shortDate]]</span>
+    </td>
+    <td>
+      [[item.drug]] [[item.dose]] [[item.route]]
+    </td>
+    <td>
+      <span ng-show="item.start_date">day</span>
+      [[ item.start_date | daysSince:1:true]]
+      <span ng-show="item.start_date">/</span>
+      [[ item.start_date | daysTo:item.planned_end_date:true ]]
+    </td>
+  </tr>
+</table>

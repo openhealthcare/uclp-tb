@@ -10,7 +10,7 @@
         Actions
       </h3>
     </div>
-    <ul class="list-group">
+    <ul class="list-group" ng-hide="episode.stage=='Contact tracing'">
 
       <li class="list-group-item" ng-show="episode.stage=='Under Investigation'">
         <a class="btn btn-primary btn-text-left col-md-8"
@@ -20,18 +20,12 @@
       </li>
 
       <li class="list-group-item"
-          ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active TB'"
+          ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active'"
           >
         <button class="btn btn-primary btn-text-left col-md-8 pointer"
                 ng-click="episode.recordEditor.editItem('ph_england_notification', 0)">
           {% icon "fa-flag" %} Record Notification
         </button>
-      </li>
-      <li class="list-group-item" ng-hide="episode.environmental_risk_assessment[0].updated">
-        <a class="btn btn-primary col-md-8 btn-text-left"
-           href="/pathway/#/contact_tracing/[[ episode.id ]]">
-          {% icon "fa-users" %} Contact Tracing
-        </a>
       </li>
       <li class="list-group-item">
         <a class="btn btn-primary btn-text-left col-md-8"
@@ -39,10 +33,10 @@
           {% icon "fa-medkit" %} <span ng-show="episode.stage == 'Under Investigation'">Start </span>TB Treatment
         </a>
       </li>
-      <li class="list-group-item" ng-hide="episode.stage=='Under Investigation'">
+      <li class="list-group-item" >
         <a class="btn btn-primary col-md-8 btn-text-left"
-           href="/pathway/#/tb_treatment_outcome/[[ episode.id ]]">
-          {% icon "fa-home" %} Treatment Outcome
+           href="/pathway/#/contact_tracing/[[ episode.id ]]">
+          {% icon "fa-users" %} Contact Tracing
         </a>
       </li>
     </ul>
