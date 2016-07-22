@@ -98,7 +98,6 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
     def save(self, data, user):
         stage = data.pop('stage')[0]
         episode = self.episode
-        # delete_others(data, uclptb_models.Treatment, patient=self.patient, episode=self.episode)
         patient = super(TBTreatment, self).save(data, user)
         episode.stage = stage
         episode.save()
