@@ -1,0 +1,4 @@
+<div ng-repeat="item in getSubrecordFromDateAndMetaInfo(date, metaInfo)">
+  <span ng-show="$first"><b>[[ metaInfo.display_name ]]:</b><br /></span>
+  <a class="pointer" ng-click="editItem(item)" ng-include src="metaInfo.templateUrl"></a>
+</div>
