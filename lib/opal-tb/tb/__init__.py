@@ -13,10 +13,10 @@ class TbPlugin(plugins.OpalPlugin):
     javascripts = {
         'opal.controllers': [
             'js/tb/controllers/tb_treatment.js',
-            "js/tb/controllers/tb_symptoms_form.js",
+            "js/tb/controllers/tb_initial_assessment.js",
             "js/tb/controllers/tb_type.js",
-            "js/tb/controllers/ordered_tests.js",
-            "js/tb/controllers/results_received.js",
+            "js/tb/controllers/add_tests.js",
+            "js/tb/controllers/add_results.js",
             "js/tb/controllers/results_tab.js",
             "js/tb/directives.js",
         ],

@@ -9,31 +9,31 @@ from pathway.pathways import (
 from uclptb import models as uclptb_models
 from tb import models as tb_models
 
-class TBOrderTest(ModalPathway):
+class TBAddTests(ModalPathway):
     display_name = "Add Tests"
-    slug = "tests_ordered_pathway"
+    slug = "add_tests_pathway"
     template_url = "/templates/test_results_pathway_base.html"
     icon="fa fa-mail-forward"
 
     steps = (
         Step(
             model=tb_models.TestResult,
-            template_url="/templates/tests_ordered.html",
-            controller_class="OrderedTestsCtrl",
+            template_url="/templates/pathway/add_tests.html",
+            controller_class="AddTestsCtrl",
         ),
     )
 
-class TBResultsReceived(ModalPathway):
+class TBAddResults(ModalPathway):
     display_name = "Add Results"
-    slug = "results_received_pathway"
+    slug = "add_results_pathway"
     template_url = "/templates/test_results_pathway_base.html"
     icon="fa fa-reply"
 
     steps = (
         Step(
             model=tb_models.TestResult,
-            template_url="/templates/tests_results_received.html",
-            controller_class="ResultsReceivedCtrl",
+            template_url="/templates/pathway/add_results.html",
+            controller_class="AddResultsCtrl",
         ),
     )
 
@@ -63,20 +63,20 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
     steps = (
         Step(
             model=tb_models.ContactTracing,
-            template_url="/templates/contact_tracing.html"
+            template_url="/templates/pathway/contact_tracing.html"
         ),
     )
 
 class TBAssessment(RedirectsToPatientMixin, Pathway):
     display_name = "TB Assessment"
     template_url = '/templates/pathway/treatment_form_base.html'
-    slug = "tb_assessment"
+    slug = "tb_initial_assessment"
     steps = (
         Step(
             title="Presentation & History",
             model=uclptb_models.SymptomComplex,
             template_url="/templates/pathway/initial_assessment.html",
-            controller_class="TBSymptomsFormCtrl"
+            controller_class="TBInitialAssessmentCtrl"
         ),
     )
 
@@ -89,7 +89,7 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
         Step(
             title="Diagnosis & Treatment",
             icon="fa fa-medkit",
-            template_url="/templates/tb_treatment.html",
+            template_url="/templates/pathway/tb_treatment.html",
             controller_class="TBTreatmentCtrl",
         ),
     )
