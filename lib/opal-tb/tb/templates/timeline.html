@@ -67,22 +67,6 @@
           </div>
         </div>
 
-        <div ng-show="getMetaDataFromMomentAndName(date, 'test_result_ordered').length" class="row content-offset-below-10">
-          <div class="col-md-1 col-md-offset-1">
-            <div class="timeline-item-icon">
-              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'test_result_ordered')[0].icon ]]"></i>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'test_result_ordered')">
-              <span ng-show="$first"><b>Tests Ordered:</b><br /></span>
-              <div ng-repeat="item in [metaData.subrecord]">
-                <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div ng-show="getMetaDataFromMomentAndName(date, 'test_result_received').length" class="row content-offset-below-10">
           <div class="col-md-1 col-md-offset-1">
             <div class="timeline-item-icon">
@@ -99,6 +83,21 @@
           </div>
         </div>
 
+        <div ng-show="getMetaDataFromMomentAndName(date, 'test_result_ordered').length" class="row content-offset-below-10">
+          <div class="col-md-1 col-md-offset-1">
+            <div class="timeline-item-icon">
+              <i style="color: white;" class="[[ getMetaDataFromMomentAndName(date, 'test_result_ordered')[0].icon ]]"></i>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div ng-repeat="metaData in getMetaDataFromMomentAndName(date, 'test_result_ordered')">
+              <span ng-show="$first"><b>Tests Ordered:</b><br /></span>
+              <div ng-repeat="item in [metaData.subrecord]">
+                <a class="pointer" ng-click="editItem(item)" ng-include src="metaData.templateUrl"></a>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div ng-show="getMetaDataFromMomentAndName(date, 'symptom_complex').length" class="row content-offset-below-10">
           <div class="col-md-1 col-md-offset-1">
