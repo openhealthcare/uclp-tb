@@ -1,0 +1,54 @@
+{% load forms %}
+<div class="panel panel-default panel-combined-timeline">
+  <div class="panel-heading">
+    <center>
+      <button class="btn btn-lg btn-primary" ng-click="timelineAddVisible = !timelineAddVisible">
+        {% icon "glyphicon-plus" %} Add entry
+      </button>
+    </center>
+    <div ng-show="timelineAddVisible" class="timeline-add-record">
+      <div class="row">
+
+      <div ng-repeat="information in metaInformationDisplay"
+           ng-click="episode.recordEditor.newItem(information.columnName)"
+           >
+        <div class="col-md-4 content-offset-20">
+          <center>
+            <button class="btn btn-primary col-md-12">
+              <i class="[[ information.icon ]]"></i> [[ information.display_name ]]
+            </button>
+          </center>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="patient-timeline-now">
+          <div class="patient-timeline-now-text bg-secondary">
+            Now
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-repeat="date in dates" class="row content-offset-20">
+      <div class="col-md-12 patient-timeline">
+        <div class="date">[[ date | momentDateFormat:'DD MMM' ]] [[ date | momentDateFormat:'YYYY' ]]</div>
+      </div>
+      <div class="col-md-12">
+        <div ng-repeat="metaInfo in metaInformation" ng-show="getSubrecordFromDateAndMetaInfo(date, metaInfo).length" class="row content-offset-below-10">
+          <div class="col-md-1 col-md-offset-1">
+            <div class="timeline-item-icon">
+              <i style="color: white;" class="[[ metaInfo.icon ]]"></i>
+            </div>
+          </div>
+          <div ng-include src="metaInfo.aggregateTemplateUrl" class="col-md-8">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
