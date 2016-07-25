@@ -73,23 +73,6 @@ class TBRiskFactors(models.EpisodeSubrecord):
     chronic_lung_disease     = fields.NullBooleanField()
 
 
-class TBTests(models.EpisodeSubrecord):
-    _is_singleton = True
-    _title = "Tests"
-    _icon = 'fa fa-laptop'
-
-    sputum_1 = fields.BooleanField(default=False)
-    sputum_2 = fields.BooleanField(default=False)
-    sputum_3 = fields.BooleanField(default=False)
-    sputum_pcr = fields.BooleanField(default=False)
-    fna = fields.BooleanField(default=False)
-    biopsy = fields.BooleanField(default=False)
-    qftt_spot = fields.BooleanField(default=False)
-    ct_scan = fields.BooleanField(default=False)
-    routine_blood_tests = fields.BooleanField(default=False)
-    chest_xray = fields.BooleanField(default=False)
-
-
 class Observations(models.EpisodeSubrecord):
     _sort           = 'datetime'
     _icon           = 'fa fa-line-chart'
