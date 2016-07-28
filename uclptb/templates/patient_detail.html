@@ -33,7 +33,7 @@
           {% icon "fa-medkit" %} <span ng-show="episode.stage == 'Under Investigation'">Start </span>TB Treatment
         </a>
       </li>
-      <li class="list-group-item" >
+      <li class="list-group-item" ng-hide="episode.tb_meta[0].contact_tracing_done">
         <a class="btn btn-primary col-md-8 btn-text-left"
            href="/pathway/#/contact_tracing/[[ episode.id ]]">
           {% icon "fa-users" %} Contact Tracing
