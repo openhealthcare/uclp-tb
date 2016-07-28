@@ -123,5 +123,6 @@ class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
         patient = super(TreatmentOutcome, self).save(data, user)
         episode = self.episode
         episode.stage = 'Discharged'
+        episode.discharge_date = datetime.date.today()
         episode.save()
         return patient

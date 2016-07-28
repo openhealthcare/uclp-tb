@@ -14,7 +14,7 @@ class TestTBAddPatientTestCase(OpalTestCase):
         pathway = pathways.TBAddPatient(patient_id=None, episode_id=None)
         patient = pathway.save({'demographics': [{'hospital_number': '1234'}]}, self.user)
         episode = patient.episode_set.first()
-        self.assertEqual(datetime.date.today(), episode.date_of_admission)
+        self.assertEqual(datetime.date.today(), episode.start)
 
 
 class TestTBTreatment(OpalTestCase):
@@ -36,3 +36,12 @@ class TestTreatmentOutcome(OpalTestCase):
         pathway.save({}, self.user)
         reloaded_episode = Episode.objects.get()
         self.assertEqual(reloaded_episode.stage, 'Discharged')
+
+    def test_save_sets_episode_end_date(self):
+        patient, episode = self.new_patient_and_episode_please()
+        pathway = pathways.TreatmentOutcome(
+            patient_id=patient.id, episode_id=episode.id
+        )
+        patient = pathway.save({}, self.user)
+        episode = patient.episode_set.first()
+        self.assertEqual(datetime.date.today(), episode.end)
