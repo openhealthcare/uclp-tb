@@ -11,6 +11,15 @@
     <div ng-repeat="item in episode.travel">
       {% include models.Travel.get_display_template %}
     </div>
+
+    <div class="row" ng-show="episode.social_history[0].drinking && episode.social_history[0].drinking == 'Excess'">
+      <div class="col-md-6">
+        <b>Alcohol:</b>
+      </div>
+      <div class="col-md-6">
+        Excess <span ng-show="episode.social_history[0].alcohol_dependent">(Alcohol dependent)</span>
+      </div>
+    </div>
     <div class="row" ng-show="episode.social_history[0].smoking && episode.social_history[0].smoking != 'Never'">
       <div class="col-md-6">
         <b>Smoking:</b>
@@ -19,5 +28,33 @@
         [[ episode.social_history[0].smoking ]]
       </div>
     </div>
+
+    <div class="row"
+         ng-show="episode.social_history[0].intravenous_drug_use && episode.social_history[0].intravenous_drug_use != 'Never'">
+      <div class="col-md-6">
+        <b>IV Drug use:</b>
+      </div>
+      <div class="col-md-6">
+        [[ episode.social_history[0].intravenous_drug_use ]]
+      </div>
+    </div>
+    <div class="row" ng-show="episode.social_history[0].incarceration && episode.social_history[0].incarceration != 'Never'">
+      <div class="col-md-6">
+        <b>Incarceration:</b>
+      </div>
+      <div class="col-md-6">
+        [[ episode.social_history[0].incarceration ]]
+      </div>
+    </div>
+    <div class="row" ng-show="episode.social_history[0].homelessness && episode.social_history[0].homelessness != 'Never'">
+      <div class="col-md-6">
+        <b>Homelessness:</b>
+      </div>
+      <div class="col-md-6">
+        [[ episode.social_history[0].homelessness ]]
+      </div>
+    </div>
+
+
   </div>
 </div>
