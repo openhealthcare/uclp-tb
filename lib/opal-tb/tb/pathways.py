@@ -72,6 +72,17 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
         ),
     )
 
+    def save(self, data, user):
+        """
+        Set this step as done in TBMeta
+        """
+        patient = super(TBContactTracing, self).save(data, user)
+        meta = self.episode.tbmeta_set.get()
+        meta.contact_tracing_done = True
+        meta.save()
+        return patient
+
+
 class TBAssessment(RedirectsToPatientMixin, Pathway):
     display_name = "TB Assessment"
     template_url = '/templates/pathway/treatment_form_base.html'
