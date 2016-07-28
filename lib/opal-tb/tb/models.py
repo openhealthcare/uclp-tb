@@ -14,6 +14,12 @@ from tb.episode_categories import TBEpisode
 from opal.core.fields import ForeignKeyOrFreeText
 from opal.core import lookuplists, subrecords
 
+class TBMeta(models.EpisodeSubrecord):
+    _is_singleton = True
+    _advanced_searchable = False
+
+    contact_tracing_done = fields.BooleanField(default=False)
+
 
 class ContactDetails(models.PatientSubrecord):
     _is_singleton = True
