@@ -1,11 +1,15 @@
 """
 OPAL Pathway definitions for the re-usable TB module.
 """
+import datetime
+
 from django.db import transaction
 from pathway import pathways
 from pathway.pathways import (
     Pathway, RedirectsToPatientMixin, Step, delete_others, ModalPathway
 )
+
+# TODO Stop importing these like this - it makes us unpluggable
 from uclptb import models as uclptb_models
 from tb import models as tb_models
 
@@ -53,6 +57,7 @@ class TBAddPatient(RedirectsToPatientMixin, Pathway):
         patient = super(TBAddPatient, self).save(data, user)
         episode = patient.episode_set.first()
         episode.stage = 'Under Investigation'
+        episode.date_of_admission = datetime.date.today()
         episode.save()
         return patient
 
@@ -129,5 +134,6 @@ class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
         patient = super(TreatmentOutcome, self).save(data, user)
         episode = self.episode
         episode.stage = 'Discharged'
+        episode.discharge_date = datetime.date.today()
         episode.save()
         return patient

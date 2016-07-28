@@ -192,7 +192,8 @@ class ContactTracing(models.EpisodeSubrecord):
     def create_tb_episode(self, patient):
         return patient.create_episode(
             category_name=TBEpisode.get_slug().upper(),
-            stage=TBEpisode.stages.CONTACT_TRACING
+            stage=TBEpisode.stages.CONTACT_TRACING,
+            date_of_admission=date.today()
         )
 
     @transaction.atomic()

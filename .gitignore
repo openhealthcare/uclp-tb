@@ -1,5 +1,5 @@
 *~
-*.sqlite
+*.sqlite*
 *.pyc
 static/*
 .coverage

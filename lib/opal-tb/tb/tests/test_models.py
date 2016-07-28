@@ -1,8 +1,13 @@
+"""
+Unittests for the tb.models module
+"""
 import datetime
-from opal.core.test import OpalTestCase
-from opal.core import subrecords
-from tb.models import ContactTracing
 
+from opal import models
+from opal.core import subrecords
+from opal.core.test import OpalTestCase
+
+from tb.models import ContactTracing
 
 class ContactTracingTestCase(OpalTestCase):
     def setUp(self):
@@ -95,6 +100,9 @@ class ContactTracingTestCase(OpalTestCase):
         no_difference = expected_keys - found_keys
         self.assertFalse(no_difference)
 
+    def test_create_tb_episode_sets_date(self):
+        episode = ContactTracing().create_tb_episode(models.Patient.objects.create())
+        self.assertEqual(datetime.date.today(), episode.start)
 
     def test_update_contact_tracing(self):
         """
