@@ -103,6 +103,11 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
+          {% input field="Demographics.birth_place" change="birth_place_change()" %}
+          <div ng-show="show_arrival_in_the_uk">
+            {% input field="SocialHistory.arrival_in_the_uk" %}
+          </div>
+          <h4 class="text-center content-offset-25">History of Travel</h4>
           {% include models.Travel.get_form_template %}
         </div>
       </div>
