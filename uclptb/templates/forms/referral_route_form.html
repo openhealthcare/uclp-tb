@@ -1,3 +1,29 @@
 {% load forms %}
-{% datepicker field="ReferralRoute.date_of_referral" %}
-{% select field="ReferralRoute.referral_type" %}
+{% datepicker field="ReferralRoute.date_of_referral"  %}
+
+<div class="form-group">
+  <div class="col-sm-8 col-sm-push-3">
+    <div class="row">
+      <div class="col-sm-6">
+        <label class="radio-inline">
+          <input ng-value="true" type="radio" ng-model="editing.referral_route.internal">
+          Internal
+        </label>
+      </div>
+      <div class="col-sm-6">
+        <label class="radio-inline">
+          <input ng-value="false" type="radio" ng-model="editing.referral_route.internal">
+          External
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-show="editing.referral_route.internal">
+  {% input  field="ReferralRoute.referral_team"  %}
+</div>
+<div ng-show="editing.referral_route.internal == false">
+  {% select field="ReferralRoute.referral_type"  %}
+  {% input field="ReferralRoute.referral_organisation"  %}
+</div>
