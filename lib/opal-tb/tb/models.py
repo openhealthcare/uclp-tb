@@ -202,6 +202,12 @@ class SocialHistory(models.EpisodeSubrecord):
     homelessness      = fields.TextField(blank=True, null=True)
     intravenous_drug_use = fields.CharField(max_length=250, blank=True, null=True)
     incarceration = fields.CharField(max_length=250, blank=True, null=True)
+    arrival_in_the_uk = fields.CharField(
+        max_length=250,
+        blank=True,
+        null=True,
+        verbose_name="Year of arrival"
+    )
 
 
 def get_for_lookup_list(model, values):
