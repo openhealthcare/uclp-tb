@@ -7,8 +7,7 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          {% datepicker field="ReferralRoute.date_of_referral" %}
-          {% select field="ReferralRoute.referral_type" %}
+          {% include models.ReferralRoute.get_form_template %}
         </div>
       </div>
     </div>
