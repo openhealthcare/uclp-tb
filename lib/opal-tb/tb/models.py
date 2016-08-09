@@ -73,7 +73,10 @@ class ContactTraced(models.EpisodeSubrecord):
         this includes things like, phoned, contacted, appointment booked
         NICE
     """
-    pass
+    symptomatic = models.BooleanField(default=False)
+
+    def to_dict(self, user):
+        super(ContactTraced, self).to_dict(user)
 
 
 class ContactTracing(models.EpisodeSubrecord):
@@ -165,8 +168,10 @@ class ContactTracing(models.EpisodeSubrecord):
             date_of_admission=date.today()
         )
 
-    def create_contact_traced(self, episode):
-        return ContactTraced.objects.create(episode=episode)
+    def create_contact_traced(self, data, episode):
+        return ContactTraced.objects.create(
+            episode=episode, symptomatic=data.get("symptomatic", False)
+        )
 
     @transaction.atomic()
     def update_from_dict(self, data, user, *args, **kwargs):
@@ -175,10 +180,10 @@ class ContactTracing(models.EpisodeSubrecord):
         if created:
             self.update_contact_details(patient, data, user)
             episode = self.create_tb_episode(patient)
-            self.contact_traced = self.create_contact_traced(episode)
-            self.create_referral_route(self.contact_episode, user)
+            self.contact_traced = self.create_contact_traced(data, episode)
+            self.create_referral_route(self.contact_traced.episode, user)
 
-        self.relationship_to_index = data.pop("relationship_to_index", None)
+        self.relationship_to_insdex = data.pop("relationship_to_index", None)
         self.reason_at_risk = data.pop("reason_at_risk", None)
         self.set_created_by_id(data, user)
         self.set_updated_by_id(data, user)
@@ -192,13 +197,11 @@ class ContactTracing(models.EpisodeSubrecord):
             of patient, contact details and
             episode stage
         """
-        result = self.contact_episode.patient.demographics_set.first().to_dict(user)
-        result.update(self.contact_episode.patient.contactdetails_set.first().to_dict(user))
+        result = self.contact_traced.episode.patient.demographics_set.first().to_dict(user)
+        result.update(self.contact_traced.episode.patient.contactdetails_set.first().to_dict(user))
         result.update(super(ContactTracing, self).to_dict(user))
-        result["stage"] = self.contact_episode.stage
+        result["stage"] = self.contact_traced.episode.stage
         return result
-
-
 
 
 class SocialHistory(models.EpisodeSubrecord):
