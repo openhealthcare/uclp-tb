@@ -9,7 +9,15 @@
   <div class="panel-body">
     <p>
       <b>
-        [[ episode.stage ]]
+        <div ng-show="episode.stage === 'Contact tracing'">
+          Traced From:
+          <div ng-repeat="item in episode.contact_traced">
+            {% include models.ContactTraced.get_detail_template %}
+          </div>
+        </div>
+        <div ng-hide="episode.stage === 'Contact tracing'">
+          [[ episode.stage ]]
+        </div>
         <span ng-show="episode.tb_location[0].sites.length">([[ episode.tb_location[0].sites.join(", ") ]])</span>
       </b>
       <span class="pull-right" ng-show="episode.ph_england_notification[0].who || episode.ph_england_notification[0].when">
