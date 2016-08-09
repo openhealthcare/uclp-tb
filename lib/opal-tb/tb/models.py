@@ -62,6 +62,20 @@ class ReasonAtRisk(lookuplists.LookupList):
     pass
 
 
+class ContactTraced(models.EpisodeSubrecord):
+    """ contact traced is the other side of the
+        contact tracing relationship.
+
+        this in theory has a 1 to many relationship between contact tracing
+        ie we dont' create a contact traced if one already exists
+        for the current episode.
+
+        this includes things like, phoned, contacted, appointment booked
+        NICE
+    """
+    pass
+
+
 class ContactTracing(models.EpisodeSubrecord):
     """ contact tracing works by having 2 sub models
         essentially demographics and contact details
@@ -74,9 +88,8 @@ class ContactTracing(models.EpisodeSubrecord):
         gets us what we want
     """
     _icon = 'fa fa-group'
-    contact_episode = fields.ForeignKey(
-        models.Episode,
-        related_name="contact_traced"
+    contact_traced = fields.ForeignKey(
+        ContactTraced,
     )
 
     relationship_to_index = ForeignKeyOrFreeText(
@@ -134,13 +147,6 @@ class ContactTracing(models.EpisodeSubrecord):
         }
         contact_details.update_from_dict(contact_detail_data, user)
 
-    def get_episode(self, patient):
-        tb_episodes = patient.episode_set.filter(category_name=TBEpisode.get_slug())
-
-        for tb_episode in tb_episodes:
-            if not tb_episode.end:
-                return tb_episode
-
     def create_referral_route(self, episode, user):
         referral = episode.referralroute_set.first()
         referral.referral_type = "TB contact tracing"
@@ -159,13 +165,17 @@ class ContactTracing(models.EpisodeSubrecord):
             date_of_admission=date.today()
         )
 
+    def create_contact_traced(self, episode):
+        return ContactTraced.objects.create(episode=episode)
+
     @transaction.atomic()
     def update_from_dict(self, data, user, *args, **kwargs):
         patient, created = self.get_or_create_patient(data, user)
 
         if created:
             self.update_contact_details(patient, data, user)
-            self.contact_episode = self.create_tb_episode(patient)
+            episode = self.create_tb_episode(patient)
+            self.contact_traced = self.create_contact_traced(episode)
             self.create_referral_route(self.contact_episode, user)
 
         self.relationship_to_index = data.pop("relationship_to_index", None)
@@ -187,6 +197,8 @@ class ContactTracing(models.EpisodeSubrecord):
         result.update(super(ContactTracing, self).to_dict(user))
         result["stage"] = self.contact_episode.stage
         return result
+
+
 
 
 class SocialHistory(models.EpisodeSubrecord):
