@@ -280,6 +280,7 @@ if 'test' in sys.argv:
     )
     MIGRATION_MODULES = {
         'opal': 'opal.nomigrations',
+        'obs': 'obs.nomigrations',
         'tb': 'tb.nomigrations',
         'uclptb': 'uclptb.nomigrations',
     }
