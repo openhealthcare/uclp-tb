@@ -27,17 +27,8 @@ class ContactDetails(models.PatientSubrecord):
     _icon = 'fa fa-phone'
     _title = 'Contact Details'
 
-    address_line1 = fields.CharField("Address line 1", max_length = 45,
-                                     blank=True, null=True)
-    address_line2 = fields.CharField("Address line 2", max_length = 45,
-                                     blank=True, null=True)
-    city          = fields.CharField(max_length = 50, blank = True)
-    county        = fields.CharField("County", max_length = 40,
-                                     blank=True, null=True)
-    post_code     = fields.CharField("Post Code", max_length = 10,
-                                     blank=True, null=True)
-    tel1          = fields.CharField(verbose_name="Telephone 1", blank=True, null=True, max_length=50)
-    tel2          = fields.CharField(verbose_name="Telephone 2", blank=True, null=True, max_length=50)
+    telephone = fields.CharField(blank=True, null=True, max_length=50)
+    address = fields.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Contact details"
@@ -75,8 +66,6 @@ class ContactTraced(models.EpisodeSubrecord):
     _title="Traced By"
     _icon = 'fa fa-street-view'
     symptomatic = fields.BooleanField(default=False)
-    telephone = fields.CharField(blank=True, null=True, max_length=50)
-    address = fields.TextField(blank=True, null=True)
 
     def to_dict(self, user):
         response = super(ContactTraced, self).to_dict(user)
@@ -121,6 +110,7 @@ class ContactTracing(models.EpisodeSubrecord):
         Demographics = subrecords.get_subrecord_from_model_name('Demographics')
         schema = Demographics.build_field_schema()
         schema.extend(super(ContactTracing, cls).build_field_schema())
+        schema.extend(ContactDetails.build_field_schema())
 
         schema.append({
             'name': "stage",
@@ -167,12 +157,23 @@ class ContactTracing(models.EpisodeSubrecord):
             date_of_admission=date.today()
         )
 
+    def update_contact_details(self, patient, data, user):
+        """
+        current behaviour is if there are no contact details
+        we'll let you populate them, otherwise they'll stay the same
+        """
+        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
+        contact_details_fields = ContactDetails._get_fieldnames_to_serialize()
+        contact_details = patient.contactdetails_set.first()
+        contact_detail_data = {
+            i: v for i, v in data.iteritems() if i in contact_details_fields and not i == "id" and not i == "patient_id"
+        }
+        contact_details.update_from_dict(contact_detail_data, user)
+
     def create_contact_traced(self, data, episode):
         return ContactTraced.objects.create(
             episode=episode,
             symptomatic=data.get("symptomatic", False),
-            telephone=data.get("telephone", None),
-            address=data.get("address", None),
         )
 
     @transaction.atomic()
@@ -182,6 +183,7 @@ class ContactTracing(models.EpisodeSubrecord):
         if created:
             episode = self.create_tb_episode(patient)
             self.contact_traced = self.create_contact_traced(data, episode)
+            self.update_contact_details(patient, data, user)
             self.create_referral_route(self.contact_traced.episode, user)
 
         self.relationship_to_index = data.pop("relationship_to_index", None)
@@ -199,6 +201,7 @@ class ContactTracing(models.EpisodeSubrecord):
             episode stage
         """
         result = self.contact_traced.episode.patient.demographics_set.first().to_dict(user)
+        result.update(self.contact_traced.episode.patient.contactdetails_set.first().to_dict(user))
         result.update(super(ContactTracing, self).to_dict(user))
         result["stage"] = self.contact_traced.episode.stage
         return result

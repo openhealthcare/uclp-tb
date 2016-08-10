@@ -46,12 +46,7 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          {% input  field="ContactDetails.address_line1"  %}
-          {% input  field="ContactDetails.address_line2"  %}
-          {% input  field="ContactDetails.city"  %}
-          {% input  field="ContactDetails.post_code"  %}
-          {% input  field="ContactDetails.tel1"  %}
-          {% input  field="ContactDetails.tel2"  %}
+          {% include models.ContactDetails.get_form_template %}
         </div>
       </div>
     </div>

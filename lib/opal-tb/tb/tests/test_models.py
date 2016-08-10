@@ -88,7 +88,7 @@ class ContactTracingTestCase(ContactTestCase):
         result = ContactTracing.build_field_schema()
         models = set(i["model"] for i in result)
         self.assertEqual(
-            models, set(["Demographics", "ContactTracing"])
+            models, set(["Demographics", "ContactTracing", "ContactDetails"])
         )
         fields = set(i["name"] for i in result if not i["name"] == "id")
         example_fields = set(self.get_test_dict().keys())
@@ -100,7 +100,6 @@ class ContactTracingTestCase(ContactTestCase):
             that are not in schema
         """
         contact_traced = ContactTraced.objects.create(episode=self.other_episode)
-
 
         new_contact_tracing = ContactTracing.objects.create(
             episode=self.episode,
@@ -124,6 +123,7 @@ class ContactTracingTestCase(ContactTestCase):
         any update sent won't blow up or change anything
         """
         Demographics = subrecords.get_subrecord_from_model_name('Demographics')
+        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
 
         contact_traced = ContactTraced.objects.create(episode=self.other_episode)
 
@@ -139,6 +139,7 @@ class ContactTracingTestCase(ContactTestCase):
         # and contact details the new values
         new_contact_tracing.update_from_dict(example_update_dict, self.user)
         self.assertEqual(ContactTracing.objects.count(), 1)
+        self.assertEqual(ContactDetails.objects.count(), 2)
         self.assertEqual(Demographics.objects.count(), 2)
         demographics = new_contact_tracing.contact_traced.episode.patient.demographics_set.first()
         self.assertEqual(
@@ -167,7 +168,8 @@ class ContactTracingTestCase(ContactTestCase):
             example_update_dict["first_name"]
         )
 
-        address = new_contact_tracing.contact_traced.address
+        contact_details = new_contact_tracing.contact_traced.episode.patient.contactdetails_set.first()
+        address = contact_details.address
         self.assertEqual(
             address,
             example_update_dict["address"]
