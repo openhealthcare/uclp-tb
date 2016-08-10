@@ -1646,19 +1646,35 @@
   "tbsite": [
     {
       "synonyms": [],
-      "name": "Bone"
+      "name": "Abdominal"
+    },
+    {
+      "synonyms": ["Spinal"],
+      "name": "Bone/Joint: Spine"
     },
     {
       "synonyms": [],
-      "name": "CNS"
+      "name": "Bone/Joint: Other"
     },
     {
       "synonyms": [],
-      "name": "Lymph Node"
+      "name": "CNS: Meningitis"
     },
     {
       "synonyms": [],
-      "name": "Ocular"
+      "name": "CNS: Other"
+    },
+    {
+      "synonyms": [],
+      "name": "Lymph Node (extra thoracic)"
+    },
+    {
+      "synonyms": [],
+      "name": "Lymph Node (intra thoracic)"
+    },
+    {
+      "synonyms": [],
+      "name": "Laryngeal"
     },
     {
       "synonyms": [],
@@ -1666,11 +1682,11 @@
     },
     {
       "synonyms": [],
-      "name": "Renal Tract"
+      "name": "Gastro/Peritoneal"
     },
     {
       "synonyms": [],
-      "name": "Abdominal Lymph nodes"
+      "name": "Cryptic Disseminated"
     },
     {
       "synonyms": [],
@@ -1678,7 +1694,15 @@
     },
     {
       "synonyms": [],
-      "name": "Spinal"
+      "name": "Miliary"
+    },
+    {
+      "synonyms": [],
+      "name": "Ocular"
+    },
+    {
+      "synonyms": [],
+      "name": "Renal Tract"
     }
   ],
   "travel_reason": [
