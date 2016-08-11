@@ -107,7 +107,7 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
             title="Contact Screening",
             model=uclptb_models.SymptomComplex,
             template_url="/templates/pathway/tb_contact_screening.html",
-            controller_class="TBContactScreening"
+            controller_class="TBInitialAssessmentCtrl"
         ),
     )
 

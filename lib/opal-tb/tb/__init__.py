@@ -14,7 +14,6 @@ class TbPlugin(plugins.OpalPlugin):
         'opal.controllers': [
             'js/tb/controllers/tb_treatment.js',
             "js/tb/controllers/tb_initial_assessment.js",
-            "js/tb/controllers/tb_contact_screening.js",
             "js/tb/controllers/tb_type.js",
             "js/tb/controllers/add_tests.js",
             "js/tb/controllers/add_results.js",
