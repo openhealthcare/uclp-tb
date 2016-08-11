@@ -42,18 +42,6 @@ class ContactDetails(models.PatientSubrecord):
     class Meta:
         verbose_name_plural = "Contact details"
 
-class Observations(models.EpisodeSubrecord):
-    _sort           = 'datetime'
-    _icon           = 'fa fa-line-chart'
-
-    weight = fields.FloatField()
-
-    # in many ways this isn't necessary as it should always be the created timestamp
-    # in practice those fields are for audit purposes so lets seperate it out for
-    # now
-    datetime = fields.DateTimeField(auto_now_add=True)
-
-
 class RelationshipToIndex(lookuplists.LookupList):
     pass
 
