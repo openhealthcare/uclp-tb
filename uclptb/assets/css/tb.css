@@ -25,3 +25,9 @@
 .panel-container {
   margin-top: 0px
 }
+
+.panel .panel .panel-heading.inner-panel-heading{
+  background-color: #9cc96b;
+  border-color: #9cc96b;
+  color: white;
+}

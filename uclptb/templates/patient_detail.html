@@ -10,7 +10,15 @@
         Actions
       </h3>
     </div>
-    <ul class="list-group" ng-hide="episode.stage=='Contact tracing'">
+    <ul class="list-group" ng-show="episode.stage === 'Contact tracing'">
+      <li class="list-group-item">
+        <a class="btn btn-primary btn-text-left col-md-8"
+           href="/pathway/#/tb_screening/[[ episode.id ]]">
+          {% icon "fa-plus-square" %}Contact screening
+        </a>
+      </li>
+    </ul>
+    <ul class="list-group" ng-hide="episode.stage === 'Contact tracing'">
 
       <li class="list-group-item" ng-show="episode.stage=='Under Investigation'">
         <a class="btn btn-primary btn-text-left col-md-8"

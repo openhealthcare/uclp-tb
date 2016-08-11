@@ -4,6 +4,7 @@ OPAL Pathway definitions for the re-usable TB module.
 import datetime
 
 from django.db import transaction
+from django.conf import settings
 from pathway import pathways
 from pathway.pathways import (
     Pathway, RedirectsToPatientMixin, Step, delete_others, ModalPathway
@@ -95,6 +96,46 @@ class TBAssessment(RedirectsToPatientMixin, Pathway):
             controller_class="TBInitialAssessmentCtrl"
         ),
     )
+
+
+class TBContactScreening(RedirectsToPatientMixin, Pathway):
+    display_name = "TB Contact Screening"
+    template_url = '/templates/pathway/treatment_form_base.html'
+    slug = "tb_screening"
+    steps = (
+        Step(
+            title="Contact Screening",
+            model=uclptb_models.SymptomComplex,
+            template_url="/templates/pathway/tb_contact_screening.html",
+            controller_class="TBContactScreening"
+        ),
+    )
+
+    def save(self, data, user):
+        next_steps = data.pop("next_steps")[0]
+        referral_route = data.pop("referral_route", [{}])[0]
+        today_str = datetime.datetime.now().strftime(
+            settings.DATE_INPUT_FORMATS[0]
+        )
+        episode = self.episode
+
+        if next_steps["result"] == "referred":
+            referral_route["internal"] = True
+            referral_route["date_of_referral"] = today_str
+            referral_route["referral_organisation"] = "TB Service"
+
+            if user.first_name and user.surname:
+                referral_route["referral_name"] = "{0} {1}".format(
+                    user.first_name[0], user.surname
+                )
+
+                data["referral_route"] = [referral_route]
+
+        super(TBContactScreening, self).save(data, user)
+
+        if next_steps["result"] == "discharged":
+            episode.discharge_date = datetime.date.today()
+            episode.save()
 
 
 class TBTreatment(RedirectsToPatientMixin, Pathway):
