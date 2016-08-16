@@ -4,10 +4,12 @@ OPAL Pathway definitions for the re-usable TB module.
 import datetime
 
 from django.db import transaction
+from django.conf import settings
 from pathway import pathways
 from pathway.pathways import (
     Pathway, RedirectsToPatientMixin, Step, delete_others, ModalPathway
 )
+from episode_categories import TBEpisodeStages
 
 # TODO Stop importing these like this - it makes us unpluggable
 from uclptb import models as uclptb_models
@@ -56,7 +58,7 @@ class TBAddPatient(RedirectsToPatientMixin, Pathway):
     def save(self, data, user):
         patient = super(TBAddPatient, self).save(data, user)
         episode = patient.episode_set.first()
-        episode.stage = 'Under Investigation'
+        episode.stage = TBEpisodeStages.AWAITING_APPOINTMENT
         episode.date_of_admission = datetime.date.today()
         episode.save()
         return patient
@@ -96,6 +98,57 @@ class TBAssessment(RedirectsToPatientMixin, Pathway):
         ),
     )
 
+    def save(self, data, user):
+        patient = super(TreatmentOutcome, self).save(data, user)
+        episode = self.episode
+        episode.stage = TBEpisodeStages.UNDER_INVESTIGATION
+        episode.save()
+        return patient
+
+
+class TBContactScreening(RedirectsToPatientMixin, Pathway):
+    display_name = "TB Contact Screening"
+    template_url = '/templates/pathway/treatment_form_base.html'
+    slug = "tb_screening"
+    steps = (
+        Step(
+            title="Contact Screening",
+            model=uclptb_models.SymptomComplex,
+            template_url="/templates/pathway/tb_contact_screening.html",
+            controller_class="TBInitialAssessmentCtrl"
+        ),
+    )
+
+    def save(self, data, user):
+        next_steps = data.pop("next_steps")[0]
+        referral_route = data.pop("referral_route", [{}])[0]
+        today_str = datetime.datetime.now().strftime(
+            settings.DATE_INPUT_FORMATS[0]
+        )
+        episode = self.episode
+
+        if next_steps["result"] == "referred":
+            referral_route["internal"] = True
+            referral_route["date_of_referral"] = today_str
+            referral_route["referral_organisation"] = "TB Service"
+
+            if user.first_name and user.surname:
+                referral_route["referral_name"] = "{0} {1}".format(
+                    user.first_name[0], user.surname
+                )
+
+                data["referral_route"] = [referral_route]
+
+            episode.stage = TBEpisodeStages.AWAITING_APPOINTMENT
+            episode.save()
+
+        super(TBContactScreening, self).save(data, user)
+
+        if next_steps["result"] == "discharged":
+            episode.discharge_date = datetime.date.today()
+            episode.stage = TBEpisodeStages.DISCHARGED
+            episode.save()
+
 
 class TBTreatment(RedirectsToPatientMixin, Pathway):
     display_name  = "TB Treatment"
@@ -133,7 +186,7 @@ class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
     def save(self, data, user):
         patient = super(TreatmentOutcome, self).save(data, user)
         episode = self.episode
-        episode.stage = 'Discharged'
+        episode.stage = TBEpisodeStages.DISCHARGED
         episode.discharge_date = datetime.date.today()
         episode.save()
         return patient

@@ -10,9 +10,17 @@
         Actions
       </h3>
     </div>
-    <ul class="list-group" ng-hide="episode.stage=='Contact tracing'">
+    <ul class="list-group" ng-show="episode.stage === metadata.tb.stages.contact_tracing">
+      <li class="list-group-item">
+        <a class="btn btn-primary btn-text-left col-md-8"
+           href="/pathway/#/tb_screening/[[ episode.id ]]">
+          {% icon "fa-plus-square" %}Contact screening
+        </a>
+      </li>
+    </ul>
+    <ul class="list-group" ng-hide="episode.stage === 'Contact tracing'">
 
-      <li class="list-group-item" ng-show="episode.stage=='Under Investigation'">
+      <li class="list-group-item" ng-show="episode.stage === metadata.tb.stages.awaiting_appointment">
         <a class="btn btn-primary btn-text-left col-md-8"
            href="/pathway/#/tb_initial_assessment/[[ episode.id ]]">
           {% icon "fa-stethoscope" %}Initial TB Assessment
@@ -30,7 +38,7 @@
       <li class="list-group-item">
         <a class="btn btn-primary btn-text-left col-md-8"
            href="/pathway/#/tb_treatment/[[ episode.id ]]">
-          {% icon "fa-medkit" %} <span ng-show="episode.stage == 'Under Investigation'">Start </span>TB Treatment
+          {% icon "fa-medkit" %} <span ng-show="episode.stage === metadata.tb.stages.under_investigation">Start </span>TB Treatment
         </a>
       </li>
       <li class="list-group-item" ng-hide="episode.tb_meta[0].contact_tracing_done">

@@ -10,7 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 from opal import models
 from opal.core.lookuplists import LookupList
 
-from tb.episode_categories import TBEpisode
+from tb.episode_categories import TBEpisode, TBEpisodeStages
 from opal.core.fields import ForeignKeyOrFreeText
 from opal.core import lookuplists, subrecords
 
@@ -141,7 +141,7 @@ class ContactTracing(models.EpisodeSubrecord):
     def create_tb_episode(self, patient):
         return patient.create_episode(
             category_name=TBEpisode.get_slug().upper(),
-            stage=TBEpisode.stages.CONTACT_TRACING,
+            stage=TBEpisodeStages.CONTACT_TRACING,
             date_of_admission=date.today()
         )
 
@@ -289,3 +289,17 @@ class TestResult(models.EpisodeSubrecord):
     resistant_antibiotics = fields.ManyToManyField(
         models.Antimicrobial, related_name="test_result_resistant"
     )
+
+class TBHistory(models.PatientSubrecord):
+    _icon = 'fa fa-wpforms'
+    _title = "History of TB"
+    personal_history_of_tb = fields.TextField(blank=True, null=True)
+    other_tb_contact = fields.TextField(blank=True, null=True, verbose_name="Other TB Contact")
+    date_of_other_tb_contact = fields.DateField(blank=True, null=True, verbose_name="When")
+
+class BCG(models.PatientSubrecord):
+    _icon = 'fa fa-asterisk'
+    history_of_bcg = fields.CharField(max_length=255, blank=True, null=True)
+    date_of_bcg = fields.DateField(blank=True, null=True)
+    bcg_scar = fields.BooleanField(default=False)
+    red_book_documentation_of_bcg_seen = fields.BooleanField(default=False, verbose_name="Red Book Documentation of BCG Seen")

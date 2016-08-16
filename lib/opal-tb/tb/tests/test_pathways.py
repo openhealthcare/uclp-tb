@@ -37,6 +37,37 @@ class TestTreatmentOutcome(OpalTestCase):
         reloaded_episode = Episode.objects.get()
         self.assertEqual(reloaded_episode.stage, 'Discharged')
 
+class TestContactScreening(OpalTestCase):
+    def test_discharge(self):
+        patient, episode = self.new_patient_and_episode_please()
+        episode.stage = "Contact Tracing"
+        pathway = pathways.TBContactScreening(
+            patient_id=patient.id, episode_id=episode.id
+        )
+        data = dict(next_steps=[dict(result="discharged")])
+        pathway.save(data, self.user)
+        reloaded_episode = Episode.objects.get()
+        self.assertEqual(
+            reloaded_episode.discharge_date, datetime.date.today()
+        )
+
+    def test_referral(self):
+        patient, episode = self.new_patient_and_episode_please()
+        self.user.first_name = "James"
+        self.user.surname = "Bond"
+        self.user.save()
+        episode.stage = "Contact Tracing"
+        pathway = pathways.TBContactScreening(
+            patient_id=patient.id, episode_id=episode.id
+        )
+        data = dict(next_steps=[dict(result="referred")])
+        pathway.save(data, self.user)
+        reloaded_episode = Episode.objects.get()
+        referral = episode.referralroute_set.get()
+        self.assertEqual(referral.date_of_referral, datetime.date.today())
+        self.assertTrue(referral.internal)
+        self.assertEqual(referral.referral_organisation, "TB Service")
+
 
 class TBContactTracingTestCase(OpalTestCase):
     def test_sets_contact_tracing_in_tb_meta(self):
