@@ -9,6 +9,7 @@ from pathway import pathways
 from pathway.pathways import (
     Pathway, RedirectsToPatientMixin, Step, delete_others, ModalPathway
 )
+from episode_categories import TBEpisodeStages
 
 # TODO Stop importing these like this - it makes us unpluggable
 from uclptb import models as uclptb_models
@@ -57,7 +58,7 @@ class TBAddPatient(RedirectsToPatientMixin, Pathway):
     def save(self, data, user):
         patient = super(TBAddPatient, self).save(data, user)
         episode = patient.episode_set.first()
-        episode.stage = 'Under Investigation'
+        episode.stage = TBEpisodeStages.AWAITING_APPOINTMENT
         episode.date_of_admission = datetime.date.today()
         episode.save()
         return patient
@@ -97,6 +98,13 @@ class TBAssessment(RedirectsToPatientMixin, Pathway):
         ),
     )
 
+    def save(self, data, user):
+        patient = super(TreatmentOutcome, self).save(data, user)
+        episode = self.episode
+        episode.stage = TBEpisodeStages.UNDER_INVESTIGATION
+        episode.save()
+        return patient
+
 
 class TBContactScreening(RedirectsToPatientMixin, Pathway):
     display_name = "TB Contact Screening"
@@ -131,10 +139,14 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
 
                 data["referral_route"] = [referral_route]
 
+            episode.stage = TBEpisodeStages.AWAITING_APPOINTMENT
+            episode.save()
+
         super(TBContactScreening, self).save(data, user)
 
         if next_steps["result"] == "discharged":
             episode.discharge_date = datetime.date.today()
+            episode.stage = TBEpisodeStages.DISCHARGED
             episode.save()
 
 
@@ -174,7 +186,7 @@ class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
     def save(self, data, user):
         patient = super(TreatmentOutcome, self).save(data, user)
         episode = self.episode
-        episode.stage = 'Discharged'
+        episode.stage = TBEpisodeStages.DISCHARGED
         episode.discharge_date = datetime.date.today()
         episode.save()
         return patient
