@@ -10,7 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 from opal import models
 from opal.core.lookuplists import LookupList
 
-from tb.episode_categories import TBEpisode
+from tb.episode_categories import TBEpisode, TBEpisodeStages
 from opal.core.fields import ForeignKeyOrFreeText
 from opal.core import lookuplists, subrecords
 
@@ -153,7 +153,7 @@ class ContactTracing(models.EpisodeSubrecord):
     def create_tb_episode(self, patient):
         return patient.create_episode(
             category_name=TBEpisode.get_slug().upper(),
-            stage=TBEpisode.stages.CONTACT_TRACING,
+            stage=TBEpisodeStages.CONTACT_TRACING,
             date_of_admission=date.today()
         )
 
