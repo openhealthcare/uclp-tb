@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'compressor',
     'opal',
+    'obs',
     'opal.core.search',
     'pathway',
     'referral',
@@ -279,6 +280,7 @@ if 'test' in sys.argv:
     )
     MIGRATION_MODULES = {
         'opal': 'opal.nomigrations',
+        'obs': 'obs.nomigrations',
         'tb': 'tb.nomigrations',
         'uclptb': 'uclptb.nomigrations',
     }
