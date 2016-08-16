@@ -1,0 +1,7 @@
+<div ng-repeat="contact_tracing in item.contact_tracing">
+  <a href="/#/patient/[[ contact_tracing.episode.demographics[0].patient_id ]]">
+    [[ contact_tracing.episode.demographics[0].first_name ]] [[ contact_tracing.episode.demographics[0].surname ]]
+    <span ng-show="contact_tracing.episode.demographics[0].hospital_number"> ([[ contact_tracing.episode.demographics[0].hospital_number ]])</span> - [[ item.episode.stage ]]
+  </a>
+  <span ng-show="contact_tracing.contact_tracing.relationship_to_index">is thier [[ item.contact_tracing.relationship_to_index ]]</span>
+</div>

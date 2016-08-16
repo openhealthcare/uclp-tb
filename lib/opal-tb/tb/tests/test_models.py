@@ -7,30 +7,27 @@ from opal import models
 from opal.core import subrecords
 from opal.core.test import OpalTestCase
 
-from tb.models import ContactTracing
+from tb.models import ContactTracing, ContactTraced
 
-class ContactTracingTestCase(OpalTestCase):
+
+class ContactTestCase(OpalTestCase):
     def setUp(self):
+        super(ContactTestCase, self).setUp()
         self.patient, self.episode = self.new_patient_and_episode_please()
         self.other_patient, self.other_episode = self.new_patient_and_episode_please()
         self.other_patient.demographics_set.update(
             first_name="other",
             surname="patient"
         )
-        self.other_patient.contactdetails_set.update(
-            address_line1="1 London"
-        )
 
     def get_test_dict(self):
         return {
-            "address_line1": "2 London",
-            "address_line2":  None,
+            "address": "2 London",
             "birth_place": "",
             "birth_place_fk_id": None,
             "birth_place_ft": "",
-            "city": "",
             "consistency_token": "",
-            "contact_episode_id": 16,
+            "contact_traced_id": 16,
             "county": None,
             "created": None,
             "created_by_id": None,
@@ -51,7 +48,7 @@ class ContactTracingTestCase(OpalTestCase):
             "middle_name": None,
             "nhs_number": None,
             "patient_id": 11,
-            "post_code": None,
+            "post_code": "sw13 0BK",
             "religion": None,
             "relationship_to_index": "Mother",
             "reason_at_risk": "Shared household",
@@ -60,14 +57,29 @@ class ContactTracingTestCase(OpalTestCase):
             "sex_ft": "",
             "stage": "Contact tracing",
             "surname": "Wilson",
-            "tel1": None,
-            "tel2": None,
+            "symptomatic": True,
+            "telephone": "0208 878 5603",
             "title": "Mr",
             "title_fk_id": 2,
             "title_ft": "",
             "updated": None,
             "updated_by_id": None,
         }
+
+
+
+class ContactTracedTestCase(ContactTestCase):
+    def test_to_dict(self):
+        contact_traced = ContactTraced.objects.create(episode=self.other_episode)
+        ContactTracing.objects.create(
+            episode=self.episode, contact_traced=contact_traced, relationship_to_index="Mother"
+        )
+        result = contact_traced.to_dict(self.user)
+        self.assertEqual(result["contact_tracing"][0]["episode"]["id"], 1)
+        self.assertEqual(result["contact_tracing"][0]["contact_tracing"]["relationship_to_index"], "Mother")
+
+
+class ContactTracingTestCase(ContactTestCase):
 
     def test_build_field_schema(self):
         """ the python dict should be a sub set of
@@ -76,7 +88,7 @@ class ContactTracingTestCase(OpalTestCase):
         result = ContactTracing.build_field_schema()
         models = set(i["model"] for i in result)
         self.assertEqual(
-            models, set(["Demographics", "ContactDetails", "ContactTracing"])
+            models, set(["Demographics", "ContactTracing", "ContactDetails"])
         )
         fields = set(i["name"] for i in result if not i["name"] == "id")
         example_fields = set(self.get_test_dict().keys())
@@ -87,10 +99,11 @@ class ContactTracingTestCase(OpalTestCase):
             serialisation, so there are no field in to dict
             that are not in schema
         """
+        contact_traced = ContactTraced.objects.create(episode=self.other_episode)
 
         new_contact_tracing = ContactTracing.objects.create(
             episode=self.episode,
-            contact_episode=self.other_episode
+            contact_traced=contact_traced
         )
 
         found_keys = set(new_contact_tracing.to_dict(self.user).keys())
@@ -109,12 +122,14 @@ class ContactTracingTestCase(OpalTestCase):
         we don't allow updates for contact tracing, make sure
         any update sent won't blow up or change anything
         """
-        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
         Demographics = subrecords.get_subrecord_from_model_name('Demographics')
+        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
+
+        contact_traced = ContactTraced.objects.create(episode=self.other_episode)
 
         new_contact_tracing = ContactTracing.objects.create(
             episode=self.episode,
-            contact_episode=self.other_episode
+            contact_traced=contact_traced
         )
 
         example_update_dict = self.get_test_dict()
@@ -124,26 +139,19 @@ class ContactTracingTestCase(OpalTestCase):
         # and contact details the new values
         new_contact_tracing.update_from_dict(example_update_dict, self.user)
         self.assertEqual(ContactTracing.objects.count(), 1)
-        self.assertEqual(Demographics.objects.count(), 2)
         self.assertEqual(ContactDetails.objects.count(), 2)
-        demographics = new_contact_tracing.contact_episode.patient.demographics_set.first()
+        self.assertEqual(Demographics.objects.count(), 2)
+        demographics = new_contact_tracing.contact_traced.episode.patient.demographics_set.first()
         self.assertEqual(
             demographics.first_name,
             self.other_patient.demographics_set.first().first_name
         )
 
-        contact_details = new_contact_tracing.contact_episode.patient.contactdetails_set.first()
-        self.assertEqual(
-            contact_details.address_line1,
-            self.other_patient.contactdetails_set.first().address_line1
-        )
-
-        referral_route = new_contact_tracing.contact_episode.referralroute_set.first()
+        referral_route = new_contact_tracing.contact_traced.episode.referralroute_set.first()
         self.assertEqual(referral_route.referral_type, '')
 
 
     def test_create_new_contact_tracing(self):
-        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
         Demographics = subrecords.get_subrecord_from_model_name('Demographics')
 
         new_contact_tracing = ContactTracing(episode=self.episode)
@@ -154,18 +162,20 @@ class ContactTracingTestCase(OpalTestCase):
         new_contact_tracing.update_from_dict(example_update_dict, self.user)
         self.assertEqual(ContactTracing.objects.count(), 1)
         self.assertEqual(Demographics.objects.count(), 3)
-        self.assertEqual(ContactDetails.objects.count(), 3)
-        demographics = new_contact_tracing.contact_episode.patient.demographics_set.first()
+        demographics = new_contact_tracing.contact_traced.episode.patient.demographics_set.first()
         self.assertEqual(
             demographics.first_name,
             example_update_dict["first_name"]
         )
 
-        contact_details = new_contact_tracing.contact_episode.patient.contactdetails_set.first()
+        contact_details = new_contact_tracing.contact_traced.episode.patient.contactdetails_set.first()
+        address = contact_details.address
         self.assertEqual(
-            contact_details.address_line1,
-            example_update_dict["address_line1"]
+            address,
+            example_update_dict["address"]
         )
+
+        self.assertTrue(new_contact_tracing.contact_traced.symptomatic)
 
         # update dict alters the dictionary, so refresh
         example_update_dict = self.get_test_dict()
@@ -177,7 +187,7 @@ class ContactTracingTestCase(OpalTestCase):
             new_contact_tracing.relationship_to_index,
             example_update_dict["relationship_to_index"]
         )
-        referral_route = new_contact_tracing.contact_episode.referralroute_set.first()
+        referral_route = new_contact_tracing.contact_traced.episode.referralroute_set.first()
         self.assertEqual(referral_route.referral_type, "TB contact tracing")
         self.assertEqual(referral_route.referral_name, "I Jones")
         self.assertEqual(
@@ -188,10 +198,13 @@ class ContactTracingTestCase(OpalTestCase):
             referral_route.referral_organisation, "TB Clinic"
         )
 
+        # contact traced should be updated with address, telephone number and symptomatic
+
     def test_to_dict(self):
+        contact_traced = ContactTraced.objects.create(episode=self.other_episode)
         new_contact_tracing = ContactTracing.objects.create(
             episode=self.episode,
-            contact_episode=self.other_episode
+            contact_traced=contact_traced
         )
         distant_past = datetime.datetime.now() - datetime.timedelta(54)
         new_contact_tracing.episode.patient.demographics_set.update(
@@ -210,4 +223,3 @@ class ContactTracingTestCase(OpalTestCase):
         self.assertEqual(result["id"], new_contact_tracing.id)
         self.assertEqual(result["created"], new_contact_tracing.created)
         self.assertEqual(result["updated"], new_contact_tracing.updated)
-        self.assertEqual(result["address_line1"], "1 London")

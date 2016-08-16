@@ -27,17 +27,8 @@ class ContactDetails(models.PatientSubrecord):
     _icon = 'fa fa-phone'
     _title = 'Contact Details'
 
-    address_line1 = fields.CharField("Address line 1", max_length = 45,
-                                     blank=True, null=True)
-    address_line2 = fields.CharField("Address line 2", max_length = 45,
-                                     blank=True, null=True)
-    city          = fields.CharField(max_length = 50, blank = True)
-    county        = fields.CharField("County", max_length = 40,
-                                     blank=True, null=True)
-    post_code     = fields.CharField("Post Code", max_length = 10,
-                                     blank=True, null=True)
-    tel1          = fields.CharField(verbose_name="Telephone 1", blank=True, null=True, max_length=50)
-    tel2          = fields.CharField(verbose_name="Telephone 2", blank=True, null=True, max_length=50)
+    telephone = fields.CharField(blank=True, null=True, max_length=50)
+    address = fields.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Contact details"
@@ -48,6 +39,34 @@ class RelationshipToIndex(lookuplists.LookupList):
 
 class ReasonAtRisk(lookuplists.LookupList):
     pass
+
+
+class ContactTraced(models.EpisodeSubrecord):
+    """ contact traced is the other side of the
+        contact tracing relationship.
+
+        this in theory has a 1 to many relationship between contact tracing
+        ie we dont' create a contact traced if one already exists
+        for the current episode.
+
+        this includes things like, phoned, contacted, appointment booked
+    """
+    _title="Traced By"
+    _icon = 'fa fa-street-view'
+    symptomatic = fields.BooleanField(default=False)
+
+    def to_dict(self, user):
+        response = super(ContactTraced, self).to_dict(user)
+        contact_tracing = []
+
+        for i in self.contacttracing_set.all():
+            contact_tracing.append(dict(
+                episode=i.episode.to_dict(user),
+                contact_tracing=i.to_dict(user)
+            ))
+
+        response["contact_tracing"] = contact_tracing
+        return response
 
 
 class ContactTracing(models.EpisodeSubrecord):
@@ -61,10 +80,10 @@ class ContactTracing(models.EpisodeSubrecord):
         and as these models are singletons this always
         gets us what we want
     """
+    _title="Contact Tracing"
     _icon = 'fa fa-group'
-    contact_episode = fields.ForeignKey(
-        models.Episode,
-        related_name="contact_traced"
+    contact_traced = fields.ForeignKey(
+        ContactTraced,
     )
 
     relationship_to_index = ForeignKeyOrFreeText(
@@ -77,10 +96,9 @@ class ContactTracing(models.EpisodeSubrecord):
     @classmethod
     def build_field_schema(cls):
         Demographics = subrecords.get_subrecord_from_model_name('Demographics')
-        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
         schema = Demographics.build_field_schema()
-        schema.extend(ContactDetails.build_field_schema())
         schema.extend(super(ContactTracing, cls).build_field_schema())
+        schema.extend(ContactDetails.build_field_schema())
 
         schema.append({
             'name': "stage",
@@ -95,7 +113,7 @@ class ContactTracing(models.EpisodeSubrecord):
     def get_or_create_patient(self, data, user):
         if self.id:
             created = False
-            patient = self.contact_episode.patient
+            patient = self.contact_traced.episode.patient
         else:
             created = True
             patient = models.Patient.objects.create()
@@ -108,26 +126,6 @@ class ContactTracing(models.EpisodeSubrecord):
             demographics.update_from_dict(demographics_data, user)
 
         return patient, created
-
-    def update_contact_details(self, patient, data, user):
-        """
-        current behaviour is if there are no contact details
-        we'll let you populate them, otherwise they'll stay the same
-        """
-        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
-        contact_details_fields = ContactDetails._get_fieldnames_to_serialize()
-        contact_details = patient.contactdetails_set.first()
-        contact_detail_data = {
-            i: v for i, v in data.iteritems() if i in contact_details_fields and not i == "id" and not i == "patient_id"
-        }
-        contact_details.update_from_dict(contact_detail_data, user)
-
-    def get_episode(self, patient):
-        tb_episodes = patient.episode_set.filter(category_name=TBEpisode.get_slug())
-
-        for tb_episode in tb_episodes:
-            if not tb_episode.end:
-                return tb_episode
 
     def create_referral_route(self, episode, user):
         referral = episode.referralroute_set.first()
@@ -147,14 +145,34 @@ class ContactTracing(models.EpisodeSubrecord):
             date_of_admission=date.today()
         )
 
+    def update_contact_details(self, patient, data, user):
+        """
+        current behaviour is if there are no contact details
+        we'll let you populate them, otherwise they'll stay the same
+        """
+        ContactDetails = subrecords.get_subrecord_from_model_name('ContactDetails')
+        contact_details_fields = ContactDetails._get_fieldnames_to_serialize()
+        contact_details = patient.contactdetails_set.first()
+        contact_detail_data = {
+            i: v for i, v in data.iteritems() if i in contact_details_fields and not i == "id" and not i == "patient_id"
+        }
+        contact_details.update_from_dict(contact_detail_data, user)
+
+    def create_contact_traced(self, data, episode):
+        return ContactTraced.objects.create(
+            episode=episode,
+            symptomatic=data.get("symptomatic", False),
+        )
+
     @transaction.atomic()
     def update_from_dict(self, data, user, *args, **kwargs):
         patient, created = self.get_or_create_patient(data, user)
 
         if created:
+            episode = self.create_tb_episode(patient)
+            self.contact_traced = self.create_contact_traced(data, episode)
             self.update_contact_details(patient, data, user)
-            self.contact_episode = self.create_tb_episode(patient)
-            self.create_referral_route(self.contact_episode, user)
+            self.create_referral_route(self.contact_traced.episode, user)
 
         self.relationship_to_index = data.pop("relationship_to_index", None)
         self.reason_at_risk = data.pop("reason_at_risk", None)
@@ -170,10 +188,10 @@ class ContactTracing(models.EpisodeSubrecord):
             of patient, contact details and
             episode stage
         """
-        result = self.contact_episode.patient.demographics_set.first().to_dict(user)
-        result.update(self.contact_episode.patient.contactdetails_set.first().to_dict(user))
+        result = self.contact_traced.episode.patient.demographics_set.first().to_dict(user)
+        result.update(self.contact_traced.episode.patient.contactdetails_set.first().to_dict(user))
         result.update(super(ContactTracing, self).to_dict(user))
-        result["stage"] = self.contact_episode.stage
+        result["stage"] = self.contact_traced.episode.stage
         return result
 
 

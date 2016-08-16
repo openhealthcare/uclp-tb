@@ -4,3 +4,6 @@
 {% input field="ContactTracing.relationship_to_index" %}
 {% input field="ContactTracing.reason_at_risk" %}
 {% date_of_birth_field model_name="editing.contact_tracing.date_of_birth"  %}
+{% input field="ContactDetails.telephone" model="editing.contact_tracing.telephone" %}
+{% textarea field="ContactDetails.address" model="editing.contact_tracing.address" %}
+{% checkbox field="ContactTraced.symptomatic" model="editing.contact_tracing.symptomatic" %}
