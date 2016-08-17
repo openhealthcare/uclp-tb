@@ -19,6 +19,7 @@ class TBMeta(models.EpisodeSubrecord):
     _advanced_searchable = False
 
     contact_tracing_done = fields.BooleanField(default=False)
+    directly_observed_therapy = fields.BooleanField(default=False)
 
 
 class ContactDetails(models.PatientSubrecord):
@@ -51,7 +52,7 @@ class ContactTraced(models.EpisodeSubrecord):
 
         this includes things like, phoned, contacted, appointment booked
     """
-    _title="Traced By"
+    _title="Index Case"
     _icon = 'fa fa-street-view'
     symptomatic = fields.BooleanField(default=False)
 
@@ -80,7 +81,7 @@ class ContactTracing(models.EpisodeSubrecord):
         and as these models are singletons this always
         gets us what we want
     """
-    _title="Contact Tracing"
+    _title="Contacts"
     _icon = 'fa fa-group'
     contact_traced = fields.ForeignKey(
         ContactTraced,
@@ -141,7 +142,7 @@ class ContactTracing(models.EpisodeSubrecord):
     def create_tb_episode(self, patient):
         return patient.create_episode(
             category_name=TBEpisode.get_slug().upper(),
-            stage=TBEpisodeStages.CONTACT_TRACING,
+            stage=TBEpisodeStages.NEW_CONTACT,
             date_of_admission=date.today()
         )
 

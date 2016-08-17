@@ -10,25 +10,25 @@
         Actions
       </h3>
     </div>
-    <ul class="list-group" ng-show="episode.stage === metadata.tb.stages.contact_tracing">
+    <ul class="list-group" ng-show="episode.stage === metadata.tb.stages.new_contact">
       <li class="list-group-item">
         <a class="btn btn-primary btn-text-left col-md-8"
            href="/pathway/#/tb_screening/[[ episode.id ]]">
-          {% icon "fa-plus-square" %}Contact screening
+          {% icon "fa-plus-square" %}Screen Contacts
         </a>
       </li>
     </ul>
-    <ul class="list-group" ng-hide="episode.stage === 'Contact tracing'">
+    <ul class="list-group" ng-hide="episode.stage === metadata.tb.stages.new_contact">
 
-      <li class="list-group-item" ng-show="episode.stage === metadata.tb.stages.awaiting_appointment">
+      <li class="list-group-item" ng-show="episode.stage === metadata.tb.stages.new_referral">
         <a class="btn btn-primary btn-text-left col-md-8"
            href="/pathway/#/tb_initial_assessment/[[ episode.id ]]">
-          {% icon "fa-stethoscope" %}Initial TB Assessment
+          {% icon "fa-stethoscope" %} Initial TB Assessment
         </a>
       </li>
 
       <li class="list-group-item"
-          ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active'"
+          ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage === metadata.tb.stages.active_tb_treatment"
           >
         <button class="btn btn-primary btn-text-left col-md-8 pointer"
                 ng-click="episode.recordEditor.editItem('ph_england_notification', 0)">
@@ -41,10 +41,10 @@
           {% icon "fa-medkit" %} <span ng-show="episode.stage === metadata.tb.stages.under_investigation">Start </span>TB Treatment
         </a>
       </li>
-      <li class="list-group-item" ng-hide="episode.tb_meta[0].contact_tracing_done">
+      <li class="list-group-item" ng-show="episode.stage === metadata.tb.stages.active_tb_treatment && !episode.tb_meta[0].contact_tracing_done">
         <a class="btn btn-primary col-md-8 btn-text-left"
            href="/pathway/#/contact_tracing/[[ episode.id ]]">
-          {% icon "fa-users" %} Contact Tracing
+          {% icon "fa-users" %} Record Contacts
         </a>
       </li>
     </ul>

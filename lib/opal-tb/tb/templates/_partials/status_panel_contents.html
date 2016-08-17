@@ -11,7 +11,7 @@
       <span ng-show="episode.ph_england_notification[0].when">on [[ episode.ph_england_notification[0].when|shortDate ]]</span>
     </i>
   </span>
-  <span class="pull-right" ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage == 'Active'">
+  <span class="pull-right" ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage === metadata.tb.stages.active_tb_treatment">
     <i>PHE notification not complete</i>
   </span>
 </p>

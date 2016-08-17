@@ -58,7 +58,7 @@ class TBAddPatient(RedirectsToPatientMixin, Pathway):
     def save(self, data, user):
         patient = super(TBAddPatient, self).save(data, user)
         episode = patient.episode_set.first()
-        episode.stage = TBEpisodeStages.AWAITING_APPOINTMENT
+        episode.stage = TBEpisodeStages.NEW_REFERRAL
         episode.date_of_admission = datetime.date.today()
         episode.save()
         return patient
@@ -99,7 +99,7 @@ class TBAssessment(RedirectsToPatientMixin, Pathway):
     )
 
     def save(self, data, user):
-        patient = super(TreatmentOutcome, self).save(data, user)
+        patient = super(TBAssessment, self).save(data, user)
         episode = self.episode
         episode.stage = TBEpisodeStages.UNDER_INVESTIGATION
         episode.save()
@@ -132,22 +132,24 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
             referral_route["date_of_referral"] = today_str
             referral_route["referral_organisation"] = "TB Service"
 
-            if user.first_name and user.surname:
+            if user.first_name and user.last_name:
                 referral_route["referral_name"] = "{0} {1}".format(
-                    user.first_name[0], user.surname
+                    user.first_name[0], user.last_name
                 )
 
                 data["referral_route"] = [referral_route]
 
-            episode.stage = TBEpisodeStages.AWAITING_APPOINTMENT
+            episode.stage = TBEpisodeStages.NEW_REFERRAL
             episode.save()
 
-        super(TBContactScreening, self).save(data, user)
+        patient = super(TBContactScreening, self).save(data, user)
 
         if next_steps["result"] == "discharged":
             episode.discharge_date = datetime.date.today()
             episode.stage = TBEpisodeStages.DISCHARGED
             episode.save()
+        return patient
+
 
 
 class TBTreatment(RedirectsToPatientMixin, Pathway):

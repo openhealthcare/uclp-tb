@@ -5,11 +5,11 @@
     <tab heading="Patient Overview">
 
       <div class="row">
-        <div ng-class="{'col-md-offset-2': episode.stage!='Active', 'col-md-6': episode.stage=='Active', 'col-md-8': episode.stage!='Active', 'content-offset-20': episode.stage!='Active'}">
+        <div ng-class="{'col-md-offset-2': episode.stage!=metadata.tb.stages.active_tb_treatment, 'col-md-6': episode.stage==metadata.tb.stages.active_tb_treatment, 'col-md-8': episode.stage!=metadata.tb.stages.active_tb_treatment, 'content-offset-20': episode.stage!=metadata.tb.stages.active_tb_treatment}">
           {% include "partials/status_panel.html" %}
           {% include "partials/risk_panel.html" %}
         </div>
-        <div class="col-md-6" ng-hide="episode.stage!='Active'">
+        <div class="col-md-6" ng-hide="episode.stage!=metadata.tb.stages.active_tb_treatment">
           <div class="panel panel-active">
             <div class="panel-heading">
               <h3>
@@ -44,7 +44,7 @@
         </div>
       </div>
     </tab>
-    <tab heading="Contact Tracing">
+    <tab ng-show="episode.tb_meta[0].contact_tracing_done || episode.contact_traced.length" heading="Contact Tracing">
       <div class="row">
         <div class="col-md-8">
           {% record_panel models.EnvironmentalRiskAssessment %}

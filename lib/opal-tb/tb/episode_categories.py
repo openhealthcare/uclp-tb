@@ -1,20 +1,14 @@
 from opal.core import episodes
 from opal.core import metadata
-from opal.utils import camelcase_to_underscore
-
 
 class TBEpisodeStages(metadata.Metadata):
 
     # contact has been flagged as a potential risk
-    CONTACT_TRACING = "Contact Tracing"
+    NEW_CONTACT = "New Contact"
 
-    # contact has been spoken to and run throught the
-    # contact screening pathway
-    CONTACT_SCREENING = "Contact Screening"
-
-    # contact is has been through either contact screening
-    # or has been referred and is waiting for an appointment
-    AWAITING_APPOINTMENT = "Awaiting Appointment"
+    # contact has been referred either through contact screening
+    # or a direct referral
+    NEW_REFERRAL = "New Referral"
 
     # patient has gone through the initial assessment and tests
     # have probably been sent off
@@ -30,20 +24,20 @@ class TBEpisodeStages(metadata.Metadata):
     DISCHARGED = "Discharged"
 
     # NTM are Non-tuberculous Mycobacterial Infections
-    TNM_TREATMENT = "NTM Treatment"
+    NTM_TREATMENT = "NTM Treatment"
     stages = [
-        CONTACT_TRACING,
-        CONTACT_SCREENING,
-        AWAITING_APPOINTMENT,
+        NEW_CONTACT,
+        NEW_REFERRAL,
         UNDER_INVESTIGATION,
         ACTIVE_TB_TREATMENT,
         LATENT_TB_TREATMENT,
+        NTM_TREATMENT,
         DISCHARGED
     ]
 
     @classmethod
     def to_dict(cls, **kw):
-        stages = {camelcase_to_underscore(i): i for i in cls.stages}
+        stages = { i.replace(" ", "_").lower(): i for i in cls.stages}
         return { TBEpisode.get_slug(): dict(stages=stages) }
 
 
