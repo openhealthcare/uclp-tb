@@ -67,7 +67,8 @@
         <form class="form-horizontal">
           {% input label="Weight" model="localEditing.weight" unit="kg" %}
           {% datepicker label="Treatment start date" model="localMetadata.treatmentStartDate" %}
-        </form
+          {% checkbox field="TBMeta.directly_observed_therapy" %}
+        </form>
         <hr />
         <div class="row text-center">
           <div class="col-md-3">
@@ -114,6 +115,7 @@
             </button>
           </div>
         </div>
+
 
       </div> <!-- Panel body -->
     </div> <!-- Panel -->
