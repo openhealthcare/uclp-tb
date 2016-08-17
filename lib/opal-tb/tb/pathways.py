@@ -137,7 +137,7 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
                     user.first_name[0], user.last_name
                 )
 
-                data["referral_route"] = [referral_route]
+            data["referral_route"] = [referral_route]
 
             episode.stage = TBEpisodeStages.NEW_REFERRAL
             episode.save()

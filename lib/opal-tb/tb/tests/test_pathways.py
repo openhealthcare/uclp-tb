@@ -71,7 +71,6 @@ class TestContactScreening(OpalTestCase):
 
 class TBContactTracingTestCase(OpalTestCase):
     def test_sets_contact_tracing_in_tb_meta(self):
-        from tb import pathways
         p, e = self.new_patient_and_episode_please()
         pathway = pathways.TBContactTracing(patient_id=p.id, episode_id=e.id)
         pathway.save({}, self.user)
