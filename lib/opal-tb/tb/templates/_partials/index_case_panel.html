@@ -1,0 +1,22 @@
+<div class="panel panel-active">
+  <div class="panel-heading">
+    <h3>
+      <i class="{{ models.ContactTraced.get_icon }}"></i> {{ models.ContactTraced.get_display_name }}
+    </h3>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="item in episode.contact_traced">
+      <div ng-repeat="contact_tracing in item.contact_tracing">
+        <div ng-repeat="episode in [contact_tracing.episode]">
+              <h4>
+                <a href="/#/patient/[[ episode.demographics[0].patient_id ]]">
+                  [[ episode.demographics[0].first_name ]]
+                  [[ episode.demographics[0].surname ]]
+                </a>
+              </h4>
+              {% include "_partials/status_panel_contents.html" %}
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
