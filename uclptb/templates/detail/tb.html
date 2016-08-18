@@ -10,14 +10,7 @@
           {% include "partials/risk_panel.html" %}
         </div>
         <div class="col-md-6" ng-hide="episode.stage!=metadata.tb.stages.active_tb_treatment">
-          <div class="panel panel-active">
-            <div class="panel-heading">
-              <h3>
-                {% icon "fa-medkit" %} Current Treatment <span ng-show="episode.tb_meta[0].directly_observed_therapy">(DOT)</span>
-              </h3>
-            </div>
             {% include 'partials/current_tb_treatment.html' %}
-          </div>
         </div>
       </div>
       <div class="row">

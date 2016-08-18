@@ -151,17 +151,31 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
         return patient
 
 
-class TBObserveTreatement(ModalPathway):
-    display_name = "Observe Treatment"
-    slug = "observe_treatment"
+class TBObserveDOT(ModalPathway):
+    display_name = "Observe DOT"
+    slug = "observe_dot"
     template_url = "/templates/test_results_pathway_base.html"
     icon="fa fa-reply"
 
     steps = (
         Step(
             model=tb_models.TestResult,
-            template_url="/templates/pathway/observe_treatment.html",
-            controller_class="ObserveTreatmentCtrl",
+            template_url="/templates/pathway/observe_dot.html",
+            controller_class="ObserveDOTCtrl",
+        ),
+    )
+
+class TBDOTHistory(ModalPathway):
+    display_name = "DOT History"
+    slug = "dot_history"
+    template_url = "/templates/test_results_pathway_base.html"
+    icon="fa fa-reply"
+
+    steps = (
+        Step(
+            model=tb_models.TestResult,
+            template_url="/templates/pathway/dot_history.html",
+            controller_class="DOTHistoryCtrl",
         ),
     )
 

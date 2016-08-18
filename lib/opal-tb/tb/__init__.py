@@ -18,7 +18,8 @@ class TbPlugin(plugins.OpalPlugin):
             "js/tb/controllers/add_tests.js",
             "js/tb/controllers/add_results.js",
             "js/tb/controllers/results_tab.js",
-            "js/tb/controllers/observe_treatment.js",
+            "js/tb/controllers/observe_dot.js",
+            "js/tb/controllers/dot_history.js",
             "js/tb/directives.js",
         ],
         'opal.services': [

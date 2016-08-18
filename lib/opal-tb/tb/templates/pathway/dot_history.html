@@ -1,0 +1,26 @@
+
+<div ng-repeat="chunk in treatmentChunks">
+  <table class="table content-offset">
+    <tr>
+      <th class="text-center">
+        Date
+      </th>
+      <th class="text-center" ng-repeat="(index, drug) in chunk[0].drugs">
+        [[ drug ]]<br />
+        [[ chunk[0].doses[index] ]]
+      </th>
+    </tr>
+    <tr ng-repeat="row in chunk">
+      <td class="text-center">[[ row.date | shortDate ]]</td>
+      <td class="text-center" ng-repeat="ot in row.treatments">
+        <span ng-show="ot.observed"><i class="fa fa-check"></i></span>
+        <span ng-show="!ot.observed"><i class="fa fa-times-circle text-danger"></i>
+      </td>
+    </tr>
+  </table>
+
+  <div >
+
+  </div>
+
+</div>
