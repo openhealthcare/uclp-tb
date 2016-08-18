@@ -151,6 +151,20 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
         return patient
 
 
+class TBObserveTreatement(ModalPathway):
+    display_name = "Observe Treatment"
+    slug = "observe_treatment"
+    template_url = "/templates/test_results_pathway_base.html"
+    icon="fa fa-reply"
+
+    steps = (
+        Step(
+            model=tb_models.TestResult,
+            template_url="/templates/pathway/observe_treatment.html",
+            controller_class="ObserveTreatmentCtrl",
+        ),
+    )
+
 
 class TBTreatment(RedirectsToPatientMixin, Pathway):
     display_name  = "TB Treatment"

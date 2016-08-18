@@ -2,6 +2,7 @@
 tb models.
 """
 from datetime import datetime, date
+from django.db import transaction
 
 from django.db import models as fields
 from django.db import models, transaction
@@ -13,6 +14,7 @@ from opal.core.lookuplists import LookupList
 from tb.episode_categories import TBEpisode, TBEpisodeStages
 from opal.core.fields import ForeignKeyOrFreeText
 from opal.core import lookuplists, subrecords
+
 
 class TBMeta(models.EpisodeSubrecord):
     _is_singleton = True
@@ -194,6 +196,14 @@ class ContactTracing(models.EpisodeSubrecord):
         result.update(super(ContactTracing, self).to_dict(user))
         result["stage"] = self.contact_traced.episode.stage
         return result
+
+
+class ObservedTreatment(models.EpisodeSubrecord):
+    date = fields.DateField()
+    initials = fields.CharField(max_length=255, blank=True)
+    drug          = models.ForeignKeyOrFreeText(models.Drug)
+    dose          = fields.CharField(max_length=255, blank=True)
+    observed      = fields.NullBooleanField()
 
 
 class SocialHistory(models.EpisodeSubrecord):
