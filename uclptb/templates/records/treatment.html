@@ -1,4 +1,4 @@
 <span ng-show="item.start_date">[[item.start_date | shortDate]]</span>
 <span ng-show="item.end_date">-[[item.end_date | shortDate]]</span>
 [[item.drug]] [[item.dose]] [[item.route]]
-day [[ item.start_date | daysSince:1:true]]/[[ item.start_date | daysTo:item.planned_end_date:true ]]
+<span ng-show="item.start_date && item.end_date">day [[ item.start_date | daysSince:1:true]]/[[ item.start_date | daysTo:item.planned_end_date:true ]]</span>
