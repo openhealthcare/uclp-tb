@@ -84,7 +84,6 @@ module.exports = function(config){
             // 'opaltest/*.js',
             __dirname + '/../tb/static/js/tbtest/*.js'
             // '../../../../elcid/elcid/assets/js/elcidtest/*.js',
-
         ],
 
         preprocessors: preprocessors,

@@ -9,7 +9,6 @@ class Application(application.OpalApplication):
     javascripts   = [
         'js/uclptb/routes.js',
         'js/opal/controllers/discharge.js',
-        'js/uclptb/controllers/investigations_form.js'
     ]
     default_episode_category = 'TB'
     styles = [

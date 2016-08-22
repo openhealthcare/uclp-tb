@@ -241,6 +241,7 @@ class PHEnglandNotification(models.EpisodeSubrecord):
 
     who = fields.CharField(max_length=250, blank=True, null=True, verbose_name="Notified by")
     when = fields.DateField(null=True, blank=True, verbose_name="Notification date")
+    number = fields.CharField(max_length=250, blank=True, null=True, verbose_name="LTBR Number")
 
 
 class TBOutcome(models.EpisodeSubrecord):
@@ -304,13 +305,13 @@ class TestResult(models.EpisodeSubrecord):
 class TBHistory(models.PatientSubrecord):
     _icon = 'fa fa-wpforms'
     _title = "History of TB"
-    personal_history_of_tb = fields.TextField(blank=True, null=True)
+    personal_history_of_tb = fields.TextField(blank=True, null=True, verbose_name="Personal History of TB")
     other_tb_contact = fields.TextField(blank=True, null=True, verbose_name="Other TB Contact")
     date_of_other_tb_contact = fields.DateField(blank=True, null=True, verbose_name="When")
 
 class BCG(models.PatientSubrecord):
     _icon = 'fa fa-asterisk'
-    history_of_bcg = fields.CharField(max_length=255, blank=True, null=True)
-    date_of_bcg = fields.DateField(blank=True, null=True)
-    bcg_scar = fields.BooleanField(default=False)
+    history_of_bcg = fields.CharField(max_length=255, blank=True, null=True, verbose_name="History Of BCG")
+    date_of_bcg = fields.DateField(blank=True, null=True, verbose_name="Date Of BCG")
+    bcg_scar = fields.BooleanField(default=False, verbose_name="BCG Scar")
     red_book_documentation_of_bcg_seen = fields.BooleanField(default=False, verbose_name="Red Book Documentation of BCG Seen")
