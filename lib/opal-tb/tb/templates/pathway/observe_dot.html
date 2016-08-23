@@ -8,7 +8,7 @@
         <th class="text-center">Date</th>
         <th class="text-center">Observed</th>
       </tr>
-      <tr ng-show="withHistorical || isCurrent(item)" ng-repeat="item in editing.observed_treatment">
+      <tr ng-show="withUnobserved || isCurrent(item)" ng-repeat="item in editing.observed_treatment">
         <td>
           [[ item.drug ]]
         </td>
@@ -19,8 +19,8 @@
           [[ item.date | shortDate ]]
         </td>
         <td>
-          <label class="btn btn-default" ng-change="setDate(item)" ng-model="item.observed" data-title="Observed" bs-tooltip btn-radio="true">{% icon "fa-check" %}</label>
-          <label class="btn btn-default" ng-change="setDate(item)" ng-model="item.observed" data-title="Not Observed" bs-tooltip btn-radio="false">{% icon "fa fa-close"%}</label>
+          <label class="btn btn-default" ng-model="item.observed" data-title="Observed" bs-tooltip btn-radio="true">{% icon "fa-check" %}</label>
+          <label class="btn btn-default" ng-model="item.observed" data-title="Not Observed" bs-tooltip btn-radio="false">{% icon "fa fa-close"%}</label>
         </td>
       </tr>
     </table>
