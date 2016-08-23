@@ -10,8 +10,47 @@
         <h3 >{% icon "fa-flask" %} Drug History </h3>
       </div>
       <div class="panel-body">
-        <div class="form-horizontal">
-          {% multisave models.Treatment %}
+        <div save-multiple-wrapper="editing.treatment">
+          <div class="row text-center">
+            <div class="col-md-3">
+              <b>Drug</b>
+            </div>
+            <div class="col-md-2">
+              <b>Dose</b>
+            </div>
+            <div class="col-md-3">
+              <b>Route</b>
+            </div>
+            <div class="col-md-3">
+              <b>Treatment</b>
+            </div>
+          </div>
+          <div class="row form-horizontal content-offset-20" ng-repeat="editing in model.subrecords">
+            <div class="col-md-3">
+              <input class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched" type="text" ng-model="editing.treatment.drug" autocomplete="off" bs-typeahead="" bs-options="i for i in antimicrobial_list" name="treatment_drug" ng-maxlength="255">
+            </div>
+            <div class="col-md-2">
+              <input class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched" type="text" ng-model="editing.treatment.dose" autocomplete="off" name="treatment_dose" ng-maxlength="255">
+            </div>
+            <div class="col-md-3">
+              <input class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched" type="text" ng-model="editing.treatment.route" autocomplete="off" bs-typeahead="" bs-options="i for i in drugroute_list" name="treatment_route" ng-maxlength="255">
+            </div>
+            <div class="col-md-3">
+              <input class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched" type="text" ng-model="editing.treatment.frequency" autocomplete="off" bs-typeahead="" bs-options="i for i in drugfreq_list" name="treatment_frequency" ng-maxlength="255">
+            </div>
+            <div class="col-md-1">
+              <button ng-click="remove($index)" class="btn btn-secondary" data-title="Remove" bs-tooltip>
+                {% icon "fa-trash" %}
+              </button>
+            </div>
+          </div>
+          <div class="row content-offset-20">
+            <div class="col-md-1 col-md-offset-11">
+              <button class="btn-primary btn" ng-click="addAnother()" data-title="Add Another" bs-tooltip>
+                {% icon "glyphicon-plus" %}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
