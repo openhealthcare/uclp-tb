@@ -1,11 +1,15 @@
-<table class="table">
+<table class="table table-hover">
   <tr>
     <th>Start</th>
     <th>Drug</th>
     <th></th>
+    <th></th>
   </tr>
   <tr ng-repeat="item in activeTreatments"
-      ng-show="!item.end_date">
+      ng-show="!item.end_date"
+      ng-click="episode.recordEditor.editItem('treatment', $index)"
+      class="pointer"
+      >
     <td>
       <span ng-show="item.start_date">[[item.start_date | shortDate]]</span>
       <span ng-show="item.end_date">-[[item.end_date | shortDate]]</span>
@@ -18,6 +22,9 @@
       [[ item.start_date | daysSince:1:true]]
       <span ng-show="item.start_date">/</span>
       [[ item.start_date | daysTo:item.planned_end_date:true ]]
+    </td>
+    <td>
+      <i class="fa fa-pencil edit pull-right pointer"></i>
     </td>
   </tr>
 </table>

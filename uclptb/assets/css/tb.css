@@ -51,3 +51,14 @@
 .panel-footer .btn.pull-right {
   margin-right: 8px;
 }
+
+.no-touchevents tr i.edit{
+  visibility: hidden;
+  font-size: 20px;
+}
+
+.no-touchevents tr:hover i.edit,
+.touchevents > i.edit{
+  visibility: visible;
+  font-size: 20px;
+}
