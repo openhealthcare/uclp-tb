@@ -1,5 +1,5 @@
 {% load forms %}
-<div ng-show="!editing.observed_treatment.length" class="row">
+<div ng-show="editing.observed_treatment.length" class="row">
   <div class="col-md-8 col-md-push-2 text-center">
     <button ng-show="unobservedCount" class="btn btn-secondary" ng-click="showUnobserved()">
       <span ng-hide="withUnobserved">{% icon "fa-toggle-off" %} Show </span>
@@ -35,6 +35,6 @@
     </button>
   </div>
 </div>
-<div ng-show="editing.observed_treatment.length" class="row">
+<div ng-show="!editing.observed_treatment.length" class="row">
   <h3 class="text-center">The Patient Has No Treatments To Observe</h3>
 </div>
