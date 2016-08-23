@@ -24,6 +24,7 @@ class TbPlugin(plugins.OpalPlugin):
         ],
         'opal.services': [
             "js/tb/services/test_result_record.js",
+            "js/tb/services/treatment_utils.js",
         ]
     }
 

@@ -18,7 +18,7 @@ from tb import models as tb_models
 class TBAddTests(ModalPathway):
     display_name = "Add Tests"
     slug = "add_tests_pathway"
-    template_url = "/templates/test_results_pathway_base.html"
+    template_url = "/templates/pathway/no_steps_modal_base.html"
     icon="fa fa-mail-forward"
 
     steps = (
@@ -32,7 +32,7 @@ class TBAddTests(ModalPathway):
 class TBAddResults(ModalPathway):
     display_name = "Add Results"
     slug = "add_results_pathway"
-    template_url = "/templates/test_results_pathway_base.html"
+    template_url = "/templates/pathway/no_steps_modal_base.html"
     icon="fa fa-reply"
 
     steps = (
@@ -154,7 +154,7 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
 class TBObserveDOT(ModalPathway):
     display_name = "Observe DOT"
     slug = "observe_dot"
-    template_url = "/templates/test_results_pathway_base.html"
+    template_url = "/templates/pathway/observe_dot_pathway_base.html"
     icon="fa fa-reply"
 
     steps = (
@@ -168,7 +168,7 @@ class TBObserveDOT(ModalPathway):
 class TBDOTHistory(ModalPathway):
     display_name = "DOT History"
     slug = "dot_history"
-    template_url = "/templates/test_results_pathway_base.html"
+    template_url = "/templates/pathway/no_steps_modal_base.html"
     icon="fa fa-reply"
 
     steps = (

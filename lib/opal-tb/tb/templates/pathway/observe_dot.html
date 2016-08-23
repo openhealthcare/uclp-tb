@@ -1,16 +1,12 @@
+{% load forms %}
 <div class="row">
   <div class="col-md-8 col-md-push-2 text-center">
-    <a ng-click="showHistorical()" href="">
-      <span ng-hide="withHistorical">Show </span>
-      <span ng-show="withHistorical">hide </span>
-      Historical Readings
-    </a>
     <table class="table content-offset">
       <tr>
         <th class="text-center">Drug</th>
         <th class="text-center">Dose</th>
         <th class="text-center">Date</th>
-        <th class="text-center"></th>
+        <th class="text-center">Observed</th>
       </tr>
       <tr ng-show="withHistorical || isCurrent(item)" ng-repeat="item in editing.observed_treatment">
         <td>
@@ -23,13 +19,14 @@
           [[ item.date | shortDate ]]
         </td>
         <td>
-          <label class="btn btn-default" ng-change="setDate(item)" ng-model="item.observed" btn-radio="true">Seen</label>
-          <label class="btn btn-default" ng-change="setDate(item)" ng-model="item.observed" btn-radio="false">Not Seen</label>
+          <label class="btn btn-default" ng-change="setDate(item)" ng-model="item.observed" data-title="Observed" bs-tooltip btn-radio="true">{% icon "fa-check" %}</label>
+          <label class="btn btn-default" ng-change="setDate(item)" ng-model="item.observed" data-title="Not Observed" bs-tooltip btn-radio="false">{% icon "fa fa-close"%}</label>
         </td>
       </tr>
     </table>
     <button class="btn btn-primary" ng-click="observeAllActiveTreatments()">
-      Observe All Current Treatments
+      {% icon "fa-check" %}
+      All Treatments observed
     </button>
   </div>
 </div>

@@ -80,6 +80,7 @@ module.exports = function(config){
             '../../../../opal-pathway/pathway/static/js/pathway/services/*.js',
 
             __dirname + '/../tb/static/js/tb/controllers/*.js',
+            __dirname + '/../tb/static/js/tb/services/*.js',
 
             // 'opaltest/*.js',
             __dirname + '/../tb/static/js/tbtest/*.js'

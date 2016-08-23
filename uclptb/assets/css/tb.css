@@ -31,3 +31,23 @@
   border-color: #9cc96b;
   color: white;
 }
+
+.panel-footer {
+  background: white;
+}
+
+.panel-active .panel-footer {
+  border-top: 1px solid #ddd;
+}
+
+.panel-footer .btn {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.panel-footer .btn.pull-left {
+  margin-left: 8px;
+}
+.panel-footer .btn.pull-right {
+  margin-right: 8px;
+}

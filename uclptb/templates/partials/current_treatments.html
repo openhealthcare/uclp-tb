@@ -4,7 +4,7 @@
     <th>Drug</th>
     <th></th>
   </tr>
-  <tr ng-repeat="item in episode.treatment"
+  <tr ng-repeat="item in activeTreatments"
       ng-show="!item.end_date">
     <td>
       <span ng-show="item.start_date">[[item.start_date | shortDate]]</span>

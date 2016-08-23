@@ -1,0 +1,9 @@
+{% extends "pathway/no_steps_modal_base.html" %}
+{% load forms %}
+{% block modal_footer_left %}
+<button ng-show="currentScope.hasHistory" class="btn btn-secondary" ng-click="currentScope.showHistorical()">
+  <span ng-hide="currentScope.withHistorical">{% icon "fa-toggle-off" %} Show </span>
+  <span ng-show="currentScope.withHistorical">{% icon "fa-toggle-on" %} Hide </span>
+  Historical Readings
+</button>
+{% endblock modal_footer_left %}
