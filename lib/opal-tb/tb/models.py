@@ -2,6 +2,7 @@
 tb models.
 """
 from datetime import datetime, date
+from django.db import transaction
 
 from django.db import models as fields
 from django.db import models, transaction
@@ -13,6 +14,7 @@ from opal.core.lookuplists import LookupList
 from tb.episode_categories import TBEpisode, TBEpisodeStages
 from opal.core.fields import ForeignKeyOrFreeText
 from opal.core import lookuplists, subrecords
+
 
 class TBMeta(models.EpisodeSubrecord):
     _is_singleton = True
@@ -196,6 +198,14 @@ class ContactTracing(models.EpisodeSubrecord):
         return result
 
 
+class ObservedTreatment(models.EpisodeSubrecord):
+    date = fields.DateField()
+    initials = fields.CharField(max_length=255, blank=True)
+    drug          = models.ForeignKeyOrFreeText(models.Drug)
+    dose          = fields.CharField(max_length=255, blank=True)
+    observed      = fields.NullBooleanField()
+
+
 class SocialHistory(models.EpisodeSubrecord):
     _is_singleton = True
     _title = 'Social History'
@@ -297,7 +307,6 @@ class TBHistory(models.PatientSubrecord):
     _title = "History of TB"
     personal_history_of_tb = fields.TextField(blank=True, null=True, verbose_name="Personal History of TB")
     other_tb_contact = fields.TextField(blank=True, null=True, verbose_name="Other TB Contact")
-    date_of_other_tb_contact = fields.DateField(blank=True, null=True, verbose_name="When")
 
 class BCG(models.PatientSubrecord):
     _icon = 'fa fa-asterisk'
