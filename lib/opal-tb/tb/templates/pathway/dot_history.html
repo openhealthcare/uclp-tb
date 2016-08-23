@@ -1,4 +1,3 @@
-
 <div ng-repeat="chunk in treatmentChunks">
   <table class="table content-offset">
     <tr>
@@ -14,7 +13,9 @@
       <td class="text-center">[[ row.date | shortDate ]]</td>
       <td class="text-center" ng-repeat="ot in row.treatments">
         <span ng-show="ot.observed"><i class="fa fa-check fa-2x"></i></span>
-        <span ng-show="!ot.observed"><i class="fa fa-times-close fa-2x text-danger"></i>
+        <span ng-show="!ot.observed && ot.observed !== null">
+          <i class="fa fa-times fa-2x text-danger"></i>
+        </span>
       </td>
     </tr>
   </table>
@@ -22,5 +23,9 @@
   <div >
 
   </div>
-
+</div>
+<div class="text-center" ng-show="!treatmentChunks.length">
+  <h3>
+    No Treatments Have Been Observed
+  </h3>
 </div>
