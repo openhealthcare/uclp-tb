@@ -1,7 +1,12 @@
 {% load forms %}
-<div class="row">
+<div ng-show="!editing.observed_treatment.length" class="row">
   <div class="col-md-8 col-md-push-2 text-center">
-    <table class="table content-offset">
+    <button ng-show="unobservedCount" class="btn btn-secondary" ng-click="showUnobserved()">
+      <span ng-hide="withUnobserved">{% icon "fa-toggle-off" %} Show </span>
+      <span ng-show="withUnobserved">{% icon "fa-toggle-on" %} Hide </span>
+      Unobserved ([[ getUnobservedCount() ]])
+    </button>
+    <table class="table content-offset-25">
       <tr>
         <th class="text-center">Drug</th>
         <th class="text-center">Dose</th>
@@ -29,4 +34,7 @@
       All Treatments observed
     </button>
   </div>
+</div>
+<div ng-show="editing.observed_treatment.length" class="row">
+  <h3 class="text-center">The Patient Has No Treatments To Observe</h3>
 </div>

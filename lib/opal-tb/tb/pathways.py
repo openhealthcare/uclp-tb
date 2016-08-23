@@ -154,7 +154,7 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
 class TBObserveDOT(ModalPathway):
     display_name = "Observe DOT"
     slug = "observe_dot"
-    template_url = "/templates/pathway/observe_dot_pathway_base.html"
+    template_url = "/templates/pathway/no_steps_modal_base.html"
     icon = "fa fa-eye-slash"
 
     steps = (
