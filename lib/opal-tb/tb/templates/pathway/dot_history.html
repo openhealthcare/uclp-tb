@@ -14,7 +14,9 @@
       <td class="text-center">[[ row.date | shortDate ]]</td>
       <td class="text-center" ng-repeat="ot in row.treatments">
         <span ng-show="ot.observed"><i class="fa fa-check fa-2x"></i></span>
-        <span ng-show="!ot.observed"><i class="fa fa-times-close fa-2x text-danger"></i>
+        <span ng-show="!ot.observed">
+          <i class="fa fa-times fa-2x text-danger"></i>
+        </SPAN>
       </td>
     </tr>
   </table>
