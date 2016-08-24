@@ -1,0 +1,19 @@
+{% load forms %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3>
+      {% icon "fa-medkit" %} Current Treatment <span ng-show="episode.tb_meta[0].directly_observed_therapy">(DOT)</span>
+    </h3>
+  </div>
+  {% include 'partials/current_treatments.html' %}
+  <div class="panel-footer">
+    <div class="row content-offset- content-offset-below-">
+      <button class="btn btn-primary pull-right" open-pathway="observe_dot">
+        <i class="fa fa-eye-slash"></i> Observe
+      </button>
+      <button class="btn btn-secondary pull-right" open-pathway="dot_history">
+        <i class="fa fa-history"></i> History
+      </button>
+    </div>
+  </div>
+</div>

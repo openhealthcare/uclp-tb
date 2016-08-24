@@ -21,6 +21,7 @@ class SymptomComplex(models.SymptomComplex): pass
 class PatientConsultation(models.PatientConsultation): pass
 
 class Treatment(models.Treatment):
+    _angular_service = 'TreatmentRecord'
     planned_end_date = fields.DateField(blank=True, null=True)
 
 class Travel(EpisodeSubrecord):
