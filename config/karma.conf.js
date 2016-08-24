@@ -20,8 +20,8 @@ module.exports = function(config){
     }
 
     var preprocessors = {};
-    preprocessors[__dirname + '/../uclptb/assets/js/uclptb/*'] = 'coverage';
-    preprocessors[__dirname + '/../tb/static/js/tb/controllers/*'] = 'coverage';
+    preprocessors[__dirname + '/../uclptb/assets/js/uclptb/**/*.js'] = 'coverage';
+    preprocessors[__dirname + '/../tb/static/js/tb/**/*.js'] = 'coverage';
 
 
 
@@ -79,8 +79,8 @@ module.exports = function(config){
             '../../../../opal-pathway/pathway/static/js/pathway/controllers/*.js',
             '../../../../opal-pathway/pathway/static/js/pathway/services/*.js',
 
-            __dirname + '/../tb/static/js/tb/controllers/*.js',
-            __dirname + '/../tb/static/js/tb/services/*.js',
+            __dirname + '/../tb/static/js/**/*.js',
+            __dirname + '/../uclptb/static/js/**/*.js',
 
             // 'opaltest/*.js',
             __dirname + '/../tb/static/js/tbtest/*.js'
