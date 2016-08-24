@@ -1,17 +1,19 @@
+{% load forms %}
 <div ng-repeat="contact_tracing in item.contact_tracing">
   <div ng-repeat="episode in [contact_tracing.episode]">
-    <div class="panel panel-default">
+    <div class="panel inner-panel">
       <div class="panel-heading inner-panel-heading">
         <div class="row">
-          <h3 class="col-md-8">
-            <a href="/#/patient/[[ episode.demographics[0].patient_id ]]">
+          <h4 class="col-md-8">
+            <a class="pointer" href="/#/patient/[[ episode.demographics[0].patient_id ]]">
+              {% icon "fa fa-street-view" %} Index Case:
               [[ episode.demographics[0].first_name ]]
               [[ episode.demographics[0].surname ]]
               <span ng-show="episode.demographics[0].hospital_number">
                 ([[ episode.demographics[0].hospital_number ]])
               </span>
             </a>
-          </h3>
+          </h4>
         </div>
       </div>
       <div class="panel-body">

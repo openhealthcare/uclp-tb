@@ -26,10 +26,22 @@
   margin-top: 0px
 }
 
+.panel .panel.inner-panel{
+  border: 1px solid #ddd;
+}
+
 .panel .panel .panel-heading.inner-panel-heading{
-  background-color: #9cc96b;
-  border-color: #9cc96b;
-  color: white;
+  padding: 2px 15px;
+  border-bottom: 2px solid #5fa2dd;
+  background: white;
+}
+
+.panel .panel .panel-heading.inner-panel-heading a{
+  color: #333;
+}
+
+.panel .panel .panel-heading.inner-panel-heading a:hover{
+  color: #f76c51;
 }
 
 .panel-footer {
