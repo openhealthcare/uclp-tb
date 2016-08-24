@@ -21,5 +21,7 @@ angular.module('opal.controllers').controller('TreatmentFormCtrl', function(
           $scope.editing.treatment.end_date = new Date();
       };
 
-      $scope.showStopTreatment = !$scope.editing.treatment.end_date || moment($scope.editing.treatment.end_date).isAfter(moment(), "days");
+      $scope.showStopTreatment = function(){
+        return !$scope.editing.treatment.end_date || moment($scope.editing.treatment.end_date).isAfter(moment(), "days");
+      }
 });

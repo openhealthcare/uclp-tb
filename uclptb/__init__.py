@@ -11,6 +11,7 @@ class Application(application.OpalApplication):
         'js/opal/controllers/discharge.js',
         'js/uclptb/services/records/treatment_record.js',
         'js/uclptb/controllers/treatment_modal_form.js',
+        'js/uclptb/controllers/current_treatment_panel.js',
     ]
     default_episode_category = 'TB'
     styles = [

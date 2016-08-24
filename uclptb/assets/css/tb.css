@@ -52,12 +52,12 @@
   margin-right: 8px;
 }
 
-.no-touchevents tr i.edit{
+.no-touchevents .opal-editable i.edit{
   visibility: hidden;
   font-size: 20px;
 }
 
-.no-touchevents tr:hover i.edit,
+.no-touchevents .opal-editable:hover i.edit,
 .touchevents > i.edit{
   visibility: visible;
   font-size: 20px;
