@@ -154,8 +154,8 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
 class TBObserveDOT(ModalPathway):
     display_name = "Observe DOT"
     slug = "observe_dot"
-    template_url = "/templates/pathway/observe_dot_pathway_base.html"
-    icon="fa fa-reply"
+    template_url = "/templates/pathway/no_steps_modal_base.html"
+    icon = "fa fa-eye-slash"
 
     steps = (
         Step(
@@ -165,11 +165,12 @@ class TBObserveDOT(ModalPathway):
         ),
     )
 
+
 class TBDOTHistory(ModalPathway):
     display_name = "DOT History"
     slug = "dot_history"
     template_url = "/templates/pathway/no_steps_modal_base.html"
-    icon="fa fa-reply"
+    icon = "fa fa-history"
 
     steps = (
         Step(
@@ -184,6 +185,7 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
     display_name  = "TB Treatment"
     slug          = "tb_treatment"
     template_url = '/templates/pathway/treatment_form_base.html'
+    icon = 'fa fa-medkit'
     steps = (
         Step(
             title="Diagnosis & Treatment",
