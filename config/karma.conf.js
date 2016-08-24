@@ -21,7 +21,7 @@ module.exports = function(config){
 
     var preprocessors = {};
     preprocessors[__dirname + '/../uclptb/assets/js/uclptb/**/*.js'] = 'coverage';
-    preprocessors[__dirname + '/../tb/static/js/tb/**/*.js'] = 'coverage';
+    preprocessors[__dirname + '/../lib/opal-tb/tb/static/js/tb/**/*.js'] = 'coverage';
 
 
 
