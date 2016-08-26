@@ -26,10 +26,40 @@
   margin-top: 0px
 }
 
+.panel .panel.inner-panel{
+  border: 1px solid #ddd;
+}
+
+/*
+* this deal with making inner panels have smaller headings
+* when they are within an another record panel
+*/
+
+.panel .panel-active .panel-heading.inner-panel-heading{
+  padding: 2px 15px;
+  border-bottom: 2px solid #5fa2dd;
+}
+
 .panel .panel .panel-heading.inner-panel-heading{
-  background-color: #9cc96b;
-  border-color: #9cc96b;
-  color: white;
+  background-color: white;
+  border-bottom: 3px solid #f76c51;
+}
+
+.panel .panel .panel-heading.inner-panel-heading a{
+  color: #333;
+}
+
+.panel .panel-active .panel-heading.inner-panel-heading h3{
+  /*
+  * essentially change the h4 into an h3
+  */
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.panel .panel .panel-heading.inner-panel-heading a:hover{
+  color: #f76c51;
 }
 
 .panel-footer {

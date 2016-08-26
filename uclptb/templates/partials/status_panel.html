@@ -1,5 +1,5 @@
 {% load forms %}
-<div class="panel panel-active">
+<div class="panel panel-active content-offset-20">
   <div class="panel-heading">
     <h3>
       {% icon "fa-user" %}
@@ -8,5 +8,10 @@
   </div>
   <div class="panel-body">
     {% include "_partials/status_panel_contents.html" %}
+    <div ng-show="episode.stage === metadata.tb.stages.new_contact" class="content-offset-20">
+      <div ng-repeat="item in episode.contact_traced">
+        {% include models.ContactTraced.get_display_template %}
+      </div>
+    </div>
   </div>
 </div>
