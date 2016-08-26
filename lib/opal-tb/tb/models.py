@@ -306,7 +306,9 @@ class TBHistory(models.PatientSubrecord):
     _icon = 'fa fa-wpforms'
     _title = "History of TB"
     personal_history_of_tb = fields.TextField(blank=True, null=True, verbose_name="Personal History of TB")
+    date_of_previous_tb_infection = fields.CharField(max_length=255, blank=True, null=True, verbose_name="Date of Previous TB")
     other_tb_contact = fields.TextField(blank=True, null=True, verbose_name="Other TB Contact")
+    date_of_other_tb_contact = fields.CharField(max_length=255, blank=True, null=True, verbose_name="Date of TB Contact")
 
 class BCG(models.PatientSubrecord):
     _icon = 'fa fa-asterisk'
