@@ -295,6 +295,7 @@ class TestResult(models.EpisodeSubrecord):
     date_received = fields.DateField(null=True, blank=True)
     status = fields.CharField(max_length=255, default="Pending")
     result = fields.TextField(null=True, blank=True)
+    mdr = fields.BooleanField(default=False, verbose_name="MDR")
     sensitive_antibiotics = fields.ManyToManyField(
         models.Antimicrobial, related_name="test_result_sensitive"
     )
