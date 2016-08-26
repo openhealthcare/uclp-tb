@@ -1,1 +1,2 @@
-[[ item.name ]] ([[ item.status ]])<span ng-show="item.result"> [[ item.result ]]</span>
+[[ item.name ]] <span ng-show="item.status === 'Pending'"> ([[ item.status ]])</span><span ng-show="item.result"> [[ item.result ]]</span>
+<b ng-show="item.mdr"> MDR</b>

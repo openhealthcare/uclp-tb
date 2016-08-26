@@ -10,3 +10,7 @@
   {% select field="TestResult.resistant_antibiotics" multiple=True tagging=False %}
 </span>
 <span ng-show="editing.test_result.name=='GeneXpert'">{% radio field="TestResult.result" lookuplist="['Negative', 'Positive']"%}</span>
+
+<span ng-show="editing.test_result.name=='GeneXpert' || editing.test_result.name=='Culture'">
+  {% checkbox field="TestResult.mdr" %}
+</span>
