@@ -16,11 +16,11 @@
     <td>[[ test_result.date_received | shortDate ]]</td>
     <td>[[ test_result.result ]]</td>
     <td>
-      <span ng-show="test_result.mdr">
-        <i class="fa fa-times fa-2x text-danger"></i>
-      </span>
       <span ng-hide="test_result.mdr">
-        <i class="fa fa-check fa-2x"></i>
+        <i class="fa fa-times fa-2x "></i>
+      </span>
+      <span ng-show="test_result.mdr">
+        <i class="fa fa-check fa-2x text-danger"></i>
       </span>
     <td>[[ test_result.sensitive_antibiotics.join(", ") ]]</td>
     <td>[[ test_result.resistant_antibiotics.join(", ") ]]</td>
