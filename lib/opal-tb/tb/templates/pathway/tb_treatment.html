@@ -87,7 +87,8 @@
 
         <div class="row form-horizontal content-offset-20" ng-repeat="plan in localEditing.treatmentPlan" ng-show="existingTreatmentFilter(plan)">
           <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.drug" bs-typeahead  bs-options="i for i in antimicrobial_list" />
+            <input type="text" class="form-control" ng-model="plan.drug"
+                   uib-typeahead="i for i in antimicrobial_list | filter:$viewValue | limitTo:8" />
           </div>
           <div class="col-md-2">
             <input type="text" class="form-control" ng-model="plan.dose" />
