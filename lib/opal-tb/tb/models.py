@@ -3,6 +3,8 @@ tb models.
 """
 from datetime import datetime, date
 from django.db import transaction
+from djchoices import DjangoChoices, ChoiceItem
+from lab import models as lmodels
 
 from django.db import models as fields
 from django.db import models, transaction
@@ -35,6 +37,7 @@ class ContactDetails(models.PatientSubrecord):
 
     class Meta:
         verbose_name_plural = "Contact details"
+
 
 class RelationshipToIndex(lookuplists.LookupList):
     pass
@@ -283,6 +286,30 @@ class EnvironmentalRiskAssessment(models.EpisodeSubrecord):
     congregate_drug_use = fields.BooleanField(default=False)
     pub_or_club = fields.BooleanField(default=False)
     other_setting = fields.CharField(null=True, blank=True, max_length=256)
+
+
+class Smear(lmodels.LabTest):
+    class Meta:
+        proxy = True
+
+    class ResultChoices(DjangoChoices):
+        positive = ChoiceItem("+", label="+")
+        double_positive = ChoiceItem("++", label="++")
+        triple_positive = ChoiceItem("+++", label="+++")
+
+
+class Culture(lmodels.PosNegLabTest):
+    class Meta:
+        proxy = True
+
+
+class GeneXpert(lmodels.PosNegLabTest):
+    class Meta:
+        proxy = True
+
+
+class LabTestCollection(lmodels.LabTestCollection, models.EpisodeSubrecord):
+    _is_singleton = True
 
 
 class TestResult(models.EpisodeSubrecord):

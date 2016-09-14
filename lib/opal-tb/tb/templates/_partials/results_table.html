@@ -1,4 +1,4 @@
-<table class="table" ng-show="episode.test_result.length">
+<table class="table" ng-show="episode.lab_test_collection[0].lab_tests.length">
   <tr>
     <th>Name</th>
     <th>Ordered</th>
@@ -9,8 +9,8 @@
     <th>Sensitive Antibiotics</th>
     <th>Resistant Antibiotics</th>
   </tr>
-  <tr ng-repeat="test_result in episode.test_result">
-    <td>[[ test_result.name ]]</td>
+  <tr ng-repeat="test_result in episode.lab_test_collection[0].lab_tests">
+    <td>[[ test_result.test_name ]]</td>
     <td>[[ test_result.date_ordered | shortDate ]]</td>
     <td>[[ test_result.status ]]</td>
     <td>[[ test_result.date_received | shortDate ]]</td>

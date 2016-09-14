@@ -16,7 +16,7 @@
     </div>
 
 
-    <table ng-show="editing.test_result.length" class="table content-offset">
+    <table ng-show="editing.lab_test_collection.lab_tests.length" class="table content-offset">
       <tr>
         <th>Name</th>
         <th>Ordered</th>
@@ -27,14 +27,14 @@
         <th>Resistant</th>
         <th></tr>
       </tr>
-      <tr ng-repeat="test_result in editing.test_result">
-        <td>[[ test_result.name ]]</td>
-        <td>[[ test_result.date_ordered | shortDate ]]</td>
-        <td>[[ test_result.status ]]</td>
-        <td>[[ test_result.date_recieved | shortDate ]]</td>
-        <td>[[ test_result.result ]]</td>
-        <td>[[ test_result.sensitive_antibiotics.join(", ") ]]</td>
-        <td>[[ test_result.resistant_antibiotics.join(", ") ]]</td>
+      <tr ng-repeat="test in editing.lab_test_collection.lab_tests">
+        <td>[[ test.test_name ]]</td>
+        <td>[[ test.date_ordered | shortDate ]]</td>
+        <td>[[ test.status ]]</td>
+        <td>[[ test.date_recieved | shortDate ]]</td>
+        <td>[[ test.result ]]</td>
+        <td>[[ test.sensitive_antibiotics.join(", ") ]]</td>
+        <td>[[ test.resistant_antibiotics.join(", ") ]]</td>
         <td><button ng-click="removeTest($index)" class="btn btn-secondary btn-sm">{% icon "fa-trash" %}</button></td>
       </tr>
     </table>
