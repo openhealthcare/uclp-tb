@@ -1,0 +1,7 @@
+{% load lab %}
+{% load  %}
+<div class="form-horizontal">
+  {% test_result_radio lab_test %}
+  {% select label="Sensitive" model="aerobicModel.sensitive_antibiotics" lookuplist="antimicrobial_list" multiple=True tagging=False %}
+  {% select label="Resistant" model="aerobicModel.resistant_antibiotics" lookuplist="antimicrobial_list" multiple=True tagging=False %}
+</div>

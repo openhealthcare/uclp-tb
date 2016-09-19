@@ -293,9 +293,9 @@ class Smear(lmodels.LabTest):
         proxy = True
 
     class ResultChoices(DjangoChoices):
-        positive = ChoiceItem("+", label="+")
-        double_positive = ChoiceItem("++", label="++")
-        triple_positive = ChoiceItem("+++", label="+++")
+        positive = ChoiceItem("+", label="+", order=1)
+        double_positive = ChoiceItem("++", label="++", order=2)
+        triple_positive = ChoiceItem("+++", label="+++", order=3)
 
 
 class Culture(lmodels.PosNegLabTest):
@@ -307,6 +307,9 @@ class GeneXpert(lmodels.PosNegLabTest):
     class Meta:
         proxy = True
 
+    @classmethod
+    def get_form_template(cls):
+        return "lab_tests/forms/sensitive_resistant_form.html"
 
 class LabTestCollection(lmodels.LabTestCollection, models.EpisodeSubrecord):
     _is_singleton = True

@@ -1,15 +1,13 @@
 {% load lab %}
 <div ng-repeat="test in editing.lab_test_collection.lab_tests">
-  <div ng-show="test.test_name === 'smear'">
-    {% render_lab_form lab_tests.Smear %}
-  </div>
-  <div ng-show="test.test_name === 'genxpert'">
-    {% render_lab_form lab_tests.GeneXpert %}
-  </div>
-  <div ng-show="test.test_name === 'culture'">
-    {% render_lab_form lab_tests.Culture %}
-  </div>
-  <div ng-show="test.test_name !== 'smear' && test.test_name !== 'culture' && test.test_name !== 'genexpert'">
-    {% render_lab_form lab_tests.GenericLabTest %}
+  <div ng-switch="test.test_name">
+    {% for test in models.LabTestCollection.get_possible_test %}
+      <div ng-switch-when="{{ test.get_display_name }}">
+        {% render_lab_form test %}
+      </div>
+    {% endfor %}
+    <div ng-switch-default>
+      {% render_lab_form lab_tests.GenericLabTest %}
+    </div>
   </div>
 </div>
