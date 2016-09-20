@@ -312,6 +312,7 @@ class GeneXpert(lmodels.PosNegLabTest):
         return "lab_tests/forms/sensitive_resistant_form.html"
 
 class LabTestCollection(lmodels.LabTestCollection, models.EpisodeSubrecord):
+    _possible_tests = [Smear, Culture, GeneXpert]
     _is_singleton = True
 
 

@@ -1,7 +1,8 @@
 {% load lab %}
+{% load forms %}
 <div ng-repeat="test in editing.lab_test_collection.lab_tests">
   <div ng-switch="test.test_name">
-    {% for test in models.LabTestCollection.get_possible_test %}
+    {% for test in models.LabTestCollection.get_possible_tests %}
       <div ng-switch-when="{{ test.get_display_name }}">
         {% render_lab_form test %}
       </div>
@@ -9,5 +10,10 @@
     <div ng-switch-default>
       {% render_lab_form lab_tests.GenericLabTest %}
     </div>
+    <div class="row content-offset-below-25">
+      <div class="col-sm-11">
+        <button remove-from-array="editing.lab_test_collection.lab_tests" index-to-remove="$index" class="pull-right btn btn-secondary">{% icon "fa-trash" %}Remove</button>
+    </div>
+  </div>
   </div>
 </div>
