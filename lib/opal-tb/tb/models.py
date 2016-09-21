@@ -292,10 +292,11 @@ class Smear(lmodels.LabTest):
     class Meta:
         proxy = True
 
-    class ResultChoices(DjangoChoices):
-        positive = ChoiceItem("+", label="+", order=1)
-        double_positive = ChoiceItem("++", label="++", order=2)
-        triple_positive = ChoiceItem("+++", label="+++", order=3)
+    RESULT_CHOICES = (
+        ("positive", "+"),
+        ("double_positive", "++"),
+        ("triple_positive", "+++"),
+    )
 
 
 class Culture(lmodels.PosNegLabTest):
@@ -306,6 +307,10 @@ class Culture(lmodels.PosNegLabTest):
 class GeneXpert(lmodels.PosNegLabTest):
     class Meta:
         proxy = True
+
+    @classmethod
+    def get_display_name(cls):
+        return "GeneXpert"
 
     @classmethod
     def get_form_template(cls):
