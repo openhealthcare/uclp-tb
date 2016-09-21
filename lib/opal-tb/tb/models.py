@@ -3,7 +3,6 @@ tb models.
 """
 from datetime import datetime, date
 from django.db import transaction
-from djchoices import DjangoChoices, ChoiceItem
 from lab import models as lmodels
 
 from django.db import models as fields
