@@ -1,2 +1,8 @@
 <span ng-show="item.date_of_referral">[[ item.date_of_referral  | shortDate ]]</span>
-<span ng-show="item.referral_type">[[ item.referral_type ]]</span>
+<span ng-show="item.internal">
+  Internal<span ng-show="item.referral_team">: [[ item.referral_team ]]</span>
+</span>
+<span ng-hide="item.internal">
+  <span ng-show="item.referral_type">[[ item.referral_type ]] </span>
+  <span ng-show="item.referral_organisation">[[ item.referral_organisation ]]</span>
+</span>
