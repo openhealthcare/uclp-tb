@@ -165,7 +165,6 @@ INSTALLED_APPS = (
     'lab',
     'opal.core.search',
     'pathway',
-    'referral',
     'tb',
     'uclptb',
     'django.contrib.admin',
