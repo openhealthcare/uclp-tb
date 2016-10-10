@@ -37,6 +37,7 @@ settings.configure(DEBUG=True,
                                    'django.contrib.staticfiles',
                                    'django.contrib.admin',
                                    'opal',
+                                   'lab',
                                    'tb',))
 
 import django

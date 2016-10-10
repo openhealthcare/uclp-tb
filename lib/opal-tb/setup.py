@@ -11,7 +11,7 @@ setup(
     version='0.1',
     packages=['tb'],
     include_package_data=True,
-    license='LICENSE',  
+    license='LICENSE',
     description='The tb OPAL Plugin',
     long_description=README,
     url='http://opal.openhealthcare.org.uk/',
