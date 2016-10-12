@@ -9,7 +9,7 @@
       </div>
       <div class="panel-body">
         <div class="form-horizontal">
-          {% radio model="localEditing.condition" label="TB Type" lookuplist="tbTypes" %}
+          {% radio model="localEditing.condition" label="TB Type" lookuplist="tbTypes" required=True %}
           {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True tagging=False %}
         </div> <!-- Form -->
       </div>   <!-- Body -->
@@ -64,11 +64,11 @@
         </h3>
       </div>
       <div class="panel-body">
-        <form class="form-horizontal">
+        <div class="form-horizontal">
           {% input label="Weight" model="localEditing.weight" unit="kg" %}
           {% datepicker label="Treatment start date" model="localMetadata.treatmentStartDate" %}
           {% checkbox field="TBMeta.directly_observed_therapy" %}
-        </form>
+        </div>
         <hr />
         <div class="row text-center">
           <div class="col-md-3">
@@ -93,10 +93,10 @@
             <input type="text" class="form-control" ng-model="plan.dose" />
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.start_date" bs-datepicker   />
+            <input name="treatment_plan_planned_start_date[[ $index ]]" type="text" class="form-control" required-if-not-empty="plan" ng-model="plan.start_date" bs-datepicker />
           </div>
           <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.planned_end_date" bs-datepicker   />
+            <input name="treatment_plan_planned_end_date[[ $index ]]"  type="text" class="form-control" required-if-not-empty="plan" ng-model="plan.planned_end_date" bs-datepicker   />
           </div>
           <div class="col-md-1">
             <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary" data-title="Remove" bs-tooltip>
@@ -107,10 +107,17 @@
             </button>
           </div>
         </div>
+        <div class="row" ng-show="form.$submitted">
+          <div class="col-md-12 text-center" ng-show="form.$error.requiredIfNotEmpty">
+            <span class="help-block">
+              Please enter a start date and a stop date for all treatments
+            </span>
+          </div>
+        </div>
 
         <div class="row content-offset-20">
           <div class="col-md-1 col-md-offset-11">
-            <button class="btn-primary btn" ng-click="addTreatment()" data-title="Add Another" bs-tooltip>
+            <button type="button" class="btn-primary btn" ng-click="addTreatment()" data-title="Add Another" bs-tooltip>
               {% icon "glyphicon-plus" %}
             </button>
           </div>

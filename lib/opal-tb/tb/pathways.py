@@ -15,6 +15,17 @@ from episode_categories import TBEpisodeStages
 from uclptb import models as uclptb_models
 from tb import models as tb_models
 
+
+class RemoveEmptiesMixin(object):
+    def save(self, data, user):
+        for subrecordName, subrecords in data.iteritems():
+            for index, subrecord in enumerate(subrecords):
+                if not subrecord:
+                    data[subrecordName].pop(index)
+
+        super(RemoveEmptiesMixin, self).save(data, user)
+
+
 class TBAddTests(ModalPathway):
     display_name = "Add Tests"
     slug = "add_tests_pathway"
@@ -181,7 +192,7 @@ class TBDOTHistory(ModalPathway):
     )
 
 
-class TBTreatment(RedirectsToPatientMixin, Pathway):
+class TBTreatment(RemoveEmptiesMixin, RedirectsToPatientMixin, Pathway):
     display_name  = "TB Treatment"
     slug          = "tb_treatment"
     template_url = '/templates/pathway/treatment_form_base.html'

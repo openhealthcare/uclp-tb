@@ -3,9 +3,9 @@
 {% input field="Treatment.dose" %}
 {% input field="Treatment.route" %}
 {% input field="Treatment.frequency" %}
-{% datepicker field="Treatment.start_date" %}
+{% datepicker field="Treatment.start_date" required=True %}
 {% datepicker field="Treatment.end_date" %}
-{% datepicker field="Treatment.planned_end_date" %}
+{% datepicker field="Treatment.planned_end_date" required=True %}
 
 <div ng-show="showStopTreatment()" class="text-center">
   <button class="btn btn-secondary content-offset-10" ng-click="stopTreatment()">
