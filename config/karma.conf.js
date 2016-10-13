@@ -80,10 +80,12 @@ module.exports = function(config){
             '../../../../opal-pathway/pathway/static/js/pathway/services/*.js',
 
             __dirname + '/../lib/opal-tb/tb/static/js/**/*.js',
-            __dirname + '/../uclptb/static/js/**/*.js',
+            __dirname + '/../uclptb/assets/js/uclptb/controllers/**/*.js',
+            __dirname + '/../uclptb/assets/js/uclptb/services/**/*.js',
+            __dirname + '/../uclptb/assets/js/uclptbtest/**/*.js',
 
             // 'opaltest/*.js',
-            __dirname + '/../lib/opal-tb/tb/static/js/tbtest/*.js'
+            __dirname + '/../lib/opal-tb/tb/static/js/tbtest/**/*.js',
             // '../../../../elcid/elcid/assets/js/elcidtest/*.js',
         ],
 
