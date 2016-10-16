@@ -42,13 +42,15 @@
   </div>
 </div> <!-- Row -->
 
-<div class="row" ng-show="episode.treatment.length">
-  <div class="col-md-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3>{% icon "fa-medkit" %}Current Treatment</h3>
+<div ng-controller="CurrentTreatmentPanelCtrl as currentTreatmentPathwayCtrl">
+  <div class="row" ng-show="currentTreatmentPathwayCtrl.getActiveTreatments(episode.treatment).length">
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3>{% icon "fa-medkit" %}Current Treatment</h3>
+        </div>
+        {% include 'partials/current_treatments.html' %}
       </div>
-      {% include 'partials/current_treatments.html' %}
     </div>
   </div>
 </div>
