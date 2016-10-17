@@ -1,14 +1,7 @@
-<span ng-show="item.clinical_resolution_details">
-  <span ng-show="item.clinical_resolution">
-    <b>Clincal Resolution:</b>
-  </span>
-  [[ item.clinical_resolution_details ]]
-  <br />
+<span ng-show="item.outcome">
+    [[ item.outcome ]]
+   <br />
 </span>
-<span ng-show="item.radiological_resolution_details">
-  <span ng-show="item.radiological_resolution">
-    <b>Radiological Resolution:</b>
-  </span>
-  [[ item.radiological_resolution_details ]]
-  <br />
+<span ng-show="item.additional_details">
+    [[ item.additional_details ]]
 </span>
