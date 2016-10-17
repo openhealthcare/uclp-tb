@@ -10,7 +10,12 @@
           {% include "partials/risk_panel.html" %}
         </div>
         <div class="col-md-6" ng-hide="episode.stage!=metadata.tb.stages.active_tb_treatment">
-            {% include 'partials/current_tb_treatments_panel.html' %}
+            <span ng-hide="episode.tb_outcome[0].outcome || episode.tb_outcome[0].additional_details">
+              {% include 'partials/current_tb_treatments_panel.html' %}
+            </span>
+            <span ng-show="episode.tb_outcome[0].outcome || episode.tb_outcome[0].additional_details">
+              {% record_panel models.TBOutcome %}
+            </span>
         </div>
       </div>
       <div class="row">
