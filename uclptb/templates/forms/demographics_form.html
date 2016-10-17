@@ -6,7 +6,8 @@
   {% input field="Demographics.hospital_number" %}
   <div class="text-center content-offset-below-20 has-error" ng-show="form.$submitted && form.demographics_hospital_number.$error.no_personal_info">
     <span class="help-block">
-      Please add either the patients, firstname, surname and date of birth. Or just their hospital number
+      In order to add a patient, we need either a <strong>hospital number</strong>, or their <strong>firstname</strong>, 
+      <strong>surname</strong> and <strong>date of birth</strong>.
     </span>
   </div>
 </div>
