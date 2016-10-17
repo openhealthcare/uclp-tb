@@ -245,16 +245,21 @@ class PHEnglandNotification(models.EpisodeSubrecord):
     when = fields.DateField(null=True, blank=True, verbose_name="Notification date")
     number = fields.CharField(max_length=250, blank=True, null=True, verbose_name="LTBR Number")
 
+class PossibleTBOutcome(lookuplists.LookupList):
+    pass
+
 
 class TBOutcome(models.EpisodeSubrecord):
     _is_singleton = True
     _title = 'TB Treatment Outcome'
     _icon = 'fa fa-th-list'
 
-    clinical_resolution             = fields.NullBooleanField()
-    radiological_resolution         = fields.NullBooleanField()
-    clinical_resolution_details     = fields.TextField(blank=True, null=True)
-    radiological_resolution_details = fields.TextField(blank=True, null=True)
+    outcome = ForeignKeyOrFreeText(
+        PossibleTBOutcome,
+    )
+
+    additional_details = fields.TextField(blank=True, null=True)
+
 
 class TBSite(LookupList):
     pass

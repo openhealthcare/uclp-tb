@@ -1,5 +1,39 @@
 {% load forms %}
-{% checkbox field="TBOutcome.clinical_resolution" %}
-{% textarea  field="TBOutcome.clinical_resolution_details" show="editing.tb_outcome.clinical_resolution" %}
-{% checkbox field="TBOutcome.radiological_resolution" %}
-{% textarea  field="TBOutcome.radiological_resolution_details" show="editing.tb_outcome.radiological_resolution" %}
+{% select field="TBOutcome.outcome" %}
+
+<div class="row">
+  <div class="help-block col-md-8 col-md-push-3">
+    <div class="content-offset-below-20" ng-show="editing.tb_outcome.outcome === 'Cure'">
+      A patient whose sputum smear or culture was positive at the beginning
+      of the treatment but who was smear- or culture-negative in the last month
+      of treatment and on at least one previous occasion
+    </div>
+    <div class="content-offset-below-20" ng-show="editing.tb_outcome.outcome === 'Treatment completed'">
+      A patient who completed treatment but who does not have a negative sputum smear
+      or culture result in the last month of treatment and on at least one previous
+      occasion
+    </div>
+    <div class="content-offset-below-20" ng-show="editing.tb_outcome.outcome === 'Treatment failure'">
+      A patient whose sputum smear or culture is positive at 5 months or later during
+      treatment. Also included in this definition are patients found to harbour
+      multidrug-resistant (MDR) strain at an point of time during the treatment
+      whether they are smear-negative or -positive.
+    </div>
+    <div class="content-offset-below-20" ng-show="editing.tb_outcome.outcome === 'Died'">
+      A patient who dies for any reason during the course of treatment.
+    </div>
+    <div class="content-offset-below-20" ng-show="editing.tb_outcome.outcome === 'Default'">
+      A patient whose treatment was interrupted for 2 consecutive months or more.
+    </div>
+    <div class="content-offset-below-20" ng-show="editing.tb_outcome.outcome === 'Transfer out'">
+      A patient who has been transferred to another recording and reporting unit
+      and whose treatment outcome is unknown
+    </div>
+    <div class="content-offset-below-20" ng-show="editing.tb_outcome.outcome === 'Treatment success'">
+      A sum of cured and completed treatment
+      (for smear- or culture-positive patients only)
+    </div>
+  </div>
+</div>
+
+{% textarea field="TBOutcome.additional_details"  %}
