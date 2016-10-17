@@ -1,4 +1,4 @@
-fdescribe('TreatmentRecord', function(){
+describe('TreatmentRecord', function(){
   "use strict";
   var $controller, $rootScope, controller, scope, modalInstance, item;
 

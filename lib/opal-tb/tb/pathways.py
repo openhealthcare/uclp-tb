@@ -14,6 +14,7 @@ from episode_categories import TBEpisodeStages
 # TODO Stop importing these like this - it makes us unpluggable
 from uclptb import models as uclptb_models
 from tb import models as tb_models
+from opal import models as opal_models
 
 
 class RemoveEmptiesMixin(object):
@@ -23,7 +24,7 @@ class RemoveEmptiesMixin(object):
                 if not subrecord:
                     data[subrecordName].pop(index)
 
-        super(RemoveEmptiesMixin, self).save(data, user)
+        return super(RemoveEmptiesMixin, self).save(data, user)
 
 
 class TBAddTests(ModalPathway):
@@ -62,11 +63,17 @@ class TBAddPatient(RedirectsToPatientMixin, Pathway):
         Step(
             title="Add Patient",
             icon="fa fa-user",
-            template_url="/templates/pathway/add_patient_form.html"
+            template_url="/templates/pathway/add_patient_form.html",
+            controller_class="TBAddPatientCtrl"
         ),
     )
 
     def save(self, data, user):
+        if not self.patient:
+            if "hospital_number" not in data["demographics"][0]:
+                if "surname" in data["demographics"][0]:
+                    self.patient_id = opal_models.Patient.objects.create().id
+
         patient = super(TBAddPatient, self).save(data, user)
         episode = patient.episode_set.first()
         episode.stage = TBEpisodeStages.NEW_REFERRAL

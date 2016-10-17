@@ -15,6 +15,7 @@ class TbPlugin(plugins.OpalPlugin):
             'js/tb/controllers/tb_treatment.js',
             "js/tb/controllers/tb_initial_assessment.js",
             "js/tb/controllers/tb_type.js",
+            "js/tb/controllers/tb_add_patient.js",
             "js/tb/controllers/add_tests.js",
             "js/tb/controllers/add_results.js",
             "js/tb/controllers/results_tab.js",
