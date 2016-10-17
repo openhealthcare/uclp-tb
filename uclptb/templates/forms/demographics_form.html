@@ -1,9 +1,17 @@
 {% load forms %}
-{% input  field="Demographics.first_name"  %}
-{% input  field="Demographics.surname"  %}
-{% input  field="Demographics.hospital_number" %}
-{% input  field="Demographics.nhs_number"  %}
-{% date_of_birth_field %}
-{% input  field="Demographics.sex"  %}
-{% input  field="Demographics.ethnicity"  %}
-{% input  field="Demographics.birth_place" label="Country Of Birth" %}
+<div ng-class='{"errored-state": form.$submitted && form.demographics_hospital_number.$error.no_personal_info}' >
+  {% input field="Demographics.first_name" %}
+  {% input field="Demographics.surname" %}
+  {% date_of_birth_field %}
+  {% input field="Demographics.hospital_number" %}
+  <div class="text-center content-offset-below-20 has-error" ng-show="form.$submitted && form.demographics_hospital_number.$error.no_personal_info">
+    <span class="help-block">
+      In order to add a patient, we need either a <strong>hospital number</strong>, or their <strong>firstname</strong>, 
+      <strong>surname</strong> and <strong>date of birth</strong>.
+    </span>
+  </div>
+</div>
+{% input field="Demographics.nhs_number"  %}
+{% input field="Demographics.sex"  %}
+{% input field="Demographics.ethnicity"  %}
+{% input field="Demographics.birth_place" label="Country Of Birth" %}

@@ -1,8 +1,13 @@
 <span ng-show="item.personal_history_of_tb">
-    [[ item.personal_history_of_tb ]]
-   <br />
+  Previous TB: [[ item.personal_history_of_tb ]]
+  <span ng-show="item.date_of_previous_tb_infection">
+    ([[ item.date_of_previous_tb_infection ]])
+  </span>
+  <br />
 </span>
 <span ng-show="item.other_tb_contact">
-    [[ item.other_tb_contact ]]
-   <br />
+  Previous contact with TB: [[ item.other_tb_contact ]]
+    <span ng-show="item.date_of_other_tb_contact">
+      ([[ item.date_of_other_tb_contact ]])
+    </span>
 </span>
