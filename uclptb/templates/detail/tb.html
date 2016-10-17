@@ -4,7 +4,7 @@
   <tabset justified="true">
     <tab heading="Patient Overview">
 
-      <div class="row">
+      <div class="row content-offset-20">
         <div ng-class="{'col-md-offset-2': episode.stage!=metadata.tb.stages.active_tb_treatment, 'col-md-6': episode.stage==metadata.tb.stages.active_tb_treatment, 'col-md-8': episode.stage!=metadata.tb.stages.active_tb_treatment, 'content-offset-20': episode.stage!=metadata.tb.stages.active_tb_treatment}">
           {% include "partials/status_panel.html" %}
           {% include "partials/risk_panel.html" %}
@@ -21,7 +21,7 @@
     </tab>
 
     <tab heading="Detailed History">
-      <div class="row">
+      <div class="row content-offset-20">
         <div class="col-md-8">
           {% record_panel models.ContactDetails %}
           {% record_panel models.ReferralRoute %}
@@ -40,7 +40,7 @@
       </div>
     </tab>
     <tab ng-show="episode.tb_meta[0].contact_tracing_done || episode.contact_traced.length" heading="Contact Tracing">
-      <div class="row">
+      <div class="row content-offset-20">
         <div class="col-md-8">
           {% record_panel models.EnvironmentalRiskAssessment %}
           {% record_panel models.ContactTracing editable="False" %}
@@ -49,7 +49,7 @@
       </div>
     </tab>
     <tab heading="Tests">
-      <div class="row">
+      <div class="row content-offset-20">
         {% include "test_results.html" %}
       </div>
     </tab>
