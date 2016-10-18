@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # travis seem to have a stale wheel
+=======
+>>>>>>> @{-1}
 Django==1.8.13
 coverage==3.6
 dj-database-url==0.2.1
