@@ -89,8 +89,49 @@
   <div class="col-md-8">
     <div class="panel panel-default">
       <div class="panel-heading">
+        <h3 >{% icon "fa-comments" %} Consultation Record</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-horizontal">
+          {% include models.PatientConsultation.get_form_template %}
+        </div>
+      </div>
+    </div>
+  </div> <!-- Col -->
+  <div class="col-md-4">
+    <p class="sidebar-help content-offset">
+      Summary of assessment, impression and plan.
+    </p>
+    <div class="well">
+      <h4 class="text-center">Investigations</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          3 Sputum Samples
+        </li>
+        <li class="list-group-item">
+          Smear, GeneXpert, Culture
+        </li>
+      </ul>
+      <center>
+        <button class="btn btn-primary btn-lg" type="button" ng-click="addCommonTests(1)">
+          {% icon "glyphicon-plus" %}
+          Add Investigations
+        </button>
+      </center>
+    </div>
+  </div>
+</div> <!-- Row -->
+
+
+
+
+
+<div class="row" ng-show="editing.investigation && editing.investigation.length">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
         <h3>
-          {% icon "fa-crosshairs" %}  Investigations
+          {% icon "fa-crosshairs" %}  Results
         </h3>
       </div>
       <div class="panel-body">
@@ -99,32 +140,7 @@
             {% include "_partials/investigations_table.html" %}
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <button class="btn btn-primary" ng-click="addTest()" type="button">
-              Add Test
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="well">
-      <h4 class="text-center">Common Tests</h4>
-      <ul class="list-group">
-        <li class="list-group-item">3 Smear Tests</li>
-        <li class="list-group-item">1 GeneXpert Test</li>
-        <li class="list-group-item">1 Culture Test</li>
-      </ul>
-      <center>
-        <button class="btn btn-primary btn-lg" type="button" ng-click="addCommonTests(1)">
-          {% icon "glyphicon-plus" %}
-          Add Common Tests
-        </button>
-      </center>
-    </div>
-  </div>
 </div>
-
-{% include "_partials/patient_consultation.html" %}

@@ -5,6 +5,15 @@
 <span ng-show="item.resistant_antibiotics">RES: [[item.resistant_antibiotics]]</span>
 
 <span ng-show="item.result">[[ item.result ]]</span>
+<span ng-show="item.test === 'GeneXpert'">
+  [[ item.genexpert ]]
+</span>
+<span ng-show="item.test === 'Smear'">
+  [[ item.smear ]]
+</span>
+<span ng-show="item.test === 'Culture'">
+  [[ item.culture ]]
+</span>
 
 <!-- testType == 'micro_test_serology'" -->
 <span ng-show="item.igm && item.igm != 'pending'">IgM: [[item.igm | microresult]]</span>

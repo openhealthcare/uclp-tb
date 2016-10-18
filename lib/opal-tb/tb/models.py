@@ -337,7 +337,7 @@ class TestResult(models.EpisodeSubrecord):
     result = fields.TextField(null=True, blank=True)
     mdr = fields.BooleanField(default=False, verbose_name="MDR")
     sensitive_antibiotics = fields.ManyToManyField(
-        models.Antimicrobial, related_name="test_result_sensitive", blank=True
+    models.Antimicrobial, related_name="test_result_sensitive", blank=True
     )
     resistant_antibiotics = fields.ManyToManyField(
         models.Antimicrobial, related_name="test_result_resistant", blank=True

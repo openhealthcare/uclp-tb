@@ -1,5 +1,5 @@
 {% load forms %}
-{% input "autofocus" field="Investigation.test" lookuplist="microbiology_test_list" %}
+{% input field="Investigation.test" lookuplist="microbiology_test_list" %}
 {% datepicker field="Investigation.date_ordered" %}
 {% input label="Details" model="editing.investigation.details" %}
 
@@ -41,8 +41,8 @@
 {% radio label="Result" model="editing.investigation.smear" show="editing.investigation.test == 'Smear'" lookuplist="['pending', '+', '++', '+++']" %}
 {% radio label="Result" model="editing.investigation.culture" show="editing.investigation.test == 'Culture'" lookuplist="['pending', 'positive', 'negative']" %}
 {% radio label="Result" model="editing.investigation.genexpert" show="editing.investigation.test == 'GeneXpert'" lookuplist="['pending', 'positive', 'negative']" %}
-{% input label="Sensitive antibiotics" model="editing.investigation.sensitive_antibiotics" lookuplist="antimicrobial_list" show="testType == 'micro_test_culture'" %}
-{% input label="Resistant antibiotics" model="editing.investigation.resistant_antibiotics" lookuplist="antimicrobial_list" show="testType == 'micro_test_culture'" %}
+{% input label="Sensitive antibiotics" model="editing.investigation.sensitive_antibiotics" lookuplist="antimicrobial_list" show="editing.investigation.test == 'Culture'" %}
+{% input label="Resistant antibiotics" model="editing.investigation.resistant_antibiotics" lookuplist="antimicrobial_list" show="editing.investigation.test == 'Culture'" %}
 
 <span ng-show="testType == 'micro_test_c_difficile'">
 

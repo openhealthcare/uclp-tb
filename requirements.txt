@@ -1,5 +1,4 @@
-# cryptography is required for heroku deployment
-cryptography==1.3.2
+# travis seem to have a stale wheel
 Django==1.8.13
 coverage==3.6
 dj-database-url==0.2.1
