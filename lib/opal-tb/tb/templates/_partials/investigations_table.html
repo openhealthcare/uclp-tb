@@ -1,0 +1,14 @@
+<div ng-repeat="episode in [editing || episode]">
+  <table class="table" ng-show="episode.investigation && episode.investigation.length">
+    <tr>
+      <th>Test</th>
+      <th>Date ordered</th>
+      <th>Result</th>
+    </tr>
+    <tr ng-show="item.test" ng-repeat="item in episode.investigation">
+      <td>[[ item.test ]]</td>
+      <td>[[ item.date_ordered | shortDate ]]</td>
+      <td>{% include "_partials/investigation_result.html" %}</td>
+    </tr>
+  </table>
+</div>

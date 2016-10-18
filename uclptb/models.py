@@ -15,7 +15,12 @@ class Location(models.Location): pass
 class Allergies(models.Allergies): pass
 class Diagnosis(models.Diagnosis): pass
 class PastMedicalHistory(models.PastMedicalHistory): pass
-class Investigation(models.Investigation): pass
+
+class Investigation(models.Investigation):
+    genexpert = fields.CharField(max_length=255, blank=True, null=True)
+    smear = fields.CharField(max_length=255, blank=True, null=True)
+    culture = fields.CharField(max_length=255, blank=True, null=True)
+
 class ReferralRoute(models.ReferralRoute): pass
 class SymptomComplex(models.SymptomComplex): pass
 class PatientConsultation(models.PatientConsultation): pass

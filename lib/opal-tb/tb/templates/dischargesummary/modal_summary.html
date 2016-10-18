@@ -1,0 +1,18 @@
+{% extends 'modal_base.html' %}
+{% block icon %}<i class="fa fa-envelope"></i>{% endblock %}
+{% block title %} {{ heading }} {% endblock %}
+{% block modal_body %}
+{# this gets used by the copy directive #}
+<div id="dischargecontent">
+  hello
+  {% include content %}
+</div>
+{% endblock %}
+
+{% block modal_save %}
+  <button class="btn btn-primary" clipboard data-clipboard-target="#dischargecontent">
+    <i class="fa fa-clipboard"></i>
+   Copy to Clipboard
+  </button>
+{% endblock %}
+{% block modal_another %}{% endblock %}

@@ -3520,6 +3520,18 @@
   "micro_test_other": [
     {
       "synonyms": [],
+      "name": "Smear"
+    },
+    {
+      "synonyms": [],
+      "name": "GeneXpert"
+    },
+    {
+      "synonyms": [],
+      "name": "Culture"
+    },
+    {
+      "synonyms": [],
       "name": "Other"
     },
     {

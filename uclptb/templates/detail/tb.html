@@ -34,7 +34,6 @@
           {% record_panel models.SocialHistory %}
           {% record_panel models.Travel %}
           {% record_panel models.SymptomComplex %}
-          {% record_panel models.Investigation %}
           {% record_panel models.Treatment %}
           {% record_panel models.BCG %}
           {% record_panel models.TBHistory %}
@@ -55,7 +54,7 @@
     </tab>
     <tab heading="Tests">
       <div class="row content-offset-20">
-        {% include "test_results.html" %}
+        {% record_panel models.Investigation %}
       </div>
     </tab>
   </tabset>
