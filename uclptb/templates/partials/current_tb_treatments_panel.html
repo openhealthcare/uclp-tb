@@ -6,7 +6,7 @@
     </h3>
   </div>
   {% include 'partials/current_treatments.html' %}
-  <div class="panel-footer">
+  <div ng-show="episode.observed_treatment.length" class="panel-footer">
     <div class="row content-offset- content-offset-below-">
       <button class="btn btn-primary pull-right" open-pathway="observe_dot">
         <i class="fa fa-eye-slash"></i> Observe
