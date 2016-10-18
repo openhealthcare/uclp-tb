@@ -15,9 +15,15 @@
     <i>PHE notification not complete</i>
   </span>
 </p>
-<div ng-repeat="item in episode.test_result">
-  {% include models.TestResult.get_display_template %}
-</div>
+<span ng-show="episode.investigation.length">
+  <br />
+  <strong>Investigations</strong>
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="item in episode.investigation">
+      {% include models.Investigation.get_display_template %}
+    </li>
+  </ul>
+</span>
 <div ng-repeat="item in episode.diagnosis[0]">
   {% include models.Diagnosis.get_display_template %}
 </div>
