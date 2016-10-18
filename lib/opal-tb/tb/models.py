@@ -266,7 +266,7 @@ class TBSite(LookupList):
 
 
 class TBLocation(models.EpisodeSubrecord):
-    sites = fields.ManyToManyField(TBSite)
+    sites = fields.ManyToManyField(TBSite, blank=True)
     _is_singleton = True
 
     def to_dict(self, user):
@@ -337,10 +337,10 @@ class TestResult(models.EpisodeSubrecord):
     result = fields.TextField(null=True, blank=True)
     mdr = fields.BooleanField(default=False, verbose_name="MDR")
     sensitive_antibiotics = fields.ManyToManyField(
-        models.Antimicrobial, related_name="test_result_sensitive"
+        models.Antimicrobial, related_name="test_result_sensitive", blank=True
     )
     resistant_antibiotics = fields.ManyToManyField(
-        models.Antimicrobial, related_name="test_result_resistant"
+        models.Antimicrobial, related_name="test_result_resistant", blank=True
     )
 
 class TBHistory(models.PatientSubrecord):
