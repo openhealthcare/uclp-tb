@@ -353,6 +353,7 @@ class TBHistory(models.PatientSubrecord):
 
 class BCG(models.PatientSubrecord):
     _icon = 'fa fa-asterisk'
+    _title = "BCG"
     history_of_bcg = fields.CharField(max_length=255, blank=True, null=True, verbose_name="History Of BCG")
     date_of_bcg = fields.DateField(blank=True, null=True, verbose_name="Date Of BCG")
     bcg_scar = fields.BooleanField(default=False, verbose_name="BCG Scar")
