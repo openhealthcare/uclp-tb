@@ -8,7 +8,14 @@
     <tr ng-show="item.test" ng-repeat="item in episode.investigation">
       <td>[[ item.test ]]</td>
       <td>[[ item.date_ordered | shortDate ]]</td>
-      <td>{% include "_partials/investigation_result.html" %}</td>
+      <td>
+        <span ng-show="item.test === 'GeneXpert' || item.test === 'Smear' || item.test === 'Culture' ">
+          [[ item.genexpert ]][[ item.smear ]][[ item.culture ]]<span ng-show="item.details">
+              - [[ item.details ]]
+            </span><span ng-show="item.sensitive_antibiotics"> - SENS: [[item.sensitive_antibiotics]]
+            </span><span ng-show="item.resistant_antibiotics"> - RES: [[item.resistant_antibiotics]]</span>
+        </span>
+      </td>
     </tr>
   </table>
 </div>

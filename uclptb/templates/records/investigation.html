@@ -1,28 +1,28 @@
 <span class="[[item.date_ordered == null && 'italic']]">
 
 [[item.date_ordered | shortDate]]
-[[item.test]] <span ng-show="item.details">([[item.details]])</span>
+[[item.test]]
+<span ng-show="item.test === 'GeneXpert' || item.test === 'Smear' || item.test === 'Culture' ">
+  ([[ item.genexpert ]][[ item.smear ]][[ item.culture ]]<span ng-show="item.details">
+      - [[ item.details ]]
+    </span><span ng-show="item.sensitive_antibiotics"> - SENS: [[item.sensitive_antibiotics]]
+    </span><span ng-show="item.resistant_antibiotics"> - RES: [[item.resistant_antibiotics]]</span>)
+</span>
+<span ng-hide="item.test === 'GeneXpert' || item.test === 'Smear' || item.test === 'Culture' ">
+  <span ng-show="item.details">([[ item.details ]])</span>
+  <span ng-show="item.result && item.result != 'pending'" class="break-word">
+    ([[item.result | microresult]])
+  </span>
+</span>
 
 <!-- testType == 'micro_test_other'" -->
 <!-- testType == 'micro_test_hiv'" -->
 <!-- testType == 'micro_test_single_test_pos_neg'" -->
 <!-- testType == 'micro_test_single_test_pos_neg_equiv'" -->
 <!-- testType == 'micro_test_leishmaniasis_pcr'" -->
-<span ng-show="item.result && item.result != 'pending'" class="break-word">
-  ([[item.result | microresult]])
-</span>
 
-<ul>
-  <li ng-show="item.test === 'GeneXpert'">
-    [[ item.genexpert ]]
-  </li>
-  <li ng-show="item.test === 'Smear'">
-    [[ item.smear ]]
-  </li>
-  <li ng-show="item.test === 'Culture'">
-    [[ item.culture ]]
-  </li>
 
+<ul ng-hide="item.test === 'GeneXpert' || item.test === 'Smear' || item.test === 'Culture'">
 	<!-- testType == 'micro_test_mcs'" -->
 	<li ng-show="item.microscopy">Microscopy: [[item.microscopy]]</li>
 	<li ng-show="item.organism">Culture: [[item.organism]]</li>

@@ -1,4 +1,11 @@
-<span ng-repeat="subrecord in getSubrecordFromDateAndMetaInfo(date, metaInfo) | filter:test">
+<span ng-repeat="item in getSubrecordFromDateAndMetaInfo(date, metaInfo) | filter:test">
   <span ng-show="$first"><b>Investigation<span ng-show="getSubrecordFromDateAndMetaInfo(date, metaInfo).length > 1">s</span> Ordered:</b><br />
-</span><a class="pointer" ng-click="editItem(subrecord)">[[ subrecord.test ]] <span ng-show="subrecord.result !== 'pending'">(results received)</span></a><span ng-show="!$last"><br /></span>
+</span><a class="pointer" ng-click="editItem(item)">[[ item.test ]]
+  <span ng-show="item.test === 'GeneXpert' || item.test === 'Smear' || item.test === 'Culture' ">
+    ([[ item.genexpert ]][[ item.smear ]][[ item.culture ]]<span ng-show="item.details">
+        - [[ item.details ]]
+      </span><span ng-show="item.sensitive_antibiotics"> - SENS: [[item.sensitive_antibiotics]]
+      </span><span ng-show="item.resistant_antibiotics"> - RES: [[item.resistant_antibiotics]]</span>)
+  </span>
+      </a><span ng-show="!$last"><br /></span>
 </span>
