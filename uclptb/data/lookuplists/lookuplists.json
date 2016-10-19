@@ -2215,14 +2215,14 @@
     }
   ],
     "antimicrobial": [
-        {
-            "synonyms": [],
-            "name": "Metformin"
-        },
-        {
-            "synonyms": [],
-            "name": "Gliclazide"
-        },
+    {
+        "synonyms": [],
+        "name": "Metformin"
+    },
+    {
+        "synonyms": [],
+        "name": "Gliclazide"
+    },
     {
       "synonyms": [],
       "name": "Abacavir"
@@ -6921,36 +6921,6 @@
     {
       "synonyms": [],
       "name": "Not Specified"
-    }
-  ],
-  "drug": [
-    {
-      "synonyms": [],
-      "name": "Metformin"
-    },
-    {
-      "synonyms": [],
-      "name": "Naproxen"
-    },
-    {
-      "synonyms": [],
-      "name": "Omeprazole"
-    },
-    {
-      "synonyms": [],
-      "name": "Prednisone"
-    },
-    {
-      "synonyms": [],
-      "name": "Simvastatin"
-    },
-    {
-      "synonyms": [],
-      "name": "Terbinafine"
-    },
-    {
-      "synonyms": [],
-      "name": "Gliclazide"
     }
   ],
   "antimicrobial_adverse_event": [
