@@ -1,8 +1,4 @@
-<p>
-  <b>
-    [[ episode.stage ]]
-    <span ng-show="episode.tb_location[0].sites.length">([[ episode.tb_location[0].sites.join(", ") ]])</span>
-  </b>
+<div>
   <span class="pull-right" ng-show="episode.ph_england_notification[0].who || episode.ph_england_notification[0].when">
     <i>
       <span ng-show="episode.ph_england_notification[0].who">[[ episode.ph_england_notification[0].who ]]</span>
@@ -14,15 +10,12 @@
   <span class="pull-right" ng-show="!episode.ph_england_notification[0].who && !episode.ph_england_notification[0].when && episode.stage === metadata.tb.stages.active_tb_treatment">
     <i>PHE notification not complete</i>
   </span>
-</p>
+</div>
 <span ng-show="episode.investigation.length">
-  <br />
-  <strong>Investigations</strong>
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="item in episode.investigation">
-      {% include models.Investigation.get_display_template %}
-    </li>
-  </ul>
+  <strong>Investigations:</strong>
+  <div ng-repeat="item in episode.investigation">
+    {% include models.Investigation.get_display_template %}
+  </div>
 </span>
 <div ng-repeat="item in episode.diagnosis[0]">
   {% include models.Diagnosis.get_display_template %}

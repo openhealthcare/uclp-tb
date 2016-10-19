@@ -2,8 +2,7 @@
 {% load panels %}
 <div class="col-md-12">
   <tabset justified="true">
-    <tab heading="Patient Overview">
-
+    <tab  heading="Patient Overview">
       <div class="row content-offset-20">
         <div ng-class="{'col-md-offset-2': episode.stage!=metadata.tb.stages.active_tb_treatment, 'col-md-6': episode.stage==metadata.tb.stages.active_tb_treatment, 'col-md-8': episode.stage!=metadata.tb.stages.active_tb_treatment, 'content-offset-20': episode.stage!=metadata.tb.stages.active_tb_treatment}">
           {% include "partials/status_panel.html" %}
@@ -27,7 +26,7 @@
 
     <tab heading="Detailed History">
       <div class="row content-offset-20">
-        <div class="col-md-8">
+        <div class="col-md-8 col-md-push-2">
           {% record_panel models.ContactDetails %}
           {% record_panel models.ReferralRoute %}
           {% record_panel models.PastMedicalHistory %}
@@ -54,7 +53,7 @@
     </tab>
     <tab heading="Tests">
       <div class="row content-offset-20">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-push-2">
           {% record_panel models.Investigation %}
         </div>
       </div>
