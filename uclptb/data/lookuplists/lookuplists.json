@@ -6923,7 +6923,36 @@
       "name": "Not Specified"
     }
   ],
-  "drug": [],
+  "drug": [
+    {
+      "synonyms": [],
+      "name": "Metformin"
+    },
+    {
+      "synonyms": [],
+      "name": "Naproxen"
+    },
+    {
+      "synonyms": [],
+      "name": "Omeprazole"
+    },
+    {
+      "synonyms": [],
+      "name": "Prednisone"
+    },
+    {
+      "synonyms": [],
+      "name": "Simvastatin"
+    },
+    {
+      "synonyms": [],
+      "name": "Terbinafine"
+    },
+    {
+      "synonyms": [],
+      "name": "Gliclazide"
+    }
+  ],
   "antimicrobial_adverse_event": [
     {
       "synonyms": [],
