@@ -1,8 +1,13 @@
 {% extends 'patient_detail_base.html' %}
 {% load forms %}
 {% load panels %}
+{% block demographics %}
+<div style="margin-top: 70px">
+  {{ block.super }}
+</div>
+{% endblock %}
 
-{% block pre_demographics %}
+{% block post_demographics %}
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3>
@@ -50,3 +55,5 @@
     </ul>
   </div>
 {% endblock %}
+{% block episodes_switcher %}{% endblock %}
+{% block views_switcher %}{% endblock %}
