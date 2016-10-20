@@ -17,9 +17,15 @@
             </span>
         </div>
       </div>
-      <div class="row">
+      <hr />
+      <div class="row" ng-show="episode.stage != 'New Referral'">
         <div class="col-md-8 col-md-push-2">
           <div timeline></div>
+        </div>
+      </div>
+      <div class="row" ng-show="episode.stage == 'New Referral'">
+        <div class="col-md-8 col-md-push-2">
+          {% record_panel models.ReferralRoute %}
         </div>
       </div>
     </tab>

@@ -4,7 +4,6 @@
     <h3>
       {% icon "fa-user" %}
       Status: [[ episode.stage ]]
-      <span ng-show="episode.tb_location[0].sites.length">([[ episode.tb_location[0].sites.join(", ") ]])</span>
     </h3>
   </div>
   <div ng-hide="episode.stage === 'New Referral'" class="panel-body">

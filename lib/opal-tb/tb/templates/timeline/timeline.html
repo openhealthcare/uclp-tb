@@ -35,7 +35,7 @@
       </div>
     </div>
     <div ng-repeat="date in dates" class="row content-offset-20">
-      <div class="col-md-12 patient-timeline">
+      <div class="col-md-12 patient-timeline" ng-hide="isMomentToday(date)">
         <div class="date">[[ date | momentDateFormat:'DD MMM' ]] [[ date | momentDateFormat:'YYYY' ]]</div>
       </div>
       <div class="col-md-12">

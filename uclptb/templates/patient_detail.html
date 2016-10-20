@@ -1,10 +1,55 @@
 {% extends 'patient_detail_base.html' %}
 {% load forms %}
 {% load panels %}
+{% block container_classes %}innerscroll{% endblock %}
+{% block panel_classes %}innerscroll{% endblock %}
+{% block panel_body_classes %}innerscroll{% endblock %}
 {% block demographics %}
-<div style="margin-top: 70px">
-  {{ block.super }}
-</div>
+  <div style="margin-top: 70px">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>
+          <i class="fa fa-user"></i> Demographics
+          <i class="fa fa-pencil edit pull-right"
+             ng-click="patient.recordEditor.editItem('demographics', 0)"></i>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-4">
+            <b>DOB</b>
+          </div>
+          <div class="col-md-8">
+            [[ patient.demographics[0].date_of_birth | shortDate ]]
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Sex</b>
+          </div>
+          <div class="col-md-8">
+            [[ patient.demographics[0].sex ]]
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Born</b>
+          </div>
+          <div class="col-md-8">
+            [[ patient.demographics[0].birth_place ]]
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <b>Ethnicity</b>
+          </div>
+          <div class="col-md-8">
+            [[ patient.demographics[0].ethnicity ]]
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block post_demographics %}
