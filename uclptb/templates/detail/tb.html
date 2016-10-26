@@ -4,7 +4,7 @@
   <tabset justified="true">
     <tab  heading="Patient Overview">
       <div class="row content-offset-20">
-        <div ng-class="{'col-md-offset-2': episode.stage!=metadata.tb.stages.active_tb_treatment, 'col-md-6': episode.stage==metadata.tb.stages.active_tb_treatment, 'col-md-8': episode.stage!=metadata.tb.stages.active_tb_treatment, 'content-offset-20': episode.stage!=metadata.tb.stages.active_tb_treatment}">
+        <div ng-class="{'col-md-offset-2': episode.stage!=metadata.tb.stages.active_tb_treatment, 'col-md-6': episode.stage==metadata.tb.stages.active_tb_treatment, 'col-md-8': episode.stage!=metadata.tb.stages.active_tb_treatment}">
           {% include "partials/status_panel.html" %}
           {% include "partials/risk_panel.html" %}
         </div>
@@ -17,9 +17,15 @@
             </span>
         </div>
       </div>
-      <div class="row">
+      <hr />
+      <div class="row" ng-show="episode.stage != 'New Referral'">
         <div class="col-md-8 col-md-push-2">
           <div timeline></div>
+        </div>
+      </div>
+      <div class="row" ng-show="episode.stage == 'New Referral'">
+        <div class="col-md-8 col-md-push-2">
+          {% record_panel models.ReferralRoute %}
         </div>
       </div>
     </tab>
