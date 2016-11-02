@@ -296,33 +296,8 @@ class Smear(lmodels.LabTest):
     class Meta:
         proxy = True
 
-    RESULT_CHOICES = (
-        ("positive", "+"),
-        ("double_positive", "++"),
-        ("triple_positive", "+++"),
-    )
-
-
-class Culture(lmodels.PosNegLabTest):
-    class Meta:
-        proxy = True
-
-
-class GeneXpert(lmodels.PosNegLabTest):
-    class Meta:
-        proxy = True
-
-    @classmethod
-    def get_display_name(cls):
-        return "GeneXpert"
-
-    @classmethod
-    def get_form_template(cls):
-        return "lab_tests/forms/sensitive_resistant_form.html"
-
-class LabTestCollection(lmodels.LabTestCollection, models.EpisodeSubrecord):
-    _possible_tests = [Smear, Culture, GeneXpert]
-    _is_singleton = True
+    class Observations(lmodels.Observations):
+        pathology = lmodels.PosNegUnkown()
 
 
 class TestResult(models.EpisodeSubrecord):
