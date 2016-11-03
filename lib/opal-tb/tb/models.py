@@ -296,8 +296,8 @@ class Smear(lmodels.LabTest):
     class Meta:
         proxy = True
 
-    class Observations(lmodels.Observations):
-        pathology = lmodels.PosNegUnkown()
+    class Observations(object):
+        pathology = lmodels.PosNegUnknown()
 
 
 class TestResult(models.EpisodeSubrecord):

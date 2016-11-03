@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('opal', '0023_auto_20160630_1340'),
+        ('opal', '0025_merge'),
     ]
 
     operations = [
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(null=True, blank=True)),
                 ('updated', models.DateTimeField(null=True, blank=True)),
                 ('consistency_token', models.CharField(max_length=8)),
-                ('provisional', models.BooleanField(default=False)),
+                ('provisional', models.BooleanField(default=False, verbose_name=b'Suspected?')),
                 ('details', models.CharField(max_length=255, blank=True)),
                 ('drug_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
                 ('created_by', models.ForeignKey(related_name='created_uclptb_allergies_subrecords', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='Demographics',
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('updated', models.DateTimeField(null=True, blank=True)),
                 ('consistency_token', models.CharField(max_length=8)),
                 ('hospital_number', models.CharField(max_length=255, blank=True)),
-                ('nhs_number', models.CharField(max_length=255, null=True, blank=True)),
+                ('nhs_number', models.CharField(max_length=255, null=True, verbose_name=b'NHS Number', blank=True)),
                 ('surname', models.CharField(max_length=255, blank=True)),
                 ('first_name', models.CharField(max_length=255, blank=True)),
                 ('middle_name', models.CharField(max_length=255, null=True, blank=True)),
@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 ('religion', models.CharField(max_length=255, null=True, blank=True)),
                 ('date_of_death', models.DateField(null=True, blank=True)),
                 ('post_code', models.CharField(max_length=20, null=True, blank=True)),
-                ('gp_practice_code', models.CharField(max_length=20, null=True, blank=True)),
+                ('gp_practice_code', models.CharField(max_length=20, null=True, verbose_name=b'GP Practice Code', blank=True)),
                 ('death_indicator', models.BooleanField(default=False)),
                 ('title_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
                 ('marital_status_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='Diagnosis',
@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(null=True, blank=True)),
                 ('updated', models.DateTimeField(null=True, blank=True)),
                 ('consistency_token', models.CharField(max_length=8)),
-                ('provisional', models.BooleanField(default=False)),
+                ('provisional', models.BooleanField(default=False, verbose_name=b'Provisional?')),
                 ('details', models.CharField(max_length=255, blank=True)),
                 ('date_of_diagnosis', models.DateField(null=True, blank=True)),
                 ('condition_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
@@ -90,7 +90,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='Investigation',
@@ -149,7 +149,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='Location',
@@ -169,7 +169,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='PastMedicalHistory',
@@ -189,7 +189,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='PatientConsultation',
@@ -210,7 +210,32 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
+        ),
+        migrations.CreateModel(
+            name='ReferralRoute',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(null=True, blank=True)),
+                ('updated', models.DateTimeField(null=True, blank=True)),
+                ('consistency_token', models.CharField(max_length=8)),
+                ('internal', models.NullBooleanField()),
+                ('referral_name', models.CharField(max_length=255, blank=True)),
+                ('date_of_referral', models.DateField(null=True, blank=True)),
+                ('referral_team_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
+                ('referral_organisation_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
+                ('referral_type_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
+                ('created_by', models.ForeignKey(related_name='created_uclptb_referralroute_subrecords', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('episode', models.ForeignKey(to='opal.Episode')),
+                ('referral_organisation_fk', models.ForeignKey(blank=True, to='opal.ReferralOrganisation', null=True)),
+                ('referral_team_fk', models.ForeignKey(blank=True, to='opal.Speciality', null=True)),
+                ('referral_type_fk', models.ForeignKey(blank=True, to='opal.ReferralType', null=True)),
+                ('updated_by', models.ForeignKey(related_name='updated_uclptb_referralroute_subrecords', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='SymptomComplex',
@@ -223,13 +248,35 @@ class Migration(migrations.Migration):
                 ('details', models.TextField(null=True, blank=True)),
                 ('created_by', models.ForeignKey(related_name='created_uclptb_symptomcomplex_subrecords', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
                 ('episode', models.ForeignKey(to='opal.Episode')),
-                ('symptoms', models.ManyToManyField(related_name='symptoms', to='opal.Symptom')),
+                ('symptoms', models.ManyToManyField(related_name='symptoms', to='opal.Symptom', blank=True)),
                 ('updated_by', models.ForeignKey(related_name='updated_uclptb_symptomcomplex_subrecords', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
+        ),
+        migrations.CreateModel(
+            name='Travel',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(null=True, blank=True)),
+                ('updated', models.DateTimeField(null=True, blank=True)),
+                ('consistency_token', models.CharField(max_length=8)),
+                ('dates', models.CharField(max_length=255, blank=True)),
+                ('specific_exposures', models.CharField(max_length=255, blank=True)),
+                ('destination_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
+                ('reason_for_travel_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
+                ('created_by', models.ForeignKey(related_name='created_uclptb_travel_subrecords', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('destination_fk', models.ForeignKey(blank=True, to='opal.Destination', null=True)),
+                ('episode', models.ForeignKey(to='opal.Episode')),
+                ('reason_for_travel_fk', models.ForeignKey(blank=True, to='opal.Travel_reason', null=True)),
+                ('updated_by', models.ForeignKey(related_name='updated_uclptb_travel_subrecords', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
         migrations.CreateModel(
             name='Treatment',
@@ -244,6 +291,7 @@ class Migration(migrations.Migration):
                 ('route_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
                 ('drug_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
                 ('frequency_ft', models.CharField(default=b'', max_length=255, null=True, blank=True)),
+                ('planned_end_date', models.DateField(null=True, blank=True)),
                 ('created_by', models.ForeignKey(related_name='created_uclptb_treatment_subrecords', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
                 ('drug_fk', models.ForeignKey(blank=True, to='opal.Drug', null=True)),
                 ('episode', models.ForeignKey(to='opal.Episode')),
@@ -254,6 +302,6 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(opal.models.UpdatesFromDictMixin, models.Model),
+            bases=(opal.models.UpdatesFromDictMixin, opal.models.ToDictMixin, models.Model),
         ),
     ]
