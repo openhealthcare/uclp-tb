@@ -1,4 +1,13 @@
 <span ng-show="item.start_date">[[item.start_date | shortDate]]</span>
-<span ng-show="item.end_date">-[[item.end_date | shortDate]]</span>
-[[item.drug]] [[item.dose]] [[item.route]]
-<span ng-show="item.start_date && item.end_date">day [[ item.start_date | daysSince:1:true]]/[[ item.start_date | daysTo:item.planned_end_date:true ]]</span>
+<span ng-show="item.stoppedDate">-[[item.stoppedDate | shortDate]]</span>
+[[item.drug]]<span ng-show="item.dose"> [[item.dose]]</span><span ng-show="item.route"> [[ item.route ]]</span><span ng-show="item.ongoing || item.completed || item.stoppedEarly">,
+  <span ng-show="item.ongoing">
+    day [[ item.start_date | daysSince:1:true]]/[[ item.start_date | daysTo:item.planned_end_date:true ]]
+  </span>
+  <span ng-show="item.completed">
+    completed [[item.planned_end_date | daysSince]] ago
+  </span>
+  <span ng-show="item.stoppedEarly">
+    stopped on day [[ item.end_date | daysSince:1:true]]/[[ item.start_date | daysTo:item.planned_end_date:true ]]
+  </span>
+</span>

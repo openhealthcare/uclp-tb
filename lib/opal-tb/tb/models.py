@@ -3,6 +3,7 @@ tb models.
 """
 from datetime import datetime, date
 from django.db import transaction
+from lab import models as lmodels
 
 from django.db import models as fields
 from django.db import models, transaction
@@ -35,6 +36,7 @@ class ContactDetails(models.PatientSubrecord):
 
     class Meta:
         verbose_name_plural = "Contact details"
+
 
 class RelationshipToIndex(lookuplists.LookupList):
     pass
@@ -243,23 +245,28 @@ class PHEnglandNotification(models.EpisodeSubrecord):
     when = fields.DateField(null=True, blank=True, verbose_name="Notification date")
     number = fields.CharField(max_length=250, blank=True, null=True, verbose_name="LTBR Number")
 
+class PossibleTBOutcome(lookuplists.LookupList):
+    pass
+
 
 class TBOutcome(models.EpisodeSubrecord):
     _is_singleton = True
     _title = 'TB Treatment Outcome'
     _icon = 'fa fa-th-list'
 
-    clinical_resolution             = fields.NullBooleanField()
-    radiological_resolution         = fields.NullBooleanField()
-    clinical_resolution_details     = fields.TextField(blank=True, null=True)
-    radiological_resolution_details = fields.TextField(blank=True, null=True)
+    outcome = ForeignKeyOrFreeText(
+        PossibleTBOutcome,
+    )
+
+    additional_details = fields.TextField(blank=True, null=True)
+
 
 class TBSite(LookupList):
     pass
 
 
 class TBLocation(models.EpisodeSubrecord):
-    sites = fields.ManyToManyField(TBSite)
+    sites = fields.ManyToManyField(TBSite, blank=True)
     _is_singleton = True
 
     def to_dict(self, user):
@@ -285,6 +292,39 @@ class EnvironmentalRiskAssessment(models.EpisodeSubrecord):
     other_setting = fields.CharField(null=True, blank=True, max_length=256)
 
 
+class Smear(lmodels.LabTest):
+    class Meta:
+        proxy = True
+
+    RESULT_CHOICES = (
+        ("positive", "+"),
+        ("double_positive", "++"),
+        ("triple_positive", "+++"),
+    )
+
+
+class Culture(lmodels.PosNegLabTest):
+    class Meta:
+        proxy = True
+
+
+class GeneXpert(lmodels.PosNegLabTest):
+    class Meta:
+        proxy = True
+
+    @classmethod
+    def get_display_name(cls):
+        return "GeneXpert"
+
+    @classmethod
+    def get_form_template(cls):
+        return "lab_tests/forms/sensitive_resistant_form.html"
+
+class LabTestCollection(lmodels.LabTestCollection, models.EpisodeSubrecord):
+    _possible_tests = [Smear, Culture, GeneXpert]
+    _is_singleton = True
+
+
 class TestResult(models.EpisodeSubrecord):
     _icon = 'fa fa-crosshairs'
     _title = "Tests"
@@ -297,14 +337,14 @@ class TestResult(models.EpisodeSubrecord):
     result = fields.TextField(null=True, blank=True)
     mdr = fields.BooleanField(default=False, verbose_name="MDR")
     sensitive_antibiotics = fields.ManyToManyField(
-        models.Antimicrobial, related_name="test_result_sensitive"
+        models.Antimicrobial, related_name="test_result_sensitive", blank=True
     )
     resistant_antibiotics = fields.ManyToManyField(
-        models.Antimicrobial, related_name="test_result_resistant"
+        models.Antimicrobial, related_name="test_result_resistant", blank=True
     )
 
 class TBHistory(models.PatientSubrecord):
-    _icon = 'fa fa-wpforms'
+    _icon = 'fa fa-clock-o'
     _title = "History of TB"
     personal_history_of_tb = fields.TextField(blank=True, null=True, verbose_name="Personal History of TB")
     date_of_previous_tb_infection = fields.CharField(max_length=255, blank=True, null=True, verbose_name="Date of Previous TB")
@@ -313,6 +353,7 @@ class TBHistory(models.PatientSubrecord):
 
 class BCG(models.PatientSubrecord):
     _icon = 'fa fa-asterisk'
+    _title = "BCG"
     history_of_bcg = fields.CharField(max_length=255, blank=True, null=True, verbose_name="History Of BCG")
     date_of_bcg = fields.DateField(blank=True, null=True, verbose_name="Date Of BCG")
     bcg_scar = fields.BooleanField(default=False, verbose_name="BCG Scar")

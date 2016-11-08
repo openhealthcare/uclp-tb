@@ -320,7 +320,32 @@
       "name": "BK quantification"
     }
   ],
-  "drugfreq": [],
+  "drugfreq": [
+    {
+      "synonyms": ["Daily"],
+      "name": "Once a day"
+    },
+    {
+      "synonyms": ["Weekly"],
+      "name": "Once a week"
+    },
+    {
+      "synonyms": [],
+      "name": "Twice a day"
+    },
+    {
+      "synonyms": [],
+      "name": "Twice a week"
+    },
+    {
+      "synonyms": [],
+      "name": "Three times a day"
+    },
+    {
+      "synonyms": [],
+      "name": "Three times a week"
+    }
+  ],
   "line_type": [
     {
       "synonyms": [],

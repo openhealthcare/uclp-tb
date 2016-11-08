@@ -1,7 +1,5 @@
 angular.module('opal.controllers').controller('TreatmentFormCtrl', function(
-  $scope, $cookieStore, $timeout, $modalInstance, $modal, $q,
-  ngProgressLite, $controller, profile, item, metadata,
-  referencedata, episode
+  $scope, $controller, $modalInstance, profile, item, metadata, referencedata, episode
 ) {
       "use strict";
 
@@ -19,9 +17,10 @@ angular.module('opal.controllers').controller('TreatmentFormCtrl', function(
 
       $scope.stopTreatment = function(){
           $scope.editing.treatment.end_date = new Date();
+          $scope.save('save');
       };
 
       $scope.showStopTreatment = function(){
         return !$scope.editing.treatment.end_date || moment($scope.editing.treatment.end_date).isAfter(moment(), "days");
-      }
+      };
 });

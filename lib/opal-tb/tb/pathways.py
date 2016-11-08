@@ -7,18 +7,32 @@ from django.db import transaction
 from django.conf import settings
 from pathway import pathways
 from pathway.pathways import (
-    Pathway, RedirectsToPatientMixin, Step, delete_others, ModalPathway
+    RedirectsToPatientMixin,
+    Step,
+    PagePathway,
+    ModalPagePathway
 )
 from episode_categories import TBEpisodeStages
 
 # TODO Stop importing these like this - it makes us unpluggable
 from uclptb import models as uclptb_models
 from tb import models as tb_models
+from opal import models as opal_models
 
-class TBAddTests(ModalPathway):
+
+class RemoveEmptiesMixin(object):
+    def save(self, data, user):
+        for subrecordName, subrecords in data.iteritems():
+            for index, subrecord in enumerate(subrecords):
+                if not subrecord:
+                    data[subrecordName].pop(index)
+
+        return super(RemoveEmptiesMixin, self).save(data, user)
+
+
+class TBAddTests(ModalPagePathway):
     display_name = "Add Tests"
     slug = "add_tests_pathway"
-    template_url = "/templates/pathway/no_steps_modal_base.html"
     icon="fa fa-mail-forward"
 
     steps = (
@@ -29,10 +43,9 @@ class TBAddTests(ModalPathway):
         ),
     )
 
-class TBAddResults(ModalPathway):
+class TBAddResults(ModalPagePathway):
     display_name = "Add Results"
     slug = "add_results_pathway"
-    template_url = "/templates/pathway/no_steps_modal_base.html"
     icon="fa fa-reply"
 
     steps = (
@@ -43,7 +56,7 @@ class TBAddResults(ModalPathway):
         ),
     )
 
-class TBAddPatient(RedirectsToPatientMixin, Pathway):
+class TBAddPatient(RedirectsToPatientMixin, PagePathway):
     display_name = "Add Patient"
     slug = "tb_add_patient"
     template_url = '/templates/pathway/treatment_form_base.html'
@@ -51,11 +64,17 @@ class TBAddPatient(RedirectsToPatientMixin, Pathway):
         Step(
             title="Add Patient",
             icon="fa fa-user",
-            template_url="/templates/pathway/add_patient_form.html"
+            template_url="/templates/pathway/add_patient_form.html",
+            controller_class="TBAddPatientCtrl"
         ),
     )
 
     def save(self, data, user):
+        if not self.patient:
+            if "hospital_number" not in data["demographics"][0]:
+                if "surname" in data["demographics"][0]:
+                    self.patient_id = opal_models.Patient.objects.create().id
+
         patient = super(TBAddPatient, self).save(data, user)
         episode = patient.episode_set.first()
         episode.stage = TBEpisodeStages.NEW_REFERRAL
@@ -64,7 +83,7 @@ class TBAddPatient(RedirectsToPatientMixin, Pathway):
         return patient
 
 
-class TBContactTracing(RedirectsToPatientMixin, Pathway):
+class TBContactTracing(RedirectsToPatientMixin, PagePathway):
     display_name = "Contact Tracing"
     slug = "contact_tracing"
     steps = (
@@ -85,7 +104,7 @@ class TBContactTracing(RedirectsToPatientMixin, Pathway):
         return patient
 
 
-class TBAssessment(RedirectsToPatientMixin, Pathway):
+class TBAssessment(RedirectsToPatientMixin, PagePathway):
     display_name = "TB Assessment"
     template_url = '/templates/pathway/treatment_form_base.html'
     slug = "tb_initial_assessment"
@@ -106,7 +125,7 @@ class TBAssessment(RedirectsToPatientMixin, Pathway):
         return patient
 
 
-class TBContactScreening(RedirectsToPatientMixin, Pathway):
+class TBContactScreening(RedirectsToPatientMixin, PagePathway):
     display_name = "TB Contact Screening"
     template_url = '/templates/pathway/treatment_form_base.html'
     slug = "tb_screening"
@@ -151,10 +170,9 @@ class TBContactScreening(RedirectsToPatientMixin, Pathway):
         return patient
 
 
-class TBObserveDOT(ModalPathway):
+class TBObserveDOT(ModalPagePathway):
     display_name = "Observe DOT"
     slug = "observe_dot"
-    template_url = "/templates/pathway/no_steps_modal_base.html"
     icon = "fa fa-eye-slash"
 
     steps = (
@@ -166,10 +184,9 @@ class TBObserveDOT(ModalPathway):
     )
 
 
-class TBDOTHistory(ModalPathway):
+class TBDOTHistory(ModalPagePathway):
     display_name = "DOT History"
     slug = "dot_history"
-    template_url = "/templates/pathway/no_steps_modal_base.html"
     icon = "fa fa-history"
 
     steps = (
@@ -181,7 +198,7 @@ class TBDOTHistory(ModalPathway):
     )
 
 
-class TBTreatment(RedirectsToPatientMixin, Pathway):
+class TBTreatment(RemoveEmptiesMixin, RedirectsToPatientMixin, PagePathway):
     display_name  = "TB Treatment"
     slug          = "tb_treatment"
     template_url = '/templates/pathway/treatment_form_base.html'
@@ -205,7 +222,7 @@ class TBTreatment(RedirectsToPatientMixin, Pathway):
         return patient
 
 
-class TreatmentOutcome(RedirectsToPatientMixin, pathways.Pathway):
+class TreatmentOutcome(RedirectsToPatientMixin, pathways.PagePathway):
     """
     The pathway we use to record the outcome of a course of TB.
     """

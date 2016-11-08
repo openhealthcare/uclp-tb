@@ -18,13 +18,22 @@ class TestTBAddPatientTestCase(OpalTestCase):
 
 
 class TestTBTreatment(OpalTestCase):
-    def test_save(self):
+    def test_save_stage(self):
         patient, episode = self.new_patient_and_episode_please()
         pathway = pathways.TBTreatment(patient_id=patient.id, episode_id=episode.id)
         example_data = dict(stage=['Active TB'], treatment=[])
         pathway.save(example_data, self.user)
         reloaded_episode = Episode.objects.get()
         self.assertEqual(reloaded_episode.stage, 'Active TB')
+
+    def test_save_remove_empties(self):
+        patient, episode = self.new_patient_and_episode_please()
+        pathway = pathways.TBTreatment(patient_id=patient.id, episode_id=episode.id)
+        example_data = dict(stage=['Active TB'], treatment=[{}])
+        pathway.save(example_data, self.user)
+        reloaded_episode = Episode.objects.get()
+        self.assertEqual(reloaded_episode.stage, 'Active TB')
+        self.assertFalse(Treatment.objects.exists())
 
 
 class TestTreatmentOutcome(OpalTestCase):

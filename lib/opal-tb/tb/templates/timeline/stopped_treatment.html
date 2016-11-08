@@ -1,4 +1,4 @@
 <span ng-repeat="subrecord in getSubrecordFromDateAndMetaInfo(date, metaInfo)">
-  <span ng-show="$first">Stopped Treatment:<br />
+  <span ng-show="$first"><b>Stopped Treatment:</b><br />
   </span><a class="pointer" ng-click="editItem(subrecord)">[[ item.drug ]]<span ng-show="subrecord.dose">([[ subrecord.dose ]])</span></a><span ng-show="!$last"><br /></span>
 </span>

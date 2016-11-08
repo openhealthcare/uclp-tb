@@ -1,0 +1,32 @@
+{
+  "possibletboutcome": [
+    {
+      "synonyms": [],
+      "name": "Cure"
+    },
+    {
+      "synonyms": [],
+      "name": "Default"
+    },
+    {
+      "synonyms": [],
+      "name": "Died"
+    },
+    {
+      "synonyms": [],
+      "name": "Treatment completed"
+    },
+    {
+      "synonyms": [],
+      "name": "Treatment failure"
+    },
+    {
+      "synonyms": [],
+      "name": "Transfer out"
+    },
+    {
+      "synonyms": [],
+      "name": "Treatment success"
+    }
+  ]
+}
