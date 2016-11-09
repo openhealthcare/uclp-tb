@@ -55,7 +55,10 @@
     </tab>
     <tab heading="Tests">
       <div class="row content-offset-20">
+        {% comment %}
         {% include "test_results.html" %}
+        {% endcomment %}
+        {% record_panel models.LabTest %}
       </div>
     </tab>
   </tabset>
