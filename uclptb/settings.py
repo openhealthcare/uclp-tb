@@ -146,6 +146,7 @@ TEMPLATE_CONTEXT_PROCESSORS= (
     'opal.context_processors.settings',
     'opal.context_processors.models',
     'lab.context_processors.lab_tests',
+    'lab.context_processors.observations',
 )
 
 INSTALLED_APPS = (

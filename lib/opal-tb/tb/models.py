@@ -293,12 +293,10 @@ class EnvironmentalRiskAssessment(models.EpisodeSubrecord):
 
 
 class Smear(lmodels.LabTest):
+    pathology = lmodels.PosNegUnknown()
 
     class Meta:
         proxy = True
-
-    class Observations(lmodels.Observations):
-        pathology = lmodels.PosNegUnknown()
 
 
 class TestResult(models.EpisodeSubrecord):
