@@ -145,7 +145,6 @@ TEMPLATE_CONTEXT_PROCESSORS= (
     'django.contrib.messages.context_processors.messages',
     'opal.context_processors.settings',
     'opal.context_processors.models',
-    'lab.context_processors.lab_tests',
 )
 
 INSTALLED_APPS = (
@@ -283,5 +282,4 @@ if 'test' in sys.argv:
         'obs': 'obs.nomigrations',
         'tb': 'tb.nomigrations',
         'uclptb': 'uclptb.nomigrations',
-        'lab': 'lab.nomigrations',
     }
