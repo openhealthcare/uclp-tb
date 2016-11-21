@@ -89,7 +89,8 @@
 
         <div class="row form-horizontal content-offset-20" ng-repeat="plan in localEditing.treatmentPlan" ng-show="existingTreatmentFilter(plan)">
           <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.drug" bs-typeahead  bs-options="i for i in antimicrobial_list" />
+            <input type="text" class="form-control" ng-model="plan.drug"
+                   uib-typeahead="i for i in antimicrobial_list | filter:$viewValue | limitTo:8" />
           </div>
           <div class="col-md-2">
             <input type="text" class="form-control" ng-model="plan.dose" />
@@ -101,10 +102,10 @@
             <input name="treatment_plan_planned_end_date[[ $index ]]"  type="text" class="form-control" required-if-not-empty="plan" ng-model="plan.planned_end_date" bs-datepicker   />
           </div>
           <div class="col-md-1">
-            <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary" data-title="Remove" bs-tooltip>
+            <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary">
               {% icon "fa-trash" %}
             </button>
-            <button ng-hide="!plan.id || today(plan.end_date)" ng-click="stopTreatment($index)" class="btn btn-secondary" data-title="Stop" bs-tooltip>
+            <button ng-hide="!plan.id || today(plan.end_date)" ng-click="stopTreatment($index)" class="btn btn-secondary">
               {% icon "fa-stop" %}
             </button>
           </div>
