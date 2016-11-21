@@ -16,6 +16,5 @@ djangorestframework==3.2.2
 django-compressor==1.5
 supervisor==3.0
 -e git://github.com/openhealthcare/opal.git@v0.8.0#egg=opal
--e git+https://github.com/openhealthcare/opal-lab.git@v0.1.0#egg=opal_lab
 -e git+https://github.com/openhealthcare/opal-pathway.git@v0.2#egg=opal_pathway
 -e git+https://github.com/openhealthcare/opal-observations.git@v0.2.0#egg=opal_observations
