@@ -1,5 +1,5 @@
 """
-OPAL Pathway definitions for the re-usable TB module.
+Opal Pathway definitions for the re-usable TB module.
 """
 import datetime
 
@@ -10,7 +10,7 @@ from pathway.pathways import (
     RedirectsToPatientMixin,
     Step,
     PagePathway,
-    ModalPagePathway
+    PagePathway
 )
 from episode_categories import TBEpisodeStages
 
@@ -30,7 +30,7 @@ class RemoveEmptiesMixin(object):
         return super(RemoveEmptiesMixin, self).save(data, user)
 
 
-class TBAddTests(ModalPagePathway):
+class TBAddTests(PagePathway):
     display_name = "Add Tests"
     slug = "add_tests_pathway"
     icon="fa fa-mail-forward"
@@ -43,7 +43,7 @@ class TBAddTests(ModalPagePathway):
         ),
     )
 
-class TBAddResults(ModalPagePathway):
+class TBAddResults(PagePathway):
     display_name = "Add Results"
     slug = "add_results_pathway"
     icon="fa fa-reply"
@@ -170,7 +170,7 @@ class TBContactScreening(RedirectsToPatientMixin, PagePathway):
         return patient
 
 
-class TBObserveDOT(ModalPagePathway):
+class TBObserveDOT(PagePathway):
     display_name = "Observe DOT"
     slug = "observe_dot"
     icon = "fa fa-eye-slash"
@@ -184,7 +184,7 @@ class TBObserveDOT(ModalPagePathway):
     )
 
 
-class TBDOTHistory(ModalPagePathway):
+class TBDOTHistory(PagePathway):
     display_name = "DOT History"
     slug = "dot_history"
     icon = "fa fa-history"
