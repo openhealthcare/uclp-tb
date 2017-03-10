@@ -9,7 +9,6 @@ from pathway import pathways
 from pathway.pathways import (
     RedirectsToPatientMixin,
     Step,
-    PagePathway,
     PagePathway
 )
 from episode_categories import TBEpisodeStages
