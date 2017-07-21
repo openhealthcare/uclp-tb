@@ -162,7 +162,7 @@ INSTALLED_APPS = (
     'opal',
     'obs',
     'opal.core.search',
-    'pathway',
+    'opal.core.pathway',
     'tb',
     'uclptb',
     'django.contrib.admin',

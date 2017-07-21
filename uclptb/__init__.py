@@ -1,7 +1,7 @@
 """
 uclptb - Our OPAL Application
 """
-from opal.core import application
+from opal.core import application, menus
 
 class Application(application.OpalApplication):
     schema_module = 'uclptb.schema'
@@ -17,8 +17,14 @@ class Application(application.OpalApplication):
     styles = [
         'css/tb.css'
     ]
-    menuitems = [
-        dict(
-            href='/pathway/#/tb_add_patient', display='Add Patient', icon='fa fa-plus',
-            activepattern='/referrals/#/ucl_ptb'),
-    ]
+
+    @classmethod
+    def get_menu_items(klass, user=None):
+        items = application.OpalApplication.get_menu_items(user=user)
+        add_patient = menus.MenuItem(
+            href='/pathway/#/tb_add_patient', display='Add Patient',
+            icon='fa fa-plus',
+            activepattern='/referrals/#/ucl_ptb'
+        )
+
+        return items + [add_patient]

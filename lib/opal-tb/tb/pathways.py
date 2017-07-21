@@ -5,8 +5,7 @@ import datetime
 
 from django.db import transaction
 from django.conf import settings
-from pathway import pathways
-from pathway.pathways import (
+from opal.core.pathway import (
     RedirectsToPatientMixin,
     Step,
     PagePathway
@@ -20,7 +19,7 @@ from opal import models as opal_models
 
 
 class RemoveEmptiesMixin(object):
-    def save(self, data, user):
+    def save(self, data, user=None, **kwargs):
         for subrecordName, subrecords in data.iteritems():
             for index, subrecord in enumerate(subrecords):
                 if not subrecord:
@@ -37,7 +36,7 @@ class TBAddTests(PagePathway):
     steps = (
         Step(
             model=tb_models.TestResult,
-            template_url="/templates/pathway/add_tests.html",
+            template="pathway/add_tests.html",
             controller_class="AddTestsCtrl",
         ),
     )
@@ -50,7 +49,7 @@ class TBAddResults(PagePathway):
     steps = (
         Step(
             model=tb_models.TestResult,
-            template_url="/templates/pathway/add_results.html",
+            template="pathway/add_results.html",
             controller_class="AddResultsCtrl",
         ),
     )
@@ -61,25 +60,26 @@ class TBAddPatient(RedirectsToPatientMixin, PagePathway):
     template_url = '/templates/pathway/treatment_form_base.html'
     steps = (
         Step(
-            title="Add Patient",
+            display_name="Add Patient",
             icon="fa fa-user",
-            template_url="/templates/pathway/add_patient_form.html",
+            template="pathway/add_patient_form.html",
             controller_class="TBAddPatientCtrl"
         ),
     )
 
-    def save(self, data, user):
-        if not self.patient:
+    def save(self, data, user=None, patient=None, episode=None):
+        if not patient:
             if "hospital_number" not in data["demographics"][0]:
                 if "surname" in data["demographics"][0]:
-                    self.patient_id = opal_models.Patient.objects.create().id
+                    patient = opal_models.Patient.objects.create()
 
-        patient = super(TBAddPatient, self).save(data, user)
-        episode = patient.episode_set.first()
+        patient, episode = super(TBAddPatient, self).save(
+            data, user=user, patient=patient, episode=episode
+        )
         episode.stage = TBEpisodeStages.NEW_REFERRAL
         episode.date_of_admission = datetime.date.today()
         episode.save()
-        return patient
+        return patient, episode
 
 
 class TBContactTracing(RedirectsToPatientMixin, PagePathway):
@@ -88,15 +88,15 @@ class TBContactTracing(RedirectsToPatientMixin, PagePathway):
     steps = (
         Step(
             model=tb_models.ContactTracing,
-            template_url="/templates/pathway/contact_tracing.html"
+            template="pathway/contact_tracing.html"
         ),
     )
 
-    def save(self, data, user):
+    def save(self, data, user=None, **kwargs):
         """
         Set this step as done in TBMeta
         """
-        patient = super(TBContactTracing, self).save(data, user)
+        patient, episode = super(TBContactTracing, self).save(data, user=user)
         meta = self.episode.tbmeta_set.get()
         meta.contact_tracing_done = True
         meta.save()
@@ -111,17 +111,17 @@ class TBAssessment(RedirectsToPatientMixin, PagePathway):
         Step(
             title="Presentation & History",
             model=uclptb_models.SymptomComplex,
-            template_url="/templates/pathway/initial_assessment.html",
+            template="pathway/initial_assessment.html",
             controller_class="TBInitialAssessmentCtrl"
         ),
     )
 
-    def save(self, data, user):
-        patient = super(TBAssessment, self).save(data, user)
+    def save(self, data, user=None, **kwargs):
+        patient, episode = super(TBAssessment, self).save(data, user=user)
         episode = self.episode
         episode.stage = TBEpisodeStages.UNDER_INVESTIGATION
         episode.save()
-        return patient
+        return patient, episode
 
 
 class TBContactScreening(RedirectsToPatientMixin, PagePathway):
@@ -132,18 +132,17 @@ class TBContactScreening(RedirectsToPatientMixin, PagePathway):
         Step(
             title="Contact Screening",
             model=uclptb_models.SymptomComplex,
-            template_url="/templates/pathway/tb_contact_screening.html",
+            template="pathway/tb_contact_screening.html",
             controller_class="TBInitialAssessmentCtrl"
         ),
     )
 
-    def save(self, data, user):
+    def save(self, data, user=None, patient=None, episode=None):
         next_steps = data.pop("next_steps")[0]
         referral_route = data.pop("referral_route", [{}])[0]
         today_str = datetime.datetime.now().strftime(
             settings.DATE_INPUT_FORMATS[0]
         )
-        episode = self.episode
 
         if next_steps["result"] == "referred":
             referral_route["internal"] = True
@@ -160,13 +159,14 @@ class TBContactScreening(RedirectsToPatientMixin, PagePathway):
             episode.stage = TBEpisodeStages.NEW_REFERRAL
             episode.save()
 
-        patient = super(TBContactScreening, self).save(data, user)
+        patient = super(TBContactScreening, self).save(
+            data, user=user, patient=patient, episode=episode)
 
         if next_steps["result"] == "discharged":
             episode.discharge_date = datetime.date.today()
             episode.stage = TBEpisodeStages.DISCHARGED
             episode.save()
-        return patient
+        return patient, episode
 
 
 class TBObserveDOT(PagePathway):
@@ -177,7 +177,7 @@ class TBObserveDOT(PagePathway):
     steps = (
         Step(
             model=tb_models.TestResult,
-            template_url="/templates/pathway/observe_dot.html",
+            template="pathway/observe_dot.html",
             controller_class="ObserveDOTCtrl",
         ),
     )
@@ -191,7 +191,7 @@ class TBDOTHistory(PagePathway):
     steps = (
         Step(
             model=tb_models.TestResult,
-            template_url="/templates/pathway/dot_history.html",
+            template="pathway/dot_history.html",
             controller_class="DOTHistoryCtrl",
         ),
     )
@@ -204,24 +204,23 @@ class TBTreatment(RemoveEmptiesMixin, RedirectsToPatientMixin, PagePathway):
     icon = 'fa fa-medkit'
     steps = (
         Step(
-            title="Diagnosis & Treatment",
+            display_name="Diagnosis & Treatment",
             icon="fa fa-medkit",
-            template_url="/templates/pathway/tb_treatment.html",
+            template="pathway/tb_treatment.html",
             controller_class="TBTreatmentCtrl",
         ),
     )
 
     @transaction.atomic
-    def save(self, data, user):
+    def save(self, data, user=None, **kwargs):
         stage = data.pop('stage')[0]
-        episode = self.episode
-        patient = super(TBTreatment, self).save(data, user)
+        patient, episode = super(TBTreatment, self).save(data, user=user, **kwargs)
         episode.stage = stage
         episode.save()
-        return patient
+        return patient, episode
 
 
-class TreatmentOutcome(RedirectsToPatientMixin, pathways.PagePathway):
+class TreatmentOutcome(RedirectsToPatientMixin, PagePathway):
     """
     The pathway we use to record the outcome of a course of TB.
     """
@@ -231,10 +230,9 @@ class TreatmentOutcome(RedirectsToPatientMixin, pathways.PagePathway):
         tb_models.TBOutcome,
     )
 
-    def save(self, data, user):
-        patient = super(TreatmentOutcome, self).save(data, user)
-        episode = self.episode
+    def save(self, data, **kwargs):
+        patient, episode = super(TreatmentOutcome, self).save(data, **kwargs)
         episode.stage = TBEpisodeStages.DISCHARGED
         episode.discharge_date = datetime.date.today()
         episode.save()
-        return patient
+        return patient, episode
