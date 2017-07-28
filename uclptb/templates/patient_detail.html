@@ -22,7 +22,8 @@
 
       <li class="list-group-item" ng-show="episode.stage === metadata.tb.stages.new_referral">
         <a class="btn btn-primary btn-text-left col-md-8"
-           href="/pathway/#/tb_initial_assessment/[[ episode.id ]]">
+          pathway-link="tb_initial_assessment" pathway-episode="episode"
+        >
           {% icon "fa-stethoscope" %} Initial TB Assessment
         </a>
       </li>

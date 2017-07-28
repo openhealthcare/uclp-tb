@@ -1,0 +1,4 @@
+<div class="form-horizontal">
+  {% radio model="localEditing.condition" label="TB Type" lookuplist="tbTypes" required=True %}
+  {% select autofocus field="TBLocation.sites" change="sitesChange()" multiple=True tagging=False %}
+</div>

@@ -8,7 +8,8 @@ from django.conf import settings
 from opal.core.pathway import (
     RedirectsToPatientMixin,
     Step,
-    PagePathway
+    PagePathway,
+    HelpTextStep
 )
 from episode_categories import TBEpisodeStages
 
@@ -26,6 +27,14 @@ class RemoveEmptiesMixin(object):
                     data[subrecordName].pop(index)
 
         return super(RemoveEmptiesMixin, self).save(data, user)
+
+SymptomStep = HelpTextStep(
+    model=uclptb_models.SymptomComplex,
+    template="pathway/steps/symptom_complex.html",
+    step_controller="TbSymptomComplexCrtl",
+    multiple=False,
+    help_text=""
+)
 
 
 class TBAddTests(PagePathway):
@@ -57,13 +66,27 @@ class TBAddResults(PagePathway):
 class TBAddPatient(RedirectsToPatientMixin, PagePathway):
     display_name = "Add Patient"
     slug = "tb_add_patient"
-    template_url = '/templates/pathway/treatment_form_base.html'
     steps = (
-        Step(
-            display_name="Add Patient",
-            icon="fa fa-user",
-            template="pathway/add_patient_form.html",
-            controller_class="TBAddPatientCtrl"
+        HelpTextStep(
+            model=uclptb_models.ReferralRoute,
+            help_text="""
+                How was the patient referred
+                to the TB clinic?
+            """
+        ),
+        HelpTextStep(
+            model=uclptb_models.Demographics,
+            help_text="""
+                Basic demographic information about this patient.
+                (Pulled from other hospital systems where available).
+            """
+        ),
+        HelpTextStep(
+            model=tb_models.ContactDetails,
+            help_text="""
+                Contact details for this patient.
+                (Pulled from other hospital systems where available).
+            """
         ),
     )
 
@@ -79,6 +102,7 @@ class TBAddPatient(RedirectsToPatientMixin, PagePathway):
         episode.stage = TBEpisodeStages.NEW_REFERRAL
         episode.date_of_admission = datetime.date.today()
         episode.save()
+
         return patient, episode
 
 
@@ -105,20 +129,45 @@ class TBContactTracing(RedirectsToPatientMixin, PagePathway):
 
 class TBAssessment(RedirectsToPatientMixin, PagePathway):
     display_name = "TB Assessment"
-    template_url = '/templates/pathway/treatment_form_base.html'
     slug = "tb_initial_assessment"
     steps = (
-        Step(
-            title="Presentation & History",
-            model=uclptb_models.SymptomComplex,
-            template="pathway/initial_assessment.html",
-            controller_class="TBInitialAssessmentCtrl"
+        SymptomStep,
+        HelpTextStep(
+            model=tb_models.TBHistory,
+            template="pathway/steps/tb_history.html",
+            help_text="""
+                Have they had TB before or contact with someone who has had TB
+            """
         ),
+        HelpTextStep(
+            model=uclptb_models.Treatment,
+            template="pathway/steps/drug_history.html",
+            display_name="Drug History",
+        ),
+        HelpTextStep(
+            model=tb_models.SocialHistory
+        ),
+        HelpTextStep(
+            model=tb_models.SocialHistory,
+            template="pathway/steps/geographic_exposure.html",
+            display_name="Geographical Exposure",
+            icon="fa fa-plane",
+            help_text=" ".join([
+                "Any countries with a high prevelance of TB where the",
+                "patient has spent more than three months."
+            ])
+        ),
+        HelpTextStep(
+            model=uclptb_models.PatientConsultation,
+            multiple=False,
+            help_text="Summary of assessment, impression and plan."
+        )
     )
 
-    def save(self, data, user=None, **kwargs):
-        patient, episode = super(TBAssessment, self).save(data, user=user)
-        episode = self.episode
+    def save(self, data, user=None, episode=None, patient=None):
+        patient, episode = super(TBAssessment, self).save(
+            data, user=user, patient=patient, episode=episode
+        )
         episode.stage = TBEpisodeStages.UNDER_INVESTIGATION
         episode.save()
         return patient, episode
@@ -126,14 +175,18 @@ class TBAssessment(RedirectsToPatientMixin, PagePathway):
 
 class TBContactScreening(RedirectsToPatientMixin, PagePathway):
     display_name = "TB Contact Screening"
-    template_url = '/templates/pathway/treatment_form_base.html'
     slug = "tb_screening"
     steps = (
+        HelpTextStep(
+            display_name="Already Traced",
+            template="_partials/context_traced.html",
+            help_text=""
+        ),
         Step(
-            title="Contact Screening",
             model=uclptb_models.SymptomComplex,
             template="pathway/tb_contact_screening.html",
-            controller_class="TBInitialAssessmentCtrl"
+            controller_class="TbSymptomComplexCrtl",
+            multiple=True
         ),
     )
 
@@ -203,6 +256,10 @@ class TBTreatment(RemoveEmptiesMixin, RedirectsToPatientMixin, PagePathway):
     template_url = '/templates/pathway/treatment_form_base.html'
     icon = 'fa fa-medkit'
     steps = (
+        HelpTextStep(
+            model=uclptb_models.Diagnosis,
+            controller_class=""
+        ),
         Step(
             display_name="Diagnosis & Treatment",
             icon="fa fa-medkit",

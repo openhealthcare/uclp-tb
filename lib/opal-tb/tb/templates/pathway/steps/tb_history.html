@@ -1,0 +1,12 @@
+{% load pathways %}
+<div class="form-horizontal">
+  {% include models.TBHistory.get_form_template %}
+</div>
+<h4 class="text-center content-offset-25">BCG</h4>
+<div class="form-horizontal">
+  {% include models.BCG.get_form_template %}
+</div>
+<h4 class="text-center content-offset-25">Other Past Medical History</h4>
+<div class="form-horizontal">
+  {% multisave models.PastMedicalHistory %}
+</div>

@@ -1,0 +1,10 @@
+{% load forms %}
+{% load pathways %}
+<div class="form-horizontal">
+  {% input field="Demographics.birth_place" change="birth_place_change()" %}
+  <div ng-show="editing.demographics.birth_place.length &&  editing.demographics.birth_place !== 'United Kingdom'">
+    {% input field="SocialHistory.arrival_in_the_uk" %}
+  </div>
+  <h4 class="text-center content-offset-25">History of Travel</h4>
+  {% multisave models.Travel %}
+</div>
