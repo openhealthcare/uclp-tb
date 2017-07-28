@@ -1,94 +1,25 @@
 module.exports = function(config){
+  var opalPath = process.env.OPAL_LOCATION;
+  var karmaDefaults = require(opalPath + '/opal/tests/js_config/karma_defaults.js');
+  var baseDir = __dirname + '/..';
+  var coverageFiles = [
+    __dirname + '/../lib/opal-tb/tb/static/js/**/*.js',
+    __dirname + '/../uclptb/assets/js/uclptb/controllers/**/*.js',
+    __dirname + '/../uclptb/assets/js/uclptb/services/**/*.js',
 
-    var browsers, basePath, coverageReporter;
+    // 'opaltest/*.js',
 
-    if(process.env.TRAVIS){
-        browsers = ["Firefox"];
-        basePath = '/home/travis/virtualenv/python2.7/src/opal/opal/static/js';
-        coverageReporter = {
-            type: 'lcovonly', // lcov or lcovonly are required for generating lcov.info files
-            dir: __dirname + '/../coverage/',
-        };
-    }
-    else{
-        browsers = ['PhantomJS'];
-        basePath = '../../opal/opal/static/js';
-        coverageReporter = {
-            type : 'html',
-            dir : __dirname + '/../htmlcov/js/'
-        };
-    }
+    // '../../../../elcid/elcid/assets/js/elcidtest/*.js',
+  ];
+  var includedFiles = [
+    __dirname + '/../lib/opal-tb/tb/static/js/**/*.js',
+    __dirname + '/../uclptb/assets/js/uclptb/controllers/**/*.js',
+    __dirname + '/../uclptb/assets/js/uclptb/services/**/*.js',
 
-    var preprocessors = {};
-    preprocessors[__dirname + '/../uclptb/assets/js/uclptb/**/*.js'] = 'coverage';
-    preprocessors[__dirname + '/../lib/opal-tb/tb/static/js/tb/**/*.js'] = 'coverage';
+    __dirname + '/../uclptb/assets/js/uclptbtest/**/*.js',
+    __dirname + '/../lib/opal-tb/tb/static/js/tbtest/**/*.js',
+  ];
 
-
-
-    config.set({
-        frameworks: ['jasmine'],
-        browsers: browsers,
-        basePath: basePath,
-
-        files: [
-            //JASMINE,
-            //JASMINE_ADAPTER,
-            "lib/bower_components/angular/angular.js",
-            "lib/bower_components/angular-route/angular-route.js",
-            "lib/bower_components/angular-resource/angular-resource.js",
-            "lib/bower_components/angular-cookies/angular-cookies.js",
-            "lib/bower_components/angular-mocks/angular-mocks.js",
-
-            'lib/angular-ui-utils-0.1.0/ui-utils.js',
-            "lib/angulartics-0.17.2/angulartics.min.js",
-            "lib/angulartics-0.17.2/angulartics-ga.min.js",
-            "lib/ui-bootstrap-tpls-0.14.3.js",
-            'lib/ngprogress-lite/ngprogress-lite.js',
-            'lib/jquery-1.11.3/jquery-1.11.3.js',
-            'lib/utils/underscore.js',
-            'lib/utils/showdown.js',
-            'lib/utils/moment.js',
-            'lib/bower_components/angular-growl-v2/build/angular-growl.js',
-            'lib/bower_components/ment.io/dist/mentio.js',
-            'lib/bower_components/ment.io/dist/templates.js',
-            'lib/bower_components/angular-ui-select/dist/select.js',
-            "lib/bower_components/angular-local-storage/dist/angular-local-storage.js",
-            'opal/utils.js',
-            'opal/directives.js',
-            'opal/filters.js',
-            'opal/services_module.js',
-            'opal/services/*.js',
-            'opal/services/flow.js',
-            'opal/controllers_module.js',
-            'opal/controllers/*.js',
-            // 'opal/app.js',
-            // '../../../../elcid/elcid/assets/js/elcid/*.js',
-            '../../../../opal-pathway/pathway/static/js/pathway/controllers/*.js',
-            '../../../../opal-pathway/pathway/static/js/pathway/services/*.js',
-
-            __dirname + '/../lib/opal-tb/tb/static/js/**/*.js',
-            __dirname + '/../uclptb/assets/js/uclptb/controllers/**/*.js',
-            __dirname + '/../uclptb/assets/js/uclptb/services/**/*.js',
-            __dirname + '/../uclptb/assets/js/uclptbtest/**/*.js',
-
-            // 'opaltest/*.js',
-            __dirname + '/../lib/opal-tb/tb/static/js/tbtest/**/*.js',
-            // '../../../../elcid/elcid/assets/js/elcidtest/*.js',
-        ],
-
-        preprocessors: preprocessors,
-
-        reporters: ['progress', 'coverage'],
-        autoWatch: true,
-
-        coverageReporter: coverageReporter,
-
-        // Stolen from http://oligofren.wordpress.com/2014/05/27/running-karma-tests-on-browserstack/
-        browserDisconnectTimeout : 10000, // default 2000
-        browserDisconnectTolerance : 1, // default 0
-        browserNoActivityTimeout : 4*60*1000, //default 10000
-        captureTimeout : 4*60*1000, //default 60000
-
-
-    });
-}
+  var defaultConfig = karmaDefaults(includedFiles, baseDir, coverageFiles);
+  config.set(defaultConfig);
+};

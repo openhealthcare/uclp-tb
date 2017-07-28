@@ -38,12 +38,10 @@ describe('TreatmentRecord', function(){
     });
   });
 
-  describe("stop treatment", function(){
-    it("should stop treatment and close the modal instance", function(){
-      scope.stopTreatment();
-      var endDate = moment(scope.editing.treatment.end_date);
-      expect(endDate.isSame(moment(), "d")).toBe(true);
-      expect(item.save).toHaveBeenCalled();
-    });
+  it("should stop treatment and close the modal instance", function(){
+    scope.stopTreatment();
+    var endDate = moment(scope.editing.treatment.end_date);
+    expect(endDate.isSame(moment(), "d")).toBe(true);
+    expect(item.save).toHaveBeenCalled();
   });
 });
