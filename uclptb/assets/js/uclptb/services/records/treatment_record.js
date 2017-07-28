@@ -8,7 +8,7 @@ angular.module('opal.services').service(
 
         // the actual date we stopped if it exists
         item.stoppedDate = item.end_date || item.planned_end_date;
-        item.ongoing = item.stoppedDate && now.isBefore(item.stoppedDate, "d");
+        item.ongoing = item.stoppedD  ate && now.isBefore(item.stoppedDate, "d");
 
         // we have completed a treatment if we went all the way to the
         // planned end date

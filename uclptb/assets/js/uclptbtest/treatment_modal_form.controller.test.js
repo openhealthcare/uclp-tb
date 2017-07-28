@@ -1,12 +1,14 @@
 describe('TreatmentRecord', function(){
   "use strict";
-  var $controller, $rootScope, controller, scope, modalInstance, item;
+  var $controller, $rootScope, controller, scope, modalInstance, item, opalTestHelper;
 
   beforeEach(function(){
     module('opal.controllers');
+    module('opal.test');
     inject(function($injector){
       $controller = $injector.get('$controller');
       $rootScope = $injector.get('$rootScope');
+      opalTestHelper = $injector.get('opalTestHelper');
     });
 
     scope = $rootScope.$new();
@@ -21,6 +23,7 @@ describe('TreatmentRecord', function(){
       save: function(){}
     };
     spyOn(item, "save");
+    var episode = opalTestHelper.newEpisode($rootScope);
 
     controller = $controller('TreatmentFormCtrl', {
         $scope: scope,
@@ -30,10 +33,7 @@ describe('TreatmentRecord', function(){
         referencedata: {
           toLookuplists: function(){ return {}; }
         },
-        episode: {
-          makeCopy: function(){ return {}; },
-          demographics: [{}],
-        },
+        episode: episode,
         metadata: {}
     });
   });

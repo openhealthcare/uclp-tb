@@ -115,7 +115,7 @@ class TBContactTracing(RedirectsToPatientMixin, PagePathway):
     steps = (
         Step(
             model=tb_models.ContactTracing,
-            template="pathway/contact_tracing.html"
+            template="pathway/steps/contact_tracing.html"
         ),
     )
 
@@ -185,17 +185,40 @@ class TBContactScreening(RedirectsToPatientMixin, PagePathway):
     steps = (
         HelpTextStep(
             display_name="Already Traced",
-            template="_partials/context_traced.html",
+            template="_partials/contact_traced_panel.html",
             help_text=""
         ),
-        Step(
-            model=uclptb_models.SymptomComplex,
-            template="pathway/tb_contact_screening.html",
-            step_controller="TbSymptomComplexCrtl",
-            multiple=True
+        SymptomStep,
+        HelpTextStep(
+            template="pathway/steps/geographic_exposure.html",
+            display_name="Geographical Exposure",
+            icon="fa fa-plane",
+            help_text=" ".join([
+                "Any countries with a high prevelance of TB where the",
+                "patient has spent more than three months."
+            ])
+        ),
+        HelpTextStep(
+            model=tb_models.TBHistory,
+            template="pathway/steps/tb_history.html",
+            help_text="""
+                Have they had TB before or contact with someone who has had TB
+            """
+        ),
+        HelpTextStep(
+            model=uclptb_models.PatientConsultation,
+            multiple=False,
+            help_text="Summary of assessment, impression and plan."
+        ),
+        HelpTextStep(
+            display_name="Follow up",
+            icon="fa-comments",
+            template="pathway/steps/tb_followup.html",
+            help_text="What are the next steps?"
         ),
     )
 
+    @transaction.atomic
     def save(self, data, user=None, patient=None, episode=None):
         next_steps = data.pop("next_steps")[0]
         referral_route = data.pop("referral_route", [{}])[0]
@@ -218,7 +241,7 @@ class TBContactScreening(RedirectsToPatientMixin, PagePathway):
             episode.stage = TBEpisodeStages.NEW_REFERRAL
             episode.save()
 
-        patient = super(TBContactScreening, self).save(
+        patient, episode = super(TBContactScreening, self).save(
             data, user=user, patient=patient, episode=episode)
 
         if next_steps["result"] == "discharged":
