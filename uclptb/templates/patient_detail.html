@@ -13,7 +13,8 @@
     <ul class="list-group" ng-show="episode.stage === metadata.tb.stages.new_contact">
       <li class="list-group-item">
         <a class="btn btn-primary btn-text-left col-md-8"
-           href="/pathway/#/tb_screening/[[ episode.id ]]">
+           pathway-link="tb_screening" pathway-episode="episode"
+        >
           {% icon "fa-plus-square" %}Screen Contacts
         </a>
       </li>
@@ -24,7 +25,7 @@
         <a class="btn btn-primary btn-text-left col-md-8"
           pathway-link="tb_initial_assessment" pathway-episode="episode"
         >
-          {% icon "fa-stethoscope" %} Initial TB Assessment
+        {% icon "fa-stethoscope" %} Initial TB Assessment
         </a>
       </li>
 
@@ -38,13 +39,15 @@
       </li>
       <li class="list-group-item">
         <a class="btn btn-primary btn-text-left col-md-8"
-           href="/pathway/#/tb_treatment/[[ episode.id ]]">
+          pathway-link="tb_treatment" pathway-episode="episode"
+          >
           {% icon "fa-medkit" %} <span ng-show="episode.stage === metadata.tb.stages.under_investigation">Start </span>TB Treatment
         </a>
       </li>
       <li class="list-group-item" ng-show="episode.stage === metadata.tb.stages.active_tb_treatment && !episode.tb_meta[0].contact_tracing_done">
         <a class="btn btn-primary col-md-8 btn-text-left"
-           href="/pathway/#/contact_tracing/[[ episode.id ]]">
+           pathway-link="contact_tracing" pathway-episode="episode"
+           >
           {% icon "fa-users" %} Record Contacts
         </a>
       </li>

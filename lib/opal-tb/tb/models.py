@@ -146,7 +146,7 @@ class ContactTracing(models.EpisodeSubrecord):
         return patient.create_episode(
             category_name=TBEpisode.get_slug().upper(),
             stage=TBEpisodeStages.NEW_CONTACT,
-            date_of_admission=date.today()
+            start=date.today()
         )
 
     def update_contact_details(self, patient, data, user):

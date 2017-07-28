@@ -20,13 +20,15 @@ from opal import models as opal_models
 
 
 class RemoveEmptiesMixin(object):
-    def save(self, data, user=None, **kwargs):
+    def save(self, data, user=None, patient=None, episode=None):
         for subrecordName, subrecords in data.iteritems():
             for index, subrecord in enumerate(subrecords):
                 if not subrecord:
                     data[subrecordName].pop(index)
 
-        return super(RemoveEmptiesMixin, self).save(data, user)
+        return super(RemoveEmptiesMixin, self).save(
+            data, user, patient, episode
+        )
 
 SymptomStep = HelpTextStep(
     model=uclptb_models.SymptomComplex,
@@ -46,7 +48,7 @@ class TBAddTests(PagePathway):
         Step(
             model=tb_models.TestResult,
             template="pathway/add_tests.html",
-            controller_class="AddTestsCtrl",
+            step_controller="AddTestsCtrl",
         ),
     )
 
@@ -59,7 +61,7 @@ class TBAddResults(PagePathway):
         Step(
             model=tb_models.TestResult,
             template="pathway/add_results.html",
-            controller_class="AddResultsCtrl",
+            step_controller="AddResultsCtrl",
         ),
     )
 
@@ -90,6 +92,7 @@ class TBAddPatient(RedirectsToPatientMixin, PagePathway):
         ),
     )
 
+    @transaction.atomic
     def save(self, data, user=None, patient=None, episode=None):
         if not patient:
             if "hospital_number" not in data["demographics"][0]:
@@ -100,7 +103,7 @@ class TBAddPatient(RedirectsToPatientMixin, PagePathway):
             data, user=user, patient=patient, episode=episode
         )
         episode.stage = TBEpisodeStages.NEW_REFERRAL
-        episode.date_of_admission = datetime.date.today()
+        episode.start = datetime.date.today()
         episode.save()
 
         return patient, episode
@@ -116,15 +119,18 @@ class TBContactTracing(RedirectsToPatientMixin, PagePathway):
         ),
     )
 
-    def save(self, data, user=None, **kwargs):
+    @transaction.atomic
+    def save(self, data, user=None, episode=None, patient=None):
         """
         Set this step as done in TBMeta
         """
-        patient, episode = super(TBContactTracing, self).save(data, user=user)
-        meta = self.episode.tbmeta_set.get()
+        patient, episode = super(TBContactTracing, self).save(
+            data, user=user, episode=episode, patient=patient
+        )
+        meta = episode.tbmeta_set.get()
         meta.contact_tracing_done = True
         meta.save()
-        return patient
+        return patient, episode
 
 
 class TBAssessment(RedirectsToPatientMixin, PagePathway):
@@ -148,7 +154,6 @@ class TBAssessment(RedirectsToPatientMixin, PagePathway):
             model=tb_models.SocialHistory
         ),
         HelpTextStep(
-            model=tb_models.SocialHistory,
             template="pathway/steps/geographic_exposure.html",
             display_name="Geographical Exposure",
             icon="fa fa-plane",
@@ -164,6 +169,7 @@ class TBAssessment(RedirectsToPatientMixin, PagePathway):
         )
     )
 
+    @transaction.atomic
     def save(self, data, user=None, episode=None, patient=None):
         patient, episode = super(TBAssessment, self).save(
             data, user=user, patient=patient, episode=episode
@@ -185,7 +191,7 @@ class TBContactScreening(RedirectsToPatientMixin, PagePathway):
         Step(
             model=uclptb_models.SymptomComplex,
             template="pathway/tb_contact_screening.html",
-            controller_class="TbSymptomComplexCrtl",
+            step_controller="TbSymptomComplexCrtl",
             multiple=True
         ),
     )
@@ -231,7 +237,7 @@ class TBObserveDOT(PagePathway):
         Step(
             model=tb_models.TestResult,
             template="pathway/observe_dot.html",
-            controller_class="ObserveDOTCtrl",
+            step_controller="ObserveDOTCtrl",
         ),
     )
 
@@ -245,7 +251,7 @@ class TBDOTHistory(PagePathway):
         Step(
             model=tb_models.TestResult,
             template="pathway/dot_history.html",
-            controller_class="DOTHistoryCtrl",
+            step_controller="DOTHistoryCtrl",
         ),
     )
 
@@ -253,19 +259,40 @@ class TBDOTHistory(PagePathway):
 class TBTreatment(RemoveEmptiesMixin, RedirectsToPatientMixin, PagePathway):
     display_name  = "TB Treatment"
     slug          = "tb_treatment"
-    template_url = '/templates/pathway/treatment_form_base.html'
     icon = 'fa fa-medkit'
     steps = (
         HelpTextStep(
             model=uclptb_models.Diagnosis,
-            controller_class=""
+            template="pathway/steps/tb_diagnosis.html",
+            step_controller="TBDiagnosis",
+            help_text=""""
+                What type of TB does this patient have,
+                and where is it located?"
+            """
         ),
-        Step(
-            display_name="Diagnosis & Treatment",
+        HelpTextStep(
+            display_name="Test Results",
+            icon="fa fa-crosshairs",
+            template="_partials/results_table.html",
+            help_text="A brief summary of the key test results for this patient."
+        ),
+        HelpTextStep(
+            display_name="Current Treatment",
             icon="fa fa-medkit",
-            template="pathway/tb_treatment.html",
-            controller_class="TBTreatmentCtrl",
+            template="partials/current_treatments.html"
         ),
+        HelpTextStep(
+            display_name="Treatment Plan",
+            icon="fa fa-medkit",
+            base_template="pathway/steps/treatment_plan_base.html",
+            # we use the base template instead
+            template="not_used.html",
+            step_controller="TBTreatmentCtrl",
+        ),
+        HelpTextStep(
+            model=uclptb_models.PatientConsultation,
+            multiple=False,
+        )
     )
 
     @transaction.atomic

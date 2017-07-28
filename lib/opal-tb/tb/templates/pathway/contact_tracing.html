@@ -5,4 +5,5 @@
 </div>
 <hr />
 <h4 class="text-center content-offset">{{ models.ContactTracing.get_display_name }}</h4>
-{% multisave models.ContactTracing form_url="/templates/pathway/contact_tracing_form.html" %}
+<div save-multiple-wrapper="{{ model }}">
+{% multisave models.ContactTracing %}

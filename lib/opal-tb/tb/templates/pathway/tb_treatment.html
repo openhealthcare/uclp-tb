@@ -43,7 +43,7 @@
 </div> <!-- Row -->
 
 <div ng-controller="CurrentTreatmentPanelCtrl as currentTreatmentPathwayCtrl">
-  <div class="row" ng-show="currentTreatmentPathwayCtrl.getActiveTreatments(episode.treatment).length">
+  <div class="row" ng-show="currentTreatmentPathwayCtrl.getActiveTreatments(episode.treatment || []).length">
     <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -66,89 +66,14 @@
         </h3>
       </div>
       <div class="panel-body">
-        <div class="form-horizontal">
-          {% input label="Weight" model="localEditing.weight" unit="kg" %}
-          {% datepicker label="Treatment start date" model="localMetadata.treatmentStartDate" %}
-          {% checkbox field="TBMeta.directly_observed_therapy" %}
-        </div>
-        <hr />
-        <div class="row text-center">
-          <div class="col-md-3">
-            <b>Drug</b>
-          </div>
-          <div class="col-md-2">
-            <b>Dose</b>
-          </div>
-          <div class="col-md-3">
-            <b>Start</b>
-          </div>
-          <div class="col-md-3">
-            <b>Stop</b>
-          </div>
-        </div>
 
-        <div class="row form-horizontal content-offset-20" ng-repeat="plan in localEditing.treatmentPlan" ng-show="existingTreatmentFilter(plan)">
-          <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="plan.drug"
-                   uib-typeahead="i for i in antimicrobial_list | filter:$viewValue | limitTo:8" />
-          </div>
-          <div class="col-md-2">
-            <input type="text" class="form-control" ng-model="plan.dose" />
-          </div>
-          <div class="col-md-3">
-            <input name="treatment_plan_planned_start_date[[ $index ]]" type="text" class="form-control" required-if-not-empty="plan" ng-model="plan.start_date" bs-datepicker />
-          </div>
-          <div class="col-md-3">
-            <input name="treatment_plan_planned_end_date[[ $index ]]"  type="text" class="form-control" required-if-not-empty="plan" ng-model="plan.planned_end_date" bs-datepicker   />
-          </div>
-          <div class="col-md-1">
-            <button ng-show="!plan.id || today(plan.end_date)" ng-click="removeTreatment($index)" class="btn btn-secondary">
-              {% icon "fa-trash" %}
-            </button>
-            <button ng-hide="!plan.id || today(plan.end_date)" ng-click="stopTreatment($index)" class="btn btn-secondary">
-              {% icon "fa-stop" %}
-            </button>
-          </div>
-        </div>
-        <div class="row" ng-show="form.$submitted">
-          <div class="col-md-12 text-center" ng-show="form.$error.requiredIfNotEmpty">
-            <span class="help-block">
-              Please enter a start date and a stop date for all treatments
-            </span>
-          </div>
-        </div>
-
-        <div class="row content-offset-20">
-          <div class="col-md-1 col-md-offset-11">
-            <button type="button" class="btn-primary btn" ng-click="addTreatment()" data-title="Add Another" bs-tooltip>
-              {% icon "glyphicon-plus" %}
-            </button>
-          </div>
-        </div>
 
 
       </div> <!-- Panel body -->
     </div> <!-- Panel -->
   </div>   <!--  Column -->
   <div class="col-md-4">
-    <div class="well">
-      <h4 class="text-center">First line regimen</h4>
-      <p>
-        Isoniazid (with pyridoxine), rifampicin, pyrazinamide and ethambutol for 2 months
-      </p>
-      <p class="text-center">
-        <b>then</b>
-      </p>
-      <p>
-        Isoniazid (with pyridoxine) and rifampicin for a further 4 months.
-      </p>
-      <center>
-        <button class="btn btn-primary btn-lg" ng-disabled="!localEditing.weight" ng-click="useTreatmentPlan(1)">
-          {% icon "glyphicon-plus" %}
-          Use this treatment
-        </button>
-      </center>
-    </div>
+
   </div>
 </div>     <!--  Row -->
 <div class="row">

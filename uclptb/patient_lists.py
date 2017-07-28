@@ -6,8 +6,10 @@ from opal.models import Episode
 
 from uclptb import models
 
+
 class AllPatientsList(core.patient_lists.PatientList):
     display_name = 'All Patients'
+    allow_add_patient = False
 
     schema = [
         models.Demographics,
